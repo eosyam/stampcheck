@@ -6,22 +6,16 @@
 <title>Stampcheck: Free Email HTML Checker &amp; Preview for Gmail, Outlook and Mobile</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <!-- Google Analytics 4 (Consent Mode v2: nothing is stored until the visitor accepts) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-window.GA_ID = "G-SMQPH746BD";
-(function () {
-  var saved = null;
-  try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
-  gtag("consent", "default", { analytics_storage: saved === "granted" ? "granted" : "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
-  gtag("set", "ads_data_redaction", true);
-  if (!/^G-[A-Z0-9]{6,}$/.test(window.GA_ID) || /^G-X+$/.test(window.GA_ID)) return;
-  var s = document.createElement("script");
-  s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + window.GA_ID;
-  document.head.appendChild(s);
-  gtag("js", new Date());
-  gtag("config", window.GA_ID, { allow_google_signals: false, allow_ad_personalization_signals: false });
-})();
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "granted" ? "granted" : "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
 </script>
 <meta name="description" content="Free email HTML checker. Paste your email and see what breaks in Gmail, Outlook, Apple Mail and on phones before you send. 80+ checks, live previews, runs in your browser.">
 <meta name="theme-color" content="#1D44B8">
