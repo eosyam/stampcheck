@@ -111,9 +111,9 @@ gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personali
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; }
-@media (min-width: 1280px) { html, body { height: 100%; } }
+@media (min-width: 1280px) { html[data-view="editor"], html[data-view="editor"] body { height: 100%; } }
 .shell { display: flex; flex-direction: column; min-height: 100%; }
-@media (min-width: 1280px) { .shell { height: 100%; min-height: 720px; } }
+@media (min-width: 1280px) { html[data-view="editor"] .shell { height: 100%; min-height: 720px; } }
 .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 a { color: var(--accent); }
 
@@ -174,8 +174,7 @@ button:focus-visible, .btn:focus-within, summary:focus-visible, select:focus-vis
 button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 button.primary:hover { filter: brightness(1.08); background: var(--accent); }
 button:disabled { cursor: default; opacity: 0.5; }
-.consent { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 520px; z-index: 60; background: var(--sheet); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 28px var(--shadow); padding: 14px 16px; font: 14px/1.45 var(--f-body); }
-.consent[hidden] { display: none; }
+.consent { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); max-width: 520px; z-index: 60; background: var(--sheet); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 28px var(--shadow); padding: 14px 16px; font: 14px/1.45 var(--f-body); }
 .consent p { margin: 0 0 10px; }
 .consent .row { display: flex; gap: 8px; flex-wrap: wrap; }
 button.small, .btn.small { padding: 5px 10px; font-size: 13px; border-radius: 8px; }
@@ -429,6 +428,86 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
 .fix { flex: none; padding: 12px 16px 14px; border-top: 1px solid var(--line); display: grid; gap: 6px; }
 .fix-note { font-size: 12.5px; color: var(--muted); margin: 0; text-align: center; }
 
+/* Simple check: home and results */
+.simple { flex: 1; padding-block: clamp(28px, 6vh, 64px) 28px; }
+.home { max-width: 820px; margin: 0 auto; display: grid; gap: 16px; text-align: center; }
+.hero-title { font-family: var(--f-display); font-weight: 800; font-size: clamp(36px, 6.4vw, 64px); line-height: 1.02; letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.hero-sub { margin: 0 auto; font-size: clamp(16px, 2.2vw, 19px); color: var(--muted); max-width: 46ch; text-wrap: balance; }
+.paste { margin-top: 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 24px 50px -32px var(--shadow); overflow: hidden; text-align: left; }
+.paste textarea { display: block; width: 100%; height: clamp(180px, 32vh, 280px); border: 0; resize: vertical; padding: 18px 20px; font: 13px/1.6 var(--f-mono); color: var(--ink); background: var(--code-bg); outline: none; }
+.paste textarea:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.paste-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-top: 1px solid var(--line); }
+button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
+.link { position: relative; background: none; border: 0; padding: 0; color: var(--accent); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.link:hover { background: none; }
+.link input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.or { color: var(--faint); font-size: 14px; }
+.promises { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; color: var(--muted); font-size: 14px; }
+.promises b { color: var(--ink); font-weight: 600; }
+.results { max-width: 1280px; margin: 0 auto; display: grid; gap: 18px; }
+.res-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.res-verdict { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.res-verdict .verdict-icon { width: 52px; height: 52px; border-radius: 15px; }
+.res-verdict .verdict-icon svg { width: 26px; height: 26px; }
+.res-verdict h2 { font-family: var(--f-display); font-weight: 800; font-size: clamp(26px, 4vw, 38px); margin: 0; letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
+.res-verdict p { margin: 3px 0 0; color: var(--muted); font-size: 15px; }
+.res-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 980px) { .cards { grid-template-columns: minmax(0, 1fr); max-width: 520px; width: 100%; margin: 0 auto; } }
+.card { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card header { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.card header .cdot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.card h3 { margin: 0; font-size: 15px; font-weight: 600; }
+.card .sub { font-size: 12.5px; color: var(--faint); }
+.status { margin-left: auto; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.status.error { background: var(--err-bg); color: var(--err); }
+.status.warn { background: var(--warn-bg); color: var(--warn); }
+.status.ok { background: var(--ok-bg); color: var(--ok); }
+.device-group { display: grid; gap: 10px; }
+.group-title { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.thumb { position: relative; height: 420px; overflow: hidden; background: var(--canvas); border-bottom: 1px solid var(--line); transition: height .25s ease; }
+.thumb.mobile { background: var(--paper); background-image: radial-gradient(var(--dots) 1px, transparent 1.2px); background-size: 14px 14px; }
+.thumb iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; background: var(--canvas); }
+.thumb.mobile iframe { box-shadow: 0 0 0 1px var(--line), 0 10px 30px -18px var(--shadow); }
+.fade { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 14px; background: linear-gradient(to bottom, transparent, var(--sheet) 85%); pointer-events: none; }
+.fade button { pointer-events: auto; box-shadow: 0 6px 16px -8px var(--shadow); }
+.thumb.expanded .fade { position: absolute; height: auto; background: none; padding-bottom: 12px; }
+.breaks { list-style: none; margin: 0; padding: 12px 14px 14px; display: grid; gap: 8px; align-content: start; }
+.breaks li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14px; line-height: 1.4; }
+.breaks li.error { --sev: var(--err); }
+.breaks li.warn { --sev: var(--warn); }
+.breaks li.ok { --sev: var(--ok); color: var(--muted); }
+.breaks li .sev-ic { margin-top: 1px; }
+.breaks li.more-li { display: block; color: var(--faint); font-size: 13px; padding-left: 26px; }
+.also { background: var(--sheet); border: 1px solid var(--line); border-radius: 14px; }
+.also h3 { margin: 0; padding: 14px 14px 0; font-size: 15px; font-weight: 600; }
+.also .breaks { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.cta { display: grid; justify-items: center; gap: 6px; padding: 4px 0 8px; }
+.back-btn { display: inline-flex; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); background: var(--sheet); border: 1px solid var(--line); }
+.tab:hover { color: var(--ink); background: var(--sheet); border-color: var(--faint); }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.tab .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.tab .dot.error { background: var(--err); }
+.tab .dot.warn { background: var(--warn); }
+.tab .n { font-variant-numeric: tabular-nums; font-weight: 600; opacity: .7; }
+.res-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .res-body { grid-template-columns: minmax(0, 1fr); } }
+.res-preview { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.res-preview .thumb { border-bottom: 0; background: var(--paper); background-image: radial-gradient(var(--dots) 1px, transparent 1.2px); background-size: 14px 14px; }
+.res-preview .thumb iframe { box-shadow: 0 0 0 1px var(--line), 0 12px 32px -20px var(--shadow); }
+.res-preview .thumb iframe { visibility: hidden; pointer-events: none; }
+.res-preview .thumb iframe.on { visibility: visible; }
+.res-side { background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 16px; display: grid; gap: 10px; position: sticky; top: 16px; }
+@media (max-width: 900px) { .res-side { position: static; } }
+.res-side h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
+.side-sub { margin: -6px 0 2px; font-size: 13px; color: var(--faint); }
+.res-side .breaks { padding: 4px 0 6px; }
+.res-side .cta { justify-items: stretch; padding: 8px 0 0; border-top: 1px solid var(--line); }
+.res-side .cta button { width: 100%; }
+
 /* Site footer */
 .site-foot { flex: none; padding-block: 8px 14px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 18px; font-size: 13px; color: var(--faint); }
 .site-foot a { color: var(--muted); text-decoration: none; }
@@ -467,9 +546,10 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
         </svg>
         <div>
           <p class="wordmark">Stampcheck</p>
-          <h1 class="tagline">Free email HTML checker. See where your email breaks before your readers do.</h1>
+          <p class="tagline">Free email HTML checker</p>
         </div>
       </div>
+      <button class="small back-btn" id="to-simple" type="button" hidden>← Back to results</button>
       <span class="privacy-chip">
         <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1Zm-2 6V4.5a2 2 0 1 1 4 0V7H6Z"/></svg>
         Runs in your browser. Nothing is uploaded.
@@ -478,7 +558,53 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
     <div class="airmail" aria-hidden="true"></div>
   </header>
 
-  <main class="app gutter" id="app">
+  <main class="simple gutter" id="simple">
+    <section class="home" id="home" aria-labelledby="hero-title">
+      <h1 class="hero-title" id="hero-title">Will your email break?</h1>
+      <p class="hero-sub">Paste your email HTML and see it in Gmail, Outlook and on an iPhone, with every problem marked.</p>
+      <div class="paste">
+        <textarea id="paste" spellcheck="false" placeholder="Paste your email HTML here" aria-label="Email HTML"></textarea>
+        <div class="paste-actions">
+          <button class="primary big" id="go" type="button">Check my email</button>
+          <span class="or">or</span>
+          <button class="link" id="try-example" type="button">try an example</button>
+          <label class="link" for="file-simple">open an .html file<input id="file-simple" type="file" accept=".html,.htm,text/html"></label>
+        </div>
+      </div>
+      <ul class="promises">
+        <li><b>Gmail, Outlook, iPhone</b> side by side</li>
+        <li><b>80+ checks</b> for what breaks</li>
+        <li><b>Nothing uploaded.</b> It runs in your browser.</li>
+      </ul>
+    </section>
+
+    <section class="results" id="results" hidden aria-live="polite">
+      <div class="res-top">
+        <div class="res-verdict"><span class="verdict-icon idle" id="r-icon" aria-hidden="true"></span><div><h2 id="r-title">Checking your email</h2><p id="r-sub"></p></div></div>
+        <div class="res-actions">
+          <button class="small" id="again" type="button">Check another email</button>
+          <button class="small" id="to-editor" type="button">Open in editor</button>
+        </div>
+      </div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Where to preview"></div>
+      <div class="res-body">
+        <div class="res-preview">
+          <div class="thumb" id="thumb"><div class="fade" hidden><button class="small" type="button" id="expand">Show full email</button></div></div>
+        </div>
+        <aside class="res-side" aria-live="polite">
+          <h3 id="side-title">Outlook</h3>
+          <p class="side-sub" id="side-sub"></p>
+          <ul class="breaks" id="side-list"></ul>
+          <div class="cta" id="cta">
+            <button class="primary big" id="fix-simple" type="button">Fix these for me</button>
+            <p class="fix-note" id="fix-simple-note">Get corrected HTML with every problem fixed.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <main class="app gutter" id="app" hidden>
     <section class="pane code-pane" aria-label="Email HTML">
       <div class="pane-head">
         <p class="label" id="input-label">HTML</p>
@@ -629,7 +755,7 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
       <p class="small">Last updated 28 October 2026</p>
       <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else, and it is gone when you close the tab.</p></div>
       <div><h3>What we keep in your browser</h3><p>If you edit the sender name or address in the preview, or resize the panels, those settings are remembered in your browser so you don't have to set them again. They never leave your device, and clearing this site's data removes them.</p></div>
-      <div><h3>What we count</h3><p>With your consent, we use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details only if you accept; if you decline, no analytics cookies are set. We turn off advertising features and don't use the data for ads. You can change your choice on the Cookies page.</p></div>
+      <div><h3>What we count</h3><p>With your consent, we use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details only if you accept; if you decline, no analytics cookies are set. We turn off advertising features and Google signals.</p></div>
       <div><h3>Hosting</h3><p>Our hosting provider keeps standard server logs, such as IP address, browser type and time of visit, to keep the site running and secure. We don't combine these logs with other data. Fonts and graphics are part of this page. The only other company contacted is Google, for analytics.</p></div>
       <div><h3>Your rights</h3><p>The tool itself doesn't collect personal data, and analytics data is anonymous usage counts, so there is little for us to access, correct or delete. If you have a question about server logs or your rights under GDPR or KVKK, contact us using the details on the Contact page.</p></div>
       <div><h3>Changes</h3><p>If we start handling data differently, for example to offer automatic fixes, we will update this page before that change goes live.</p></div>
@@ -1833,10 +1959,166 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
     now.forEach((t, k) => state.seen.set(k, t));
     renderReport();
     setLive(false);
+    if (state.view === "results") await renderSimple();
     const counts = { errors: state.issues.filter((i) => i.sev === "error").length, warnings: state.issues.filter((i) => i.sev === "warn").length };
     track("check", counts);
     // Key event: once per page load, so live re-checks while typing don't inflate it.
     if (!state.keyChecked) { state.keyChecked = true; track("check_run", { ...counts, sample: raw === SAMPLE }); }
+  }
+
+  /* ---------- Simple check ---------- */
+  const isMobileOnly = (it) => it.cats.includes("mobile") && !it.cats.includes("gmail") && !it.cats.includes("outlook");
+  const TABS = [
+    { id: "gmail", name: "Gmail", full: "Gmail on the web", client: "gmail", w: 680, mobile: false, match: (it) => it.cats.includes("gmail") && !isMobileOnly(it) },
+    { id: "outlook", name: "Outlook", full: "Outlook for Windows", client: "outlook", w: 680, mobile: false, match: (it) => it.cats.includes("outlook") },
+    { id: "apple", name: "Apple Mail", full: "Apple Mail on Mac", client: "apple", w: 680, mobile: false, match: (it) => it.cats.includes("apple") && !it.cats.includes("mobile") },
+    { id: "iphone", name: "iPhone", full: "iPhone · Apple Mail · 393 px", client: "apple", w: 393, mobile: true, match: (it) => it.cats.includes("mobile") || it.cats.includes("apple") },
+    { id: "android", name: "Android", full: "Android · Gmail app · 360 px", client: "gmail", w: 360, mobile: true, match: (it) => it.cats.includes("mobile") || it.cats.includes("gmail") },
+  ];
+  const CLIENT_CATS = ["gmail", "outlook", "mobile", "apple"];
+  const everywhere = (it) => (it.cats.includes("gmail") && it.cats.includes("outlook") && it.cats.includes("mobile")) || !it.cats.some((c) => CLIENT_CATS.includes(c));
+  const paste = $("#paste");
+  const simple = { tab: null, items: {}, expanded: false };
+  function buildCards() {
+    const thumb = $("#thumb");
+    TABS.forEach((t) => {
+      const fr = document.createElement("iframe");
+      fr.id = "f-" + t.id; fr.title = t.full + " preview";
+      fr.setAttribute("sandbox", "allow-same-origin"); fr.setAttribute("scrolling", "no"); fr.tabIndex = -1;
+      fr.dataset.w = String(t.w);
+      thumb.insertBefore(fr, thumb.firstChild);
+    });
+  }
+  function liHtml(it) { return `<li class="${it.sev}">${ICONS[it.sev]}<span>${esc(it.title)}</span></li>`; }
+  function listHtml(items, max) {
+    if (!items.length) return `<li class="ok">${ICONS.ok}<span>Nothing breaks here</span></li>`;
+    const shown = items.slice(0, max).map(liHtml).join("");
+    return shown + (items.length > max ? `<li class="more-li">+${items.length - max} more in the editor</li>` : "");
+  }
+  /* The email is shown at full length as a still picture. Long emails are capped with "Show full email". */
+  function fitCards() {
+    const t = TABS.find((x) => x.id === simple.tab);
+    if (!t) return;
+    const th = $("#thumb");
+    th.classList.toggle("mobile", t.mobile);
+    th.classList.toggle("expanded", simple.expanded);
+    TABS.forEach((x) => $(`#f-${x.id}`).classList.toggle("on", x.id === t.id));
+    const fr = $(`#f-${t.id}`);
+    const W = t.w, H = Number(fr.dataset.h || 900);
+    const pad = 24;
+    const s = Math.min(t.mobile ? 0.9 : 1, (th.clientWidth - pad * 2) / W);
+    fr.style.width = W + "px";
+    fr.style.height = H + "px";
+    fr.style.transform = `scale(${s})`;
+    fr.style.left = Math.max(0, (th.clientWidth - W * s) / 2) + "px";
+    fr.style.top = pad + "px";
+    const full = Math.ceil(H * s) + pad * 2;
+    const cap = 1100;
+    const long = full > cap + 80;
+    th.style.height = (simple.expanded || !long ? full : cap) + "px";
+    const fade = th.querySelector(".fade");
+    fade.hidden = !long;
+    $("#expand").textContent = simple.expanded ? "Show less" : "Show full email";
+  }
+  function frameInfo(fr) {
+    let d;
+    try { d = fr.contentDocument; } catch (e) { return null; }
+    if (!d || !d.documentElement) return null;
+    const st = d.createElement("style");
+    st.textContent = "html,body{overflow:hidden!important}.sc-err{outline:3px solid #E11D48!important;outline-offset:2px!important}a{pointer-events:none}";
+    (d.head || d.documentElement).appendChild(st);
+    const vw = d.documentElement.clientWidth;
+    const sw = Math.max(d.documentElement.scrollWidth, d.body ? d.body.scrollWidth : 0);
+    const h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+    return { d, vw, sw, h };
+  }
+  function markProblems(d, items) {
+    items.filter((it) => it.sev === "error").forEach((it) => (it.examples || []).forEach((e) => {
+      if (e.id == null) return;
+      const el = d.querySelector(`[data-src="${e.id}"]`);
+      if (el && el.tagName !== "BODY" && el.tagName !== "HTML") el.classList.add("sc-err");
+    }));
+  }
+  function renderTabs() {
+    $("#tabs").innerHTML = TABS.map((t) => {
+      const items = simple.items[t.id] || [];
+      const e = items.filter((i) => i.sev === "error").length;
+      const cls = e ? "error" : items.length ? "warn" : "";
+      const label = e ? `<span class="n">${e}</span>` : "";
+      return `<button class="tab" type="button" role="tab" data-tab="${t.id}" aria-selected="${t.id === simple.tab}"><span class="dot ${cls}"></span>${t.name}${label}</button>`;
+    }).join("");
+  }
+  function selectTab(id) {
+    simple.tab = id;
+    simple.expanded = false;
+    const t = TABS.find((x) => x.id === id);
+    const items = simple.items[id] || [];
+    const e = items.filter((i) => i.sev === "error").length;
+    $("#side-title").textContent = e ? `${plural(e, "problem", "problems")} in ${t.name}` : items.length ? `${t.name} looks mostly fine` : `${t.name} looks fine`;
+    $("#side-sub").textContent = t.full;
+    $("#side-list").innerHTML = listHtml(items, 8);
+    renderTabs();
+    fitCards();
+  }
+  async function renderSimple() {
+    if (!state.doc) return;
+    const real = state.issues.filter((i) => i.sev !== "info");
+    const overflowIssue = real.find((i) => i.key === "phone-overflow");
+    const base = real.filter((i) => i.key !== "phone-overflow");
+    const errs = real.filter((i) => i.sev === "error").length;
+    const warns = real.length - errs;
+    const icon = $("#r-icon"), t = $("#r-title"), sub = $("#r-sub");
+    if (errs) { icon.className = "verdict-icon error"; icon.innerHTML = ICONS.big_error; t.textContent = `${plural(errs, "thing", "things")} will break`; sub.textContent = "Problems are marked in red."; }
+    else if (warns) { icon.className = "verdict-icon warn"; icon.innerHTML = ICONS.big_warn; t.textContent = `Nothing breaks, ${plural(warns, "thing", "things")} may look off`; sub.textContent = "Worth a look before you send."; }
+    else { icon.className = "verdict-icon ok"; icon.innerHTML = ICONS.big_ok; t.textContent = "Your email looks good"; sub.textContent = "Nothing breaks in Gmail, Outlook, Apple Mail or on phones."; }
+    await Promise.all(TABS.map(async (tb) => {
+      const fr = $(`#f-${tb.id}`);
+      fr.style.width = tb.w + "px";
+      fr.style.height = "900px";
+      await loadFrame(fr, previewHtml(tb.client, false));
+      const info = frameInfo(fr);
+      const items = base.filter((it) => everywhere(it) || tb.match(it));
+      if (info && tb.mobile && info.sw > info.vw + 1) {
+        items.unshift({ sev: "error", title: `Wider than the screen: ${info.sw} px on a ${info.vw} px phone` });
+        if (overflowIssue) markProblems(info.d, [overflowIssue]);
+      }
+      items.sort((a, b) => SEV_ORDER[a.sev] - SEV_ORDER[b.sev]);
+      if (info) { markProblems(info.d, items); fr.dataset.h = String(info.h); }
+      simple.items[tb.id] = items;
+    }));
+    const worst = TABS.slice().sort((a, b) => {
+      const ea = simple.items[a.id].filter((i) => i.sev === "error").length, eb = simple.items[b.id].filter((i) => i.sev === "error").length;
+      return eb - ea || simple.items[b.id].length - simple.items[a.id].length;
+    })[0];
+    $("#cta").hidden = !real.length;
+    const fb = $("#fix-simple");
+    fb.disabled = false;
+    fb.textContent = `Fix ${plural(real.length, "problem", "problems")} for me`;
+    $("#fix-simple-note").textContent = "Corrected HTML for every inbox.";
+    selectTab(simple.tab && simple.items[simple.tab] ? simple.tab : worst.id);
+  }
+  function setView(v) {
+    state.view = v;
+    document.documentElement.dataset.view = v;
+    $("#simple").hidden = v === "editor";
+    $("#app").hidden = v !== "editor";
+    $("#home").hidden = v !== "home";
+    $("#results").hidden = v !== "results";
+    $("#to-simple").hidden = v !== "editor";
+    if (v === "editor") { cm.refresh(); renderPreview(); }
+    if (v === "results") fitCards();
+    window.scrollTo(0, 0);
+    track("view", { view: v });
+  }
+  function go(text) {
+    text = text == null ? paste.value : text;
+    if (!text.trim()) { paste.focus(); toast("Paste your email HTML first"); return; }
+    $("#r-title").textContent = "Checking your email";
+    $("#r-sub").textContent = "";
+    simple.tab = null;
+    setView("results");
+    if (text === cm.getValue()) run(); else setCode(text);
+    track("simple_check");
   }
 
   function loadFile(f) {
@@ -2011,22 +2293,59 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
   state.senderEmail = store.get("email") || "";
   $("#year").textContent = String(new Date().getFullYear());
   buildDeviceOptions();
-  setCode(SAMPLE);
+  document.body.appendChild(measure);
+
+  $("#go").addEventListener("click", () => go());
+  $("#try-example").addEventListener("click", () => { paste.value = SAMPLE; go(); track("example"); });
+  paste.addEventListener("paste", () => { const was = paste.value; setTimeout(() => { if (!was.trim() && paste.value.trim()) go(); }, 0); });
+  paste.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); go(); } });
+  $("#file-simple").addEventListener("change", (e) => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { paste.value = String(r.result); go(); };
+    r.readAsText(f);
+    track("open_file");
+  });
+  $("#again").addEventListener("click", () => { paste.value = ""; setView("home"); paste.focus(); });
+  $("#to-editor").addEventListener("click", () => setView("editor"));
+  $("#to-simple").addEventListener("click", () => { paste.value = cm.getValue(); setView("results"); renderSimple(); });
+  $("#fix-simple").addEventListener("click", () => {
+    track("fix_simple_click");
+    $("#fix-simple-note").textContent = "Automatic fixes are coming soon. Your click tells us you'd use them.";
+    $("#fix-simple").disabled = true;
+  });
+  buildCards();
+  $("#tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) { selectTab(b.dataset.tab); track("tab", { tab: b.dataset.tab }); } });
+  $("#expand").addEventListener("click", () => {
+    simple.expanded = !simple.expanded;
+    fitCards();
+    if (!simple.expanded) $("#thumb").scrollIntoView({ block: "nearest" });
+    track("expand_preview");
+  });
+  let lastResW = 0;
+  if ("ResizeObserver" in window) new ResizeObserver(() => { const w = $("#results").clientWidth; if (w !== lastResW) { lastResW = w; fitCards(); } }).observe($("#results"));
+  else window.addEventListener("resize", fitCards);
+
+  setView("home");
+  run();
   routeHash();
 })();
 </script>
 <script>
 (function () {
   var box = document.getElementById("consent");
+  var reset = document.getElementById("consent-reset");
+  if (typeof window.gtag !== "function") { if (reset) reset.hidden = true; return; }
   function get() { try { return localStorage.getItem("stampcheck:consent"); } catch (e) { return null; } }
   function choose(v) {
     try { localStorage.setItem("stampcheck:consent", v); } catch (e) {}
-    gtag("consent", "update", { analytics_storage: v });
+    window.gtag("consent", "update", { analytics_storage: v });
     box.hidden = true;
   }
   document.getElementById("consent-accept").addEventListener("click", function () { choose("granted"); });
   document.getElementById("consent-decline").addEventListener("click", function () { choose("denied"); });
-  var reset = document.getElementById("consent-reset");
   if (reset) reset.addEventListener("click", function () { box.hidden = false; });
   if (!get()) box.hidden = false;
 })();
