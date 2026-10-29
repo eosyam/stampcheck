@@ -1833,7 +1833,10 @@ button.ex:hover { border-color: var(--sev); background: var(--code-bg); }
     now.forEach((t, k) => state.seen.set(k, t));
     renderReport();
     setLive(false);
-    track("check", { errors: state.issues.filter((i) => i.sev === "error").length, warnings: state.issues.filter((i) => i.sev === "warn").length });
+    const counts = { errors: state.issues.filter((i) => i.sev === "error").length, warnings: state.issues.filter((i) => i.sev === "warn").length };
+    track("check", counts);
+    // Key event: once per page load, so live re-checks while typing don't inflate it.
+    if (!state.keyChecked) { state.keyChecked = true; track("check_run", { ...counts, sample: raw === SAMPLE }); }
   }
 
   function loadFile(f) {
