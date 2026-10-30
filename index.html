@@ -557,6 +557,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .fx-checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 18px; }
 .fx-checks li { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--ink); }
 .fx-checks li svg { flex: none; width: 18px; height: 18px; margin-top: 1px; fill: none; stroke: var(--ok); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.fx-sell { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 22px; }
+.fx-sell li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.fx-sell li b { color: var(--ink); font-weight: 700; }
+.fx-sell li svg { flex: none; width: 20px; height: 20px; margin-top: 1px; padding: 3px; border-radius: 50%; background: var(--ok-bg); fill: none; stroke: var(--ok); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .fx-more { margin: -2px 0 0; font-size: 13px; color: var(--muted); }
 .fx-left { border: 1px solid var(--line); border-radius: 12px; padding: 0; }
 .fx-left summary { cursor: pointer; list-style: none; padding: 11px 14px; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; gap: 10px; }
@@ -602,7 +606,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   .fx-head { padding: 18px 18px 4px; }
   .fx-body { padding: 12px 18px 20px; }
   .fx-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .fx-checks, .plans { grid-template-columns: 1fr; }
+  .fx-checks, .plans, .fx-sell { grid-template-columns: 1fr; }
   .fx-done-row { grid-template-columns: 1fr; }
 }
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
@@ -2655,6 +2659,23 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const more = items.length - shown.length;
     return `<ul class="fx-checks">${shown.map((t) => `<li>${CHECK}<span>${esc(t)}</span></li>`).join("")}</ul>${more > 0 ? `<p class="fx-more">and ${more} more</p>` : ""}`;
   }
+  // Benefits to sell, picked from what this email actually needs.
+  function sellPoints(auto) {
+    const has = (c) => auto.some((i) => i.cats.includes(c));
+    const pts = [];
+    if (has("outlook")) pts.push(["Bulletproof in Outlook.", "Buttons, backgrounds and layouts keep their shape."]);
+    if (has("mobile")) pts.push(["Perfect on every phone.", "No sideways scrolling, no tiny text."]);
+    if (has("gmail")) pts.push(["Nothing stripped in Gmail.", "Your styles and layout survive, start to finish."]);
+    if (has("apple")) pts.push(["Dark-mode safe.", "No inverted logos or unreadable text in Apple Mail."]);
+    if (has("deliver")) pts.push(["Lands in the inbox.", "Fewer spam triggers, cleaner links."]);
+    if (has("a11y")) pts.push(["Readable by everyone.", "Alt text, contrast and screen readers handled."]);
+    pts.push(["Your design stays yours.", "Same copy, links and look. Just fixed."]);
+    pts.push(["Ready in about 30 seconds.", "Download clean HTML or paste it straight into your tool."]);
+    return pts.slice(0, 6);
+  }
+  function sellHtml(auto) {
+    return `<ul class="fx-sell">${sellPoints(auto).map(([b, t]) => `<li>${CHECK}<span><b>${esc(b)}</b> ${esc(t)}</span></li>`).join("")}</ul>`;
+  }
   function leftHtml(items, open) {
     if (!items.length) return "";
     return `<details class="fx-left"${open ? " open" : ""}><summary>Before you hit send: ${plural(items.length, "quick check", "quick checks")}</summary><ul>${items.map((x) => `<li>${esc(x.why)}</li>`).join("")}</ul></details>`;
@@ -2686,7 +2707,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       title = `Fix ${plural(auto.length, "issue", "issues")} in 1 click`;
       sub = "AI rewrites the broken parts so your email looks right in Gmail, Outlook, Apple Mail and on every phone. No code, no guesswork.";
       board.innerHTML = boardHtml(boardData(state.issues, []), false);
-      sum.innerHTML = `<h3>What the AI fixes</h3>${checksHtml(auto.map((i) => FIX_TEXT[i.key] || i.title), 6)}`;
+      sum.innerHTML = sellHtml(auto);
     } else if (you.length) {
       title = "Almost ready to send";
       sub = "Everything we can fix is fixed. A couple of quick checks only you can do:";
