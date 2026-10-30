@@ -2840,7 +2840,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const blob = new Blob([cm.getValue()], { type: "text/html;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = ((state.title || "email").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-").slice(0, 60) || "email") + "-fixed.html";
+    a.download = ((subjectText() || "email").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-").slice(0, 60) || "email") + "-fixed.html";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     track("fixed_download");
