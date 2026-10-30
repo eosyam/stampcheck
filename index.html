@@ -550,7 +550,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .fx-client .a { font-size: 26px; color: var(--ok); }
 .fx-client .a.left { color: var(--warn); }
 .fx-client .cap { display: block; margin-top: 2px; font-size: 11.5px; color: var(--faint); }
-.fx-client.clean .b { color: var(--ok); }
+.fx-client .b.clean0 { color: var(--faint); }
 
 #fx-summary { display: grid; gap: 10px; }
 #fx-summary h3 { margin: 0; font-size: 15px; font-weight: 700; }
@@ -2643,9 +2643,9 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     return rows.map((r) => {
       const clean = !r.b;
       const nums = clean
-        ? `<span class="a">✓</span>`
+        ? `<span class="b clean0">0</span><span class="arr" aria-hidden="true">→</span><span class="a">0</span>`
         : `<span class="b">${r.b}</span><span class="arr" aria-hidden="true">→</span><span class="a${r.a ? " left" : ""}">${r.a}</span>`;
-      const cap = clean ? "looks great" : r.a ? `${r.b - r.a} of ${r.b} fixed` : done ? `all ${r.b} fixed` : "AI fixes all";
+      const cap = clean ? "nothing to fix here" : r.a ? `${r.b - r.a} of ${r.b} fixed` : done ? `all ${r.b} fixed` : "AI fixes all";
       return `<div class="fx-client${clean ? " clean" : ""}" style="--c:${r.color}"><span class="nm"><i></i>${r.name}</span><div class="nums" aria-label="${r.b} issues before, ${r.a} after">${nums}</div><span class="cap">${cap}</span></div>`;
     }).join("");
   }
