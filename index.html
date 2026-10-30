@@ -872,7 +872,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     <div class="airmail" aria-hidden="true"></div>
     <div class="fx-head">
       <div>
-        <p class="fx-eyebrow" id="fx-eyebrow">Automatic fixes</p>
+        <p class="fx-eyebrow" id="fx-eyebrow">AI email fixer</p>
         <h2 id="fixer-title">Fix it for me</h2>
         <p class="fx-sub" id="fx-sub"></p>
       </div>
@@ -886,23 +886,23 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       <div id="fx-buy" hidden>
         <div class="plans">
           <div class="plan" id="fx-pack">
-            <p class="plan-tag">Pay once</p>
-            <h3>Fix pack</h3>
+            <p class="plan-tag">One-time</p>
+            <h3>Fix Pack</h3>
             <p class="price"><span id="fx-pack-price"></span></p>
             <p class="plan-per" id="fx-pack-per"></p>
-            <ul class="plan-pts"><li>No subscription</li><li>One fix per email, any size</li><li>Download or copy the result</li></ul>
+            <ul class="plan-pts"><li>Pay once, use anytime</li><li>AI fixes for every inbox</li><li>Clean HTML, ready to paste</li></ul>
             <button class="primary big" type="button" id="fx-pack-btn">Get the pack</button>
           </div>
           <div class="plan plan-hi" id="fx-monthly">
-            <p class="plan-tag">Unlimited</p>
-            <h3>Monthly</h3>
+            <p class="plan-tag">Best value</p>
+            <h3>Unlimited</h3>
             <p class="price"><span id="fx-monthly-price"></span></p>
-            <p class="plan-per">Every email you send, every month</p>
-            <ul class="plan-pts"><li>Unlimited fixes</li><li>Best if you send weekly</li><li>Cancel any time</li></ul>
+            <p class="plan-per">For anyone who sends every week</p>
+            <ul class="plan-pts"><li>Unlimited AI fixes</li><li>Every client, every device</li><li>Cancel anytime</li></ul>
             <button class="primary big" type="button" id="fx-monthly-btn">Go unlimited</button>
           </div>
         </div>
-        <p class="fx-trust"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.5" y="9" width="11" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Secure checkout by Polar. You come straight back here and the fix starts by itself.</p>
+        <p class="fx-trust"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.5" y="9" width="11" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Secure checkout with Polar. No account needed. You land back here and the AI starts fixing right away.</p>
         <details class="key-form-wrap">
           <summary>Already bought? Enter your license key</summary>
           <form class="key-form" id="fx-key-form">
@@ -919,10 +919,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
       <div id="fx-done" hidden>
         <div class="fx-done-row">
-          <button class="primary big fx-cta" type="button" id="fx-download">Download fixed HTML</button>
+          <button class="primary big fx-cta" type="button" id="fx-download">Download your email</button>
           <button class="big" type="button" id="fx-copy">Copy HTML</button>
         </div>
-        <p class="fx-lic-row"><button class="link" type="button" id="fx-again">Back to the fix overview</button></p>
+        <p class="fx-lic-row"><button class="link" type="button" id="fx-again">Back</button></p>
       </div>
 
       <p class="small fx-fine" id="fx-privacy"></p>
@@ -1990,7 +1990,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const fb = $("#fix-btn");
     fb.disabled = false;
     const auto = state.issues.filter(canFix).length;
-    fb.textContent = `Fix ${plural(polarOn() && auto ? auto : total, "issue", "issues")} for me`;
+    fb.textContent = polarOn() && auto ? `Fix ${plural(auto, "issue", "issues")} with AI` : `Fix ${plural(total, "issue", "issues")} for me`;
     $("#fix-note").textContent = "Corrected HTML, checked again.";
   }
   function seeLabel(see) {
@@ -2252,8 +2252,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     $("#cta").hidden = !real.length && !(polarOn() && auto);
     const fb = $("#fix-simple");
     fb.disabled = false;
-    fb.textContent = `Fix ${plural(polarOn() && auto ? auto : real.length, "problem", "problems")} for me`;
-    $("#fix-simple-note").textContent = "Corrected HTML for every inbox.";
+    fb.textContent = polarOn() && auto ? `Fix ${plural(auto, "issue", "issues")} with AI` : `Fix ${plural(real.length, "problem", "problems")} for me`;
+    $("#fix-simple-note").textContent = "AI-fixed HTML for every inbox, in about 30 seconds.";
     selectTab(simple.tab && simple.items[simple.tab] ? simple.tab : worst.id);
   }
   function setView(v) {
@@ -2562,35 +2562,29 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   const fixer = $("#fixer");
   const delStore = (k) => { try { localStorage.removeItem("stampcheck:" + k); } catch (e) {} };
   // Problems only the sender can solve, with what they need to do.
+  // Only things that need the sender's own info (a real link, an address, an image file) stay with them.
   const NEEDS_YOU = {
-    "unsubscribe": "Add your real unsubscribe link. We can't guess it.",
-    "postal": "Add your company's postal address to the footer.",
-    "test-links": "Point these links to your live pages.",
-    "dead-links": "Give these links a real address.",
-    "lorem": "Replace the placeholder text with your copy.",
-    "todo": "Finish the unfinished text.",
-    "merge-tags": "Check your sending tool fills these tags.",
-    "img-src": "Use a full https:// link for each image.",
-    "svg-images": "Export these images as PNG or JPG.",
-    "webp": "Export these images as PNG or JPG.",
-    "data-images": "Upload these images and link them by https://.",
-    "gif": "Put the key message in the first frame.",
-    "image-heavy": "Add more live text so the email works with images off.",
-    "shorteners": "Use full links on your own domain.",
-    "link-mismatch": "Make the link text match where it goes.",
-    "subject-long": "Shorten the subject; the wording is your call.",
-    "subject-spammy": "Reword the subject; the wording is your call.",
-    "spam-words": "Reword these phrases if you use many of them.",
-    "vague-links": "Say where each link goes, e.g. \"See pricing\".",
-    "web-fonts": "Preview with your fallback font; nothing to change.",
-    "ext-css": "Paste the external CSS into a style block.",
-    "gmail-style-size": "Remove unused CSS from your style block.",
-    "radius": "Square corners in Outlook are usually fine.",
+    "unsubscribe": "Add your unsubscribe link",
+    "postal": "Add your postal address to the footer",
+    "test-links": "Swap test links for your live pages",
+    "dead-links": "Give your empty links a real address",
+    "lorem": "Replace the placeholder text",
+    "todo": "Finish the unfinished text",
+    "img-src": "Use full https:// links for images",
+    "svg-images": "Use PNG or JPG instead of SVG",
+    "webp": "Use PNG or JPG instead of WebP",
+    "data-images": "Host embedded images and link them",
+    "image-heavy": "Add a bit more live text",
+    "shorteners": "Use full links instead of shorteners",
+    "ext-css": "Paste external CSS into the email",
   };
-  const canFix = (i) => FIXABLE.has(i.key) || (fx.ai && !NEEDS_YOU[i.key]);
+  // Heads-up notes that don't need any change.
+  const NOTE_ONLY = new Set(["merge-tags", "web-fonts", "gif"]);
+  const canFix = (i) => !NOTE_ONLY.has(i.key) && (FIXABLE.has(i.key) || (fx.ai && !NEEDS_YOU[i.key]));
+  const needsYou = (i) => !NOTE_ONLY.has(i.key) && !canFix(i);
   const reasonFor = (i, skipped) => {
     const s = (skipped || []).find((x) => x.issue === i.key);
-    return (s && s.reason) || NEEDS_YOU[i.key] || (canFix(i) ? "Couldn't be fixed safely this time. The steps are in your list." : "Not automatic yet. The steps are in your list.");
+    return (s && s.reason) || NEEDS_YOU[i.key] || i.title;
   };
 
   async function checkKey(key, use) {
@@ -2637,11 +2631,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   ];
   const isProblem = (i) => i.sev === "error" || i.sev === "warn";
   // Problems per client before, and after (actual, or predicted from what can be fixed).
+  // Per inbox: issues the AI handles, before and after. Things only the sender can supply aren't counted here.
   function boardData(before, after) {
     return FX_CLIENTS.map((cl) => {
-      const b = before.filter((i) => isProblem(i) && i.cats.includes(cl.c)).length;
-      const a = after.filter((i) => isProblem(i) && i.cats.includes(cl.c)).length;
-      return Object.assign({ b, a }, cl);
+      const n = (list) => list.filter((i) => isProblem(i) && !needsYou(i) && i.cats.includes(cl.c)).length;
+      return Object.assign({ b: n(before), a: n(after) }, cl);
     });
   }
   function boardHtml(rows, done) {
@@ -2649,10 +2643,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     return rows.map((r) => {
       const clean = !r.b;
       const nums = clean
-        ? `<span class="b">0</span>`
-        : `<span class="b${r.a < r.b ? " gone" : ""}">${r.b}</span><span class="arr" aria-hidden="true">→</span><span class="a${r.a ? " left" : ""}">${r.a}</span>`;
-      const cap = clean ? "already fine" : r.a === 0 ? (done ? "all fixed" : "all fixable") : `${r.a} left for you`;
-      return `<div class="fx-client${clean ? " clean" : ""}" style="--c:${r.color}"><span class="nm"><i></i>${r.name}</span><div class="nums" aria-label="${r.b} problems before, ${r.a} after">${nums}</div><span class="cap">${cap}</span></div>`;
+        ? `<span class="a">✓</span>`
+        : `<span class="b">${r.b}</span><span class="arr" aria-hidden="true">→</span><span class="a${r.a ? " left" : ""}">${r.a}</span>`;
+      const cap = clean ? "looks great" : r.a ? `${r.b - r.a} of ${r.b} fixed` : done ? `all ${r.b} fixed` : "AI fixes all";
+      return `<div class="fx-client${clean ? " clean" : ""}" style="--c:${r.color}"><span class="nm"><i></i>${r.name}</span><div class="nums" aria-label="${r.b} issues before, ${r.a} after">${nums}</div><span class="cap">${cap}</span></div>`;
     }).join("");
   }
   const CHECK = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="m4 9.4 3.2 3.2L14 5.8"/></svg>';
@@ -2663,7 +2657,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   }
   function leftHtml(items, open) {
     if (!items.length) return "";
-    return `<details class="fx-left"${open ? " open" : ""}><summary>${plural(items.length, "thing needs", "things need")} your input</summary><ul>${items.map((x) => `<li>${esc(x.title)}<span class="fx-why">${esc(x.why)}</span></li>`).join("")}</ul></details>`;
+    return `<details class="fx-left"${open ? " open" : ""}><summary>Before you hit send: ${plural(items.length, "quick check", "quick checks")}</summary><ul>${items.map((x) => `<li>${esc(x.why)}</li>`).join("")}</ul></details>`;
   }
   function priceHtml(s) {
     const m = String(s || "").match(/^(\S+)\s*\/\s*(.+)$/);
@@ -2672,35 +2666,35 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
   function renderFixer() {
     const auto = state.issues.filter(canFix);
-    const you = state.issues.filter((i) => !canFix(i));
+    const you = state.issues.filter(needsYou);
     const key = store.get("license");
     const sum = $("#fx-summary"), board = $("#fx-board");
-    let eyebrow = "Automatic fixes", title, sub = "";
+    let eyebrow = "AI email fixer", title, sub = "";
     if (fx.result) {
       const r = fx.result;
       eyebrow = "Done";
-      title = r.fixed.length ? `${plural(r.fixed.length, "problem", "problems")} fixed` : "No changes were needed";
-      sub = r.left.length ? "Your editor now holds the corrected HTML, checked again. Download it, or copy it into your sending tool." : "Nothing left to fix. Download the HTML and send yourself a test.";
+      title = r.fixed.length ? (r.left.length ? `${plural(r.fixed.length, "issue", "issues")} fixed` : "Your email is ready to send") : "Already in great shape";
+      sub = "Clean HTML that renders right in Gmail, Outlook, Apple Mail and on every phone. Download it or paste it into your email tool.";
       board.innerHTML = boardHtml(r.board, true);
       sum.innerHTML = (r.fixed.length ? checksHtml(r.fixed, 6) : "") + leftHtml(r.left, false);
     } else if (fx.stage) {
-      title = fx.stage.startsWith("Fixing") ? "Fixing your email…" : "Payment received";
+      title = fx.stage.startsWith("Fixing") ? "AI is fixing your email…" : "You're in. Unlocking…";
       sub = "";
       board.innerHTML = "";
-      sum.innerHTML = `<div class="fx-working"><div class="fx-spin" aria-hidden="true"></div><p>${esc(fx.stage.startsWith("Fixing") ? "Simple fixes are instant; the rest take up to a minute." : "Getting your license. This takes a few seconds.")}</p></div>`;
+      sum.innerHTML = `<div class="fx-working"><div class="fx-spin" aria-hidden="true"></div><p>${esc(fx.stage.startsWith("Fixing") ? "Usually done in 20 to 40 seconds." : "Activating your license. A few seconds.")}</p></div>`;
     } else if (auto.length) {
-      title = `Fix ${plural(auto.length, "problem", "problems")} in one click`;
-      sub = "Get corrected HTML that holds up in Gmail, Outlook, Apple Mail and on phones, checked again before you download it.";
-      board.innerHTML = boardHtml(boardData(state.issues, you), false);
-      sum.innerHTML = `<h3>What gets fixed</h3>${checksHtml(auto.map((i) => FIX_TEXT[i.key] || i.title), 6)}${leftHtml(you.map((i) => ({ title: i.title, why: reasonFor(i) })), false)}`;
+      title = `Fix ${plural(auto.length, "issue", "issues")} in 1 click`;
+      sub = "AI rewrites the broken parts so your email looks right in Gmail, Outlook, Apple Mail and on every phone. No code, no guesswork.";
+      board.innerHTML = boardHtml(boardData(state.issues, []), false);
+      sum.innerHTML = `<h3>What the AI fixes</h3>${checksHtml(auto.map((i) => FIX_TEXT[i.key] || i.title), 6)}`;
     } else if (you.length) {
-      title = "These need your call";
-      sub = "Each one depends on something only you know, so we won't guess.";
+      title = "Almost ready to send";
+      sub = "Everything we can fix is fixed. A couple of quick checks only you can do:";
       board.innerHTML = "";
       sum.innerHTML = leftHtml(you.map((i) => ({ title: i.title, why: reasonFor(i) })), true);
     } else {
-      title = "Your email looks good";
-      sub = "Nothing to fix. Send yourself a test and you're good to go.";
+      title = "Your email is ready to send";
+      sub = "Nothing to fix. It already renders right everywhere.";
       board.innerHTML = ""; sum.innerHTML = "";
     }
     $("#fx-eyebrow").textContent = eyebrow;
@@ -2716,7 +2710,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     if (key && !fx.result) {
       $("#fx-lic").textContent = licLine(fx.lic) || "License active in this browser.";
       const ap = $("#fx-apply");
-      ap.textContent = `Fix ${plural(auto.length, "problem", "problems")} now`;
+      ap.textContent = `Fix ${plural(auto.length, "issue", "issues")} with AI`;
       ap.disabled = fx.busy;
     }
     const k = $("#fx-key-btn");
@@ -2728,8 +2722,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     $("#fx-monthly-price").innerHTML = priceHtml(POLAR.monthlyPrice);
     $("#fx-pack-price").innerHTML = priceHtml(POLAR.packPrice);
     $("#fx-pack-per").textContent = POLAR.packNote || "";
-    $("#fx-pack-btn").textContent = `Get the pack · ${POLAR.packPrice}`;
-    $("#fx-monthly-btn").textContent = `Go unlimited · ${String(POLAR.monthlyPrice).split(" ")[0]}`;
+    $("#fx-pack-btn").textContent = `Fix my email · ${POLAR.packPrice}`;
+    $("#fx-monthly-btn").textContent = `Get unlimited · ${String(POLAR.monthlyPrice).split(" ")[0]}/mo`;
     $("#fx-portal").hidden = !POLAR.portal;
     if (POLAR.portal) $("#fx-portal").href = POLAR.portal;
     $("#fx-privacy").textContent = fx.ai
@@ -2812,7 +2806,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const after = analyze(html).issues;
     const afterKeys = new Set(after.map((i) => i.key));
     const fixed = before.filter((i) => !afterKeys.has(i.key)).map((i) => FIX_TEXT[i.key] || i.title);
-    const left = after.map((i) => ({ title: i.title, why: reasonFor(i, skipped) }));
+    const left = after.filter(needsYou).map((i) => ({ title: i.title, why: reasonFor(i, skipped) }));
     fx.busy = false; fx.stage = "";
     fx.result = { fixed, left, board: boardData(before, after) };
     if (aiFailed) fx.msg = "Some fixes couldn't be made right now, and you weren't charged for them. Try again in a minute.";
