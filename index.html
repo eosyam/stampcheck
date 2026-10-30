@@ -527,22 +527,84 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .sheet-body p, .sheet-body li { margin: 0; font-size: 14px; color: var(--muted); max-width: 64ch; }
 .sheet-body ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
 .sheet-body .small { font-size: 12.5px; color: var(--faint); }
-.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-.plan { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
-.plan[hidden], .plans[hidden] { display: none; }
-.plan .price { font-size: 20px; font-weight: 700; color: var(--ink); }
-.plan button { justify-self: start; margin-top: 4px; }
-.key-form { display: grid; gap: 8px; margin-top: 16px; }
-.key-form label { font-size: 14px; font-weight: 600; }
-.key-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.key-row input { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); }
-.key-form a { font-size: 13px; }
-.fx-msg { color: var(--ink) !important; background: var(--accent-soft); border-radius: 9px; padding: 10px 12px; }
-#fx-lic { color: var(--ink); font-weight: 600; margin-bottom: 10px; }
-#fx-summary { display: grid; gap: 8px; }
-.fx-list { display: grid; gap: 6px; }
-.fx-list li { color: var(--ink); }
+/* ---------- Fix dialog ---------- */
+.fx-sheet { width: min(720px, 100%); overflow-x: hidden; }
+.fx-sheet .airmail { position: sticky; top: 0; z-index: 2; }
+.fx-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 22px 28px 6px; }
+.fx-eyebrow { margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--airmail-red); }
+.fx-head h2 { font-family: var(--f-display); font-weight: 800; font-size: clamp(24px, 4.2vw, 32px); line-height: 1.08; letter-spacing: -0.025em; margin: 0; }
+.fx-sub { margin: 8px 0 0; color: var(--muted); font-size: 15px; max-width: 54ch; }
+.fx-x { flex: none; width: 36px; height: 36px; padding: 0; border-radius: 50%; display: grid; place-items: center; }
+.fx-x svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.fx-body { padding: 14px 28px 26px; display: grid; gap: 18px; }
+
+.fx-board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.fx-board:empty { display: none; }
+.fx-client { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px 12px; background: var(--paper); min-width: 0; }
+.fx-client .nm { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fx-client .nm i { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--c, var(--accent)); }
+.fx-client .nums { display: flex; align-items: baseline; gap: 6px; margin-top: 6px; font-family: var(--f-display); font-weight: 800; letter-spacing: -0.02em; }
+.fx-client .b { font-size: 20px; color: var(--err); }
+.fx-client .b.gone { color: var(--faint); text-decoration: line-through; text-decoration-thickness: 2px; font-size: 16px; }
+.fx-client .arr { color: var(--faint); font-size: 14px; font-weight: 600; }
+.fx-client .a { font-size: 26px; color: var(--ok); }
+.fx-client .a.left { color: var(--warn); }
+.fx-client .cap { display: block; margin-top: 2px; font-size: 11.5px; color: var(--faint); }
+.fx-client.clean .b { color: var(--ok); }
+
+#fx-summary { display: grid; gap: 10px; }
+#fx-summary h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.fx-checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 18px; }
+.fx-checks li { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--ink); }
+.fx-checks li svg { flex: none; width: 18px; height: 18px; margin-top: 1px; fill: none; stroke: var(--ok); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.fx-more { margin: -2px 0 0; font-size: 13px; color: var(--muted); }
+.fx-left { border: 1px solid var(--line); border-radius: 12px; padding: 0; }
+.fx-left summary { cursor: pointer; list-style: none; padding: 11px 14px; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; gap: 10px; }
+.fx-left summary::-webkit-details-marker { display: none; }
+.fx-left summary::after { content: "Show"; font-weight: 500; color: var(--accent); font-size: 13px; }
+.fx-left[open] summary::after { content: "Hide"; }
+.fx-left ul { list-style: none; margin: 0; padding: 0 14px 12px; display: grid; gap: 8px; }
+.fx-left li { font-size: 14px; color: var(--ink); }
 .fx-why { display: block; color: var(--muted); font-size: 13px; }
+
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.plans[hidden], .plan[hidden] { display: none; }
+.plan { position: relative; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px 18px; display: grid; gap: 4px; align-content: start; background: var(--sheet); }
+.plan-hi { border: 2px solid var(--accent); padding: 15px 17px 17px; box-shadow: 0 14px 30px -18px var(--accent); }
+.plan-tag { margin: 0; justify-self: start; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 3px 9px; }
+.plan h3 { margin: 6px 0 0; font-size: 16px; font-weight: 700; color: var(--ink); }
+.plan .price { margin: 0; font-family: var(--f-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.plan-per { margin: 0; font-size: 13px; color: var(--muted); }
+.plan-pts { list-style: none; margin: 10px 0 12px; padding: 0; display: grid; gap: 5px; }
+.plan-pts li { font-size: 13.5px; color: var(--ink); padding-left: 20px; position: relative; }
+.plan-pts li::before { content: ""; position: absolute; left: 2px; top: 4px; width: 9px; height: 5px; border: solid var(--ok); border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+.plan button { width: 100%; justify-content: center; }
+.fx-trust { display: flex; align-items: center; gap: 8px; margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.fx-trust svg { flex: none; width: 18px; height: 18px; fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.key-form-wrap summary { cursor: pointer; font-size: 13.5px; color: var(--accent); font-weight: 600; margin-top: 4px; }
+.key-form { display: grid; gap: 8px; margin-top: 10px; }
+.key-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.key-row input { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 14px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); }
+.key-form a { font-size: 13px; }
+.fx-msg { margin: 0; color: var(--ink); background: var(--accent-soft); border-radius: 10px; padding: 11px 13px; font-size: 14px; }
+.fx-cta { width: 100%; justify-content: center; font-size: 17px; padding: 14px 22px; }
+.fx-done-row { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+.fx-done-row button { justify-content: center; }
+.fx-lic-row { margin: 8px 0 0; font-size: 13.5px; color: var(--muted); text-align: center; }
+.fx-lic-row button.link { font-size: 13.5px; }
+.fx-fine { margin: 0; font-size: 12px; color: var(--faint); }
+.fx-working { display: grid; justify-items: center; gap: 12px; padding: 18px 0 8px; text-align: center; }
+.fx-working p { margin: 0; color: var(--muted); font-size: 14px; }
+.fx-spin { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--accent-soft); border-top-color: var(--accent); animation: fxspin .8s linear infinite; }
+@keyframes fxspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .fx-spin { animation-duration: 3s; } }
+@media (max-width: 600px) {
+  .fx-head { padding: 18px 18px 4px; }
+  .fx-body { padding: 12px 18px 20px; }
+  .fx-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fx-checks, .plans { grid-template-columns: 1fr; }
+  .fx-done-row { grid-template-columns: 1fr; }
+}
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .copy-row code { font-family: var(--f-mono); font-size: 14px; background: var(--hover); border-radius: 6px; padding: 4px 8px; user-select: all; }
 .toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--sheet); font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; box-shadow: 0 10px 30px -10px var(--shadow); max-width: calc(100% - 32px); text-align: center; }
@@ -806,43 +868,64 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   </div>
 </div>
 <div class="overlay" id="fixer" role="dialog" aria-modal="true" aria-labelledby="fixer-title" hidden>
-  <div class="sheet">
-    <div class="sheet-head">
-      <h2 id="fixer-title">Fix it for me</h2>
-      <button type="button" class="small" id="fixer-close">Close</button>
+  <div class="sheet fx-sheet">
+    <div class="airmail" aria-hidden="true"></div>
+    <div class="fx-head">
+      <div>
+        <p class="fx-eyebrow" id="fx-eyebrow">Automatic fixes</p>
+        <h2 id="fixer-title">Fix it for me</h2>
+        <p class="fx-sub" id="fx-sub"></p>
+      </div>
+      <button type="button" class="fx-x" id="fixer-close" aria-label="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button>
     </div>
-    <div class="sheet-body">
+    <div class="fx-body">
+      <div class="fx-board" id="fx-board"></div>
       <div id="fx-summary"></div>
       <p class="fx-msg" id="fx-msg" role="alert" hidden></p>
+
       <div id="fx-buy" hidden>
         <div class="plans">
-          <div class="plan" id="fx-monthly">
-            <h3>Monthly</h3>
-            <p class="price" id="fx-monthly-price"></p>
-            <p>Unlimited fixes for every email you check. Cancel any time.</p>
-            <button class="primary" type="button" id="fx-monthly-btn">Get monthly</button>
-          </div>
           <div class="plan" id="fx-pack">
+            <p class="plan-tag">Pay once</p>
             <h3>Fix pack</h3>
-            <p class="price" id="fx-pack-price"></p>
-            <p>Pay once, no subscription. Each fixed email uses one fix.</p>
-            <button class="primary" type="button" id="fx-pack-btn">Get the pack</button>
+            <p class="price"><span id="fx-pack-price"></span></p>
+            <p class="plan-per" id="fx-pack-per"></p>
+            <ul class="plan-pts"><li>No subscription</li><li>One fix per email, any size</li><li>Download or copy the result</li></ul>
+            <button class="primary big" type="button" id="fx-pack-btn">Get the pack</button>
+          </div>
+          <div class="plan plan-hi" id="fx-monthly">
+            <p class="plan-tag">Unlimited</p>
+            <h3>Monthly</h3>
+            <p class="price"><span id="fx-monthly-price"></span></p>
+            <p class="plan-per">Every email you send, every month</p>
+            <ul class="plan-pts"><li>Unlimited fixes</li><li>Best if you send weekly</li><li>Cancel any time</li></ul>
+            <button class="primary big" type="button" id="fx-monthly-btn">Go unlimited</button>
           </div>
         </div>
-        <form class="key-form" id="fx-key-form">
-          <label for="fx-key">Already bought? Paste your license key</label>
-          <div class="key-row"><input id="fx-key" type="text" autocomplete="off" spellcheck="false" placeholder="License key from your Polar email"><button type="submit" id="fx-key-btn">Unlock</button></div>
-          <a id="fx-portal" href="#" target="_blank" rel="noopener" hidden>Find your key on your Polar purchases page</a>
-        </form>
+        <p class="fx-trust"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4.5" y="9" width="11" height="8" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Secure checkout by Polar. You come straight back here and the fix starts by itself.</p>
+        <details class="key-form-wrap">
+          <summary>Already bought? Enter your license key</summary>
+          <form class="key-form" id="fx-key-form">
+            <div class="key-row"><input id="fx-key" type="text" autocomplete="off" spellcheck="false" placeholder="License key from your Polar email" aria-label="License key"><button type="submit" id="fx-key-btn">Unlock</button></div>
+            <a id="fx-portal" href="#" target="_blank" rel="noopener" hidden>Find your key on your Polar purchases page</a>
+          </form>
+        </details>
       </div>
+
       <div id="fx-ready" hidden>
-        <p id="fx-lic"></p>
-        <div class="key-row"><button class="primary big" type="button" id="fx-apply">Fix problems</button><button class="small" type="button" id="fx-forget">Use a different key</button></div>
+        <button class="primary big fx-cta" type="button" id="fx-apply">Fix problems</button>
+        <p class="fx-lic-row"><span id="fx-lic"></span> <button class="link" type="button" id="fx-forget">Use a different key</button></p>
       </div>
+
       <div id="fx-done" hidden>
-        <div class="key-row"><button class="primary" type="button" id="fx-download">Download .html</button><button type="button" id="fx-copy">Copy HTML</button><button class="small" type="button" id="fx-again">Back</button></div>
+        <div class="fx-done-row">
+          <button class="primary big fx-cta" type="button" id="fx-download">Download fixed HTML</button>
+          <button class="big" type="button" id="fx-copy">Copy HTML</button>
+        </div>
+        <p class="fx-lic-row"><button class="link" type="button" id="fx-again">Back to the fix overview</button></p>
       </div>
-      <p class="small" id="fx-privacy">Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.</p>
+
+      <p class="small fx-fine" id="fx-privacy"></p>
     </div>
   </div>
 </div>
@@ -868,7 +951,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     monthly: "https://buy.polar.sh/polar_cl_GTC0lRhYA0ArSORNulkzELoKtsGOcbkSjBtNG0aHtoq", // Checkout link of the monthly product
     pack: "https://buy.polar.sh/polar_cl_Cq5bGfpHCSoIY0U5OCxmomN703Z75UTo8gVdk39R976", // Checkout link of the one-time fix pack
     monthlyPrice: "$12 / month",
-    packPrice: "$9 for 10 emails",
+    packPrice: "$9",
+    packNote: "10 emails · $0.90 each",
     portal: "https://polar.sh/stampcheck/portal", // Customer portal
     sandbox: false,     // true while testing against sandbox.polar.sh
   };
@@ -2545,26 +2629,84 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   }
   const li = (t, sub) => `<li>${esc(t)}${sub ? `<span class="fx-why">${esc(sub)}</span>` : ""}</li>`;
 
+  const FX_CLIENTS = [
+    { c: "gmail", name: "Gmail", color: "var(--cc-gmail)" },
+    { c: "outlook", name: "Outlook", color: "var(--cc-outlook)" },
+    { c: "apple", name: "Apple Mail", color: "var(--cc-apple)" },
+    { c: "mobile", name: "Phones", color: "var(--airmail-red)" },
+  ];
+  const isProblem = (i) => i.sev === "error" || i.sev === "warn";
+  // Problems per client before, and after (actual, or predicted from what can be fixed).
+  function boardData(before, after) {
+    return FX_CLIENTS.map((cl) => {
+      const b = before.filter((i) => isProblem(i) && i.cats.includes(cl.c)).length;
+      const a = after.filter((i) => isProblem(i) && i.cats.includes(cl.c)).length;
+      return Object.assign({ b, a }, cl);
+    });
+  }
+  function boardHtml(rows, done) {
+    if (!rows.some((r) => r.b)) return "";
+    return rows.map((r) => {
+      const clean = !r.b;
+      const nums = clean
+        ? `<span class="b">0</span>`
+        : `<span class="b${r.a < r.b ? " gone" : ""}">${r.b}</span><span class="arr" aria-hidden="true">→</span><span class="a${r.a ? " left" : ""}">${r.a}</span>`;
+      const cap = clean ? "already fine" : r.a === 0 ? (done ? "all fixed" : "all fixable") : `${r.a} left for you`;
+      return `<div class="fx-client${clean ? " clean" : ""}" style="--c:${r.color}"><span class="nm"><i></i>${r.name}</span><div class="nums" aria-label="${r.b} problems before, ${r.a} after">${nums}</div><span class="cap">${cap}</span></div>`;
+    }).join("");
+  }
+  const CHECK = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="m4 9.4 3.2 3.2L14 5.8"/></svg>';
+  function checksHtml(items, max) {
+    const shown = items.slice(0, max);
+    const more = items.length - shown.length;
+    return `<ul class="fx-checks">${shown.map((t) => `<li>${CHECK}<span>${esc(t)}</span></li>`).join("")}</ul>${more > 0 ? `<p class="fx-more">and ${more} more</p>` : ""}`;
+  }
+  function leftHtml(items, open) {
+    if (!items.length) return "";
+    return `<details class="fx-left"${open ? " open" : ""}><summary>${plural(items.length, "thing needs", "things need")} your input</summary><ul>${items.map((x) => `<li>${esc(x.title)}<span class="fx-why">${esc(x.why)}</span></li>`).join("")}</ul></details>`;
+  }
+  function priceHtml(s) {
+    const m = String(s || "").match(/^(\S+)\s*\/\s*(.+)$/);
+    return m ? `${esc(m[1])}<small style="font-size:15px;font-weight:600;color:var(--muted)"> / ${esc(m[2])}</small>` : esc(s);
+  }
+
   function renderFixer() {
     const auto = state.issues.filter(canFix);
     const you = state.issues.filter((i) => !canFix(i));
     const key = store.get("license");
-    const sum = $("#fx-summary");
+    const sum = $("#fx-summary"), board = $("#fx-board");
+    let eyebrow = "Automatic fixes", title, sub = "";
     if (fx.result) {
       const r = fx.result;
-      sum.innerHTML = `<h3>${r.fixed.length ? `Fixed ${plural(r.fixed.length, "problem", "problems")}` : "No changes were needed"}</h3>
-        ${r.fixed.length ? `<ul class="fx-list ok">${r.fixed.map((t) => li(t)).join("")}</ul>` : ""}
-        ${r.left.length ? `<h3>Left for you</h3><ul class="fx-list">${r.left.map((x) => li(x.title, x.why)).join("")}</ul>` : `<p>Nothing left to fix. Send yourself a test and you're good to go.</p>`}`;
+      eyebrow = "Done";
+      title = r.fixed.length ? `${plural(r.fixed.length, "problem", "problems")} fixed` : "No changes were needed";
+      sub = r.left.length ? "Your editor now holds the corrected HTML, checked again. Download it, or copy it into your sending tool." : "Nothing left to fix. Download the HTML and send yourself a test.";
+      board.innerHTML = boardHtml(r.board, true);
+      sum.innerHTML = (r.fixed.length ? checksHtml(r.fixed, 6) : "") + leftHtml(r.left, false);
     } else if (fx.stage) {
-      sum.innerHTML = `<h3>${esc(fx.stage)}</h3><p>${fx.stage.startsWith("Fixing") ? "Simple fixes are instant; the rest can take up to a minute." : "This takes a few seconds."}</p>`;
+      title = fx.stage.startsWith("Fixing") ? "Fixing your email…" : "Payment received";
+      sub = "";
+      board.innerHTML = "";
+      sum.innerHTML = `<div class="fx-working"><div class="fx-spin" aria-hidden="true"></div><p>${esc(fx.stage.startsWith("Fixing") ? "Simple fixes are instant; the rest take up to a minute." : "Getting your license. This takes a few seconds.")}</p></div>`;
     } else if (auto.length) {
-      sum.innerHTML = `<h3>${plural(auto.length, "problem", "problems")} can be fixed automatically</h3><ul class="fx-list ok">${auto.map((i) => li(FIX_TEXT[i.key] || i.title)).join("")}</ul>
-        ${you.length ? `<h3>Left for you</h3><ul class="fx-list">${you.map((i) => li(i.title, reasonFor(i))).join("")}</ul>` : ""}`;
+      title = `Fix ${plural(auto.length, "problem", "problems")} in one click`;
+      sub = "Get corrected HTML that holds up in Gmail, Outlook, Apple Mail and on phones, checked again before you download it.";
+      board.innerHTML = boardHtml(boardData(state.issues, you), false);
+      sum.innerHTML = `<h3>What gets fixed</h3>${checksHtml(auto.map((i) => FIX_TEXT[i.key] || i.title), 6)}${leftHtml(you.map((i) => ({ title: i.title, why: reasonFor(i) })), false)}`;
     } else if (you.length) {
-      sum.innerHTML = `<h3>These need you</h3><p>Each one depends on something only you know, so we won't guess.</p><ul class="fx-list">${you.map((i) => li(i.title, reasonFor(i))).join("")}</ul>`;
+      title = "These need your call";
+      sub = "Each one depends on something only you know, so we won't guess.";
+      board.innerHTML = "";
+      sum.innerHTML = leftHtml(you.map((i) => ({ title: i.title, why: reasonFor(i) })), true);
     } else {
-      sum.innerHTML = `<h3>Nothing to fix</h3><p>Your email looks good. Send yourself a test and you're good to go.</p>`;
+      title = "Your email looks good";
+      sub = "Nothing to fix. Send yourself a test and you're good to go.";
+      board.innerHTML = ""; sum.innerHTML = "";
     }
+    $("#fx-eyebrow").textContent = eyebrow;
+    $("#fixer-title").textContent = title;
+    $("#fx-sub").textContent = sub; $("#fx-sub").hidden = !sub;
+
     const msg = $("#fx-msg");
     msg.textContent = fx.msg; msg.hidden = !fx.msg;
     const working = !!fx.stage;
@@ -2572,23 +2714,27 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     $("#fx-ready").hidden = working || !!fx.result || !key || !auto.length;
     $("#fx-buy").hidden = working || !!fx.result || !!key || !auto.length;
     if (key && !fx.result) {
-      $("#fx-lic").textContent = licLine(fx.lic) || "License key saved in this browser.";
+      $("#fx-lic").textContent = licLine(fx.lic) || "License active in this browser.";
       const ap = $("#fx-apply");
-      ap.textContent = `Fix ${plural(auto.length, "problem", "problems")}`;
+      ap.textContent = `Fix ${plural(auto.length, "problem", "problems")} now`;
       ap.disabled = fx.busy;
     }
     const k = $("#fx-key-btn");
     k.disabled = fx.busy; k.textContent = fx.busy ? "Checking…" : "Unlock";
+    if (fx.returned) document.querySelector(".key-form-wrap").open = true;
     $("#fx-monthly").hidden = !POLAR.monthly;
     $("#fx-pack").hidden = !POLAR.pack;
     document.querySelector("#fx-buy .plans").hidden = fx.returned;
-    $("#fx-monthly-price").textContent = POLAR.monthlyPrice;
-    $("#fx-pack-price").textContent = POLAR.packPrice;
+    $("#fx-monthly-price").innerHTML = priceHtml(POLAR.monthlyPrice);
+    $("#fx-pack-price").innerHTML = priceHtml(POLAR.packPrice);
+    $("#fx-pack-per").textContent = POLAR.packNote || "";
+    $("#fx-pack-btn").textContent = `Get the pack · ${POLAR.packPrice}`;
+    $("#fx-monthly-btn").textContent = `Go unlimited · ${String(POLAR.monthlyPrice).split(" ")[0]}`;
     $("#fx-portal").hidden = !POLAR.portal;
     if (POLAR.portal) $("#fx-portal").href = POLAR.portal;
     $("#fx-privacy").textContent = fx.ai
       ? "Simple fixes run in your browser. For the rest, your HTML is sent to our server and to Anthropic's Claude only to make the fix, and isn't stored. Payments are handled by Polar as merchant of record."
-      : "Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.";
+      : "Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar. Payments are handled by Polar as merchant of record.";
   }
   function openFixer(source) {
     if (!state.doc) { toast("Paste your email HTML first"); return; }
@@ -2668,7 +2814,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const fixed = before.filter((i) => !afterKeys.has(i.key)).map((i) => FIX_TEXT[i.key] || i.title);
     const left = after.map((i) => ({ title: i.title, why: reasonFor(i, skipped) }));
     fx.busy = false; fx.stage = "";
-    fx.result = { fixed, left };
+    fx.result = { fixed, left, board: boardData(before, after) };
     if (aiFailed) fx.msg = "Some fixes couldn't be made right now, and you weren't charged for them. Try again in a minute.";
     paste.value = html;
     cm.setValue(html);
