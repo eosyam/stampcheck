@@ -1,0 +1,11 @@
+# Files in the repo that must not be served as part of the website
+.git/
+/.git
+.github
+.wrangler
+node_modules
+src
+wrangler.toml
+.assetsignore
+*.md
+CNAME

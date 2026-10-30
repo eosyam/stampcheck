@@ -113,11 +113,11 @@ export function applyEdits(html, edits, allowed) {
   return { html, fixed: [...fixed] };
 }
 
-export async function onRequestGet({ env }) {
+export async function handleGet(env) {
   return json({ ai: !!(env.ANTHROPIC_API_KEY) });
 }
 
-export async function onRequestPost({ request, env }) {
+export async function handlePost(request, env) {
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: "bad_request" }, 400); }
   const key = String((body && body.key) || "").trim();

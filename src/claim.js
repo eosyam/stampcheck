@@ -6,7 +6,7 @@ const polarApi = (env) => (env.POLAR_SERVER === "sandbox" ? "https://sandbox-api
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
-export async function onRequestPost({ request, env }) {
+export async function handlePost(request, env) {
   if (!env.POLAR_ACCESS_TOKEN) return json({ error: "not_configured" }, 503);
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: "bad_request" }, 400); }

@@ -1,42 +1,43 @@
-# Hosting on Cloudflare Pages
+# Hosting on Cloudflare Workers
 
-The site is static (`index.html`) plus two small server functions in `functions/api/`:
+The site is static (`index.html` and friends in the repo root) served by a Cloudflare Worker with static assets. The Worker (`src/worker.js`) only runs for `/api/*`:
 
-- `POST /api/claim` – after Polar checkout, looks up the buyer's license key so they don't have to copy it.
-- `GET|POST /api/fix` – fixes what the browser can't, using Claude, and charges one fix from the license.
+- `POST /api/claim` (`src/claim.js`) – after Polar checkout, looks up the buyer's license key so they don't have to copy it.
+- `GET|POST /api/fix` (`src/fix.js`) – fixes what the browser can't, using Claude, and charges one fix from the license.
 
-## 1. Create the Pages project
+Config is in `wrangler.toml`; `.assetsignore` keeps source and config files off the website.
 
-Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → `eosyam/stampcheck`.
+## 1. Connect the Worker to GitHub
 
-- Production branch: `main`
-- Framework preset: None, build command: empty, output directory: `.` (also set in `wrangler.toml`)
-
-Every push to `main` deploys, like GitHub Pages did.
+Cloudflare dashboard → Workers & Pages → `stampcheck` → Settings → Builds → Connect → GitHub → `eosyam/stampcheck`, branch `main`. Leave the build command empty and the deploy command as `npx wrangler deploy`. Every push to `main` deploys.
 
 ## 2. Secrets
 
-Project → Settings → Variables and Secrets → Production → add as **Secret** (type them in the dashboard; never commit them):
+`stampcheck` → Settings → Variables and Secrets → Add → type **Secret** (enter the values in the dashboard; never commit them):
 
 | Name | Where to get it |
 |---|---|
 | `POLAR_ACCESS_TOKEN` | Polar → Settings → Developers → New token. Scopes: `checkouts:read`, `customers:read`, `license_keys:read` |
 | `ANTHROPIC_API_KEY` | console.anthropic.com → API keys. Set a monthly spend limit there too. |
 
-Plain variables (`POLAR_ORG_ID`, `POLAR_SERVER`, `ANTHROPIC_MODEL`) live in `wrangler.toml`. Redeploy after adding secrets.
+Plain variables (`POLAR_ORG_ID`, `POLAR_SERVER`, `ANTHROPIC_MODEL`) live in `wrangler.toml`.
 
-Check: `https://<project>.pages.dev/api/fix` should return `{"ai":true}`.
+Check: `https://stampcheck.<your-subdomain>.workers.dev/api/fix` should return `{"ai":true}`.
 
 ## 3. Move the domain
 
-1. Pages project → Custom domains → add `getstampcheck.com` (and `www` if used). For the apex domain Cloudflare needs to manage the DNS: add the site to Cloudflare and switch the nameservers at your registrar when asked.
+1. `stampcheck` → Settings → Domains & Routes → Add → Custom domain → `getstampcheck.com` (and `www.getstampcheck.com` if used). The domain's DNS must be on Cloudflare: add the site to Cloudflare and switch the nameservers at your registrar when asked.
 2. Once `https://getstampcheck.com/api/fix` returns `{"ai":true}`, turn off GitHub Pages: repo Settings → Pages → Unpublish. The `CNAME` file can then be deleted.
 
 ## 4. Test a purchase
 
 Polar's success URL points at `getstampcheck.com`, so test after step 3. Create a 100% discount code in Polar, buy the fix pack with it, and check that you land back on the site, the key is picked up by itself and the fix runs.
 
+## Local development
+
+`npx wrangler dev` serves the site and API on http://localhost:8787. Put local secrets in `.dev.vars` (git-ignored).
+
 ## Notes
 
 - If `/api` isn't reachable (e.g. plain static hosting), the page falls back to browser-only fixes and asks buyers to paste their key.
-- Email HTML sent to `/api/fix` is used for that request only and isn't stored or logged by the function.
+- Email HTML sent to `/api/fix` is used for that request only and isn't stored or logged.

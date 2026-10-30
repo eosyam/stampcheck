@@ -1,8 +1,14 @@
-# Cloudflare Pages: serves the static site from the repo root and the API from functions/.
+# Cloudflare Worker with static assets: the site is served from the repo root, /api/* runs src/worker.js.
 # Secrets (POLAR_ACCESS_TOKEN, ANTHROPIC_API_KEY) are set in the Cloudflare dashboard, never here.
 name = "stampcheck"
-pages_build_output_dir = "."
-compatibility_date = "2025-09-01"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "."
+binding = "ASSETS"
+not_found_handling = "404-page"
+run_worker_first = ["/api/*"]
 
 [vars]
 POLAR_ORG_ID = "7405b2ed-9bc7-4203-95f3-6bf17b9e11d2"
