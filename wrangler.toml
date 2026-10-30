@@ -1,0 +1,10 @@
+# Cloudflare Pages: serves the static site from the repo root and the API from functions/.
+# Secrets (POLAR_ACCESS_TOKEN, ANTHROPIC_API_KEY) are set in the Cloudflare dashboard, never here.
+name = "stampcheck"
+pages_build_output_dir = "."
+compatibility_date = "2025-09-01"
+
+[vars]
+POLAR_ORG_ID = "7405b2ed-9bc7-4203-95f3-6bf17b9e11d2"
+POLAR_SERVER = "production"
+ANTHROPIC_MODEL = "claude-sonnet-4-6"

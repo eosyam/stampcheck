@@ -539,6 +539,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .key-form a { font-size: 13px; }
 .fx-msg { color: var(--ink) !important; background: var(--accent-soft); border-radius: 9px; padding: 10px 12px; }
 #fx-lic { color: var(--ink); font-weight: 600; margin-bottom: 10px; }
+#fx-summary { display: grid; gap: 8px; }
+.fx-list { display: grid; gap: 6px; }
+.fx-list li { color: var(--ink); }
+.fx-why { display: block; color: var(--muted); font-size: 13px; }
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .copy-row code { font-family: var(--f-mono); font-size: 14px; background: var(--hover); border-radius: 6px; padding: 4px 8px; user-select: all; }
 .toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--sheet); font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; box-shadow: 0 10px 30px -10px var(--shadow); max-width: calc(100% - 32px); text-align: center; }
@@ -766,9 +770,9 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
     <article class="sheet-body" data-page="privacy" data-title="Privacy Policy" hidden>
       <p class="small">Last updated 30 October 2026</p>
-      <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else, and it is gone when you close the tab, unless you start a checkout (see Paid fixes below).</p></div>
+      <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else while it's being checked, and it is gone when you close the tab. The only exceptions are paid fixes and checkout, described below.</p></div>
       <div><h3>What we keep in your browser</h3><p>If you edit the sender name or address in the preview, or resize the panels, those settings are remembered in your browser so you don't have to set them again. They never leave your device, and clearing this site's data removes them.</p></div>
-      <div><h3>Paid fixes</h3><p>Automatic fixes also run inside your browser, so your HTML is still never uploaded. If you buy a plan, Polar (polar.sh) handles the payment as merchant of record and receives your payment and contact details under its own privacy policy. To unlock fixes, your license key is sent to Polar to check that it's valid; it is kept in your browser so you don't have to paste it again. When you start a checkout, the email you're checking is kept in your browser until you come back, then deleted.</p></div>
+      <div><h3>Paid fixes</h3><p>Checking an email always happens in your browser. If you buy a plan and click Fix, the simple fixes also run in your browser, and the rest are made by Claude, an AI model from Anthropic: your HTML and the list of problems are sent to our server and to Anthropic only to make that fix. We don't store your HTML, and Anthropic doesn't use it to train its models. Polar (polar.sh) handles the payment as merchant of record and receives your payment and contact details under its own privacy policy. Your license key is checked with Polar and kept in your browser so you don't have to enter it again. When you start a checkout, the email you're checking is kept in your browser until you come back, then deleted.</p></div>
       <div><h3>What we count</h3><p>With your consent, we use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details only if you accept; if you decline, no analytics cookies are set. We turn off advertising features and Google signals.</p></div>
       <div><h3>Hosting</h3><p>Our hosting provider keeps standard server logs, such as IP address, browser type and time of visit, to keep the site running and secure. We don't combine these logs with other data. Fonts and graphics are part of this page. The only other company contacted is Google, for analytics.</p></div>
       <div><h3>Your rights</h3><p>The tool itself doesn't collect personal data, and analytics data is anonymous usage counts, so there is little for us to access, correct or delete. If you have a question about server logs or your rights under GDPR or KVKK, contact us using the details on the Contact page.</p></div>
@@ -778,7 +782,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     <article class="sheet-body" data-page="terms" data-title="Terms of Use" hidden>
       <p class="small">Last updated 30 October 2026</p>
       <div><h3>Using Stampcheck</h3><p>Stampcheck is free to use for personal and commercial work. By using it you agree to these terms.</p></div>
-      <div><h3>Paid fixes</h3><p>Automatic fixes are a paid extra, sold through Polar (polar.sh), which acts as merchant of record and handles billing, taxes, receipts and refunds. The monthly plan renews until you cancel it in your Polar purchases page. A fix pack is paid once and each fixed email uses one fix. Automatic fixes change only the problems they list; always review the corrected HTML and send yourself a test.</p></div>
+      <div><h3>Paid fixes</h3><p>Automatic fixes are a paid extra, sold through Polar (polar.sh), which acts as merchant of record and handles billing, taxes, receipts and refunds. The monthly plan renews until you cancel it in your Polar purchases page. A fix pack is paid once and each fixed email uses one fix. Automatic fixes, including those made with AI, change only the problems they list; always review the corrected HTML and send yourself a test.</p></div>
       <div><h3>Your content</h3><p>The HTML you check stays yours. It is processed in your browser and we don't receive it. Only check content you have the right to use.</p></div>
       <div><h3>Fair use</h3><p>Don't use the site to break the law, to harm the service or other people, or to try to get around its security.</p></div>
       <div><h3>No guarantee</h3><p>Stampcheck is provided as it is. The checks follow known rendering rules but email clients change often, so we can't promise that every problem is found or that every result is correct. Test your email before sending it.</p></div>
@@ -838,7 +842,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       <div id="fx-done" hidden>
         <div class="key-row"><button class="primary" type="button" id="fx-download">Download .html</button><button type="button" id="fx-copy">Copy HTML</button><button class="small" type="button" id="fx-again">Back</button></div>
       </div>
-      <p class="small">Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.</p>
+      <p class="small" id="fx-privacy">Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.</p>
     </div>
   </div>
 </div>
@@ -1898,10 +1902,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
     renderList();
     const total = c.error + c.warn;
-    $("#fix-box").hidden = !state.doc || (total === 0 && !(polarOn() && state.issues.some((i) => FIXABLE.has(i.key))));
+    $("#fix-box").hidden = !state.doc || (total === 0 && !(polarOn() && state.issues.some(canFix)));
     const fb = $("#fix-btn");
     fb.disabled = false;
-    const auto = state.issues.filter((i) => FIXABLE.has(i.key)).length;
+    const auto = state.issues.filter(canFix).length;
     fb.textContent = `Fix ${plural(polarOn() && auto ? auto : total, "issue", "issues")} for me`;
     $("#fix-note").textContent = "Corrected HTML, checked again.";
   }
@@ -1937,7 +1941,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
           <div class="more">
             <p>${esc(it.detail)}</p>
             ${ex ? `<div><p class="sub-label">Where</p><div class="examples">${ex}${more}</div></div>` : ""}
-            <div class="issue-actions">${see ? `<button class="small" type="button" data-see='${esc(JSON.stringify(it.see))}'>${see}</button>` : ""}${k !== "info" || (polarOn() && FIXABLE.has(it.key)) ? `<button class="small" type="button" data-fix="${it.key}">Fix it</button>` : ""}<span class="note" hidden></span></div>
+            <div class="issue-actions">${see ? `<button class="small" type="button" data-see='${esc(JSON.stringify(it.see))}'>${see}</button>` : ""}${k !== "info" || (polarOn() && canFix(it)) ? `<button class="small" type="button" data-fix="${it.key}">Fix it</button>` : ""}<span class="note" hidden></span></div>
           </div>
         </details>`;
         first = false;
@@ -2160,7 +2164,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       const ea = simple.items[a.id].filter((i) => i.sev === "error").length, eb = simple.items[b.id].filter((i) => i.sev === "error").length;
       return eb - ea || simple.items[b.id].length - simple.items[a.id].length;
     })[0];
-    const auto = state.issues.filter((i) => FIXABLE.has(i.key)).length;
+    const auto = state.issues.filter(canFix).length;
     $("#cta").hidden = !real.length && !(polarOn() && auto);
     const fb = $("#fix-simple");
     fb.disabled = false;
@@ -2465,12 +2469,45 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     return { html, done };
   }
 
-  /* ---------- Paid fixes with Polar (license keys are checked from the browser; no server needed) ---------- */
+  /* ---------- Paid fixes with Polar ----------
+     Simple fixes run in the browser. The rest go to /api/fix (Cloudflare Pages Function), where Claude fixes them.
+     After checkout, /api/claim fetches the buyer's license key so they never have to copy it. */
   const polarOn = () => !!(POLAR.org && (POLAR.monthly || POLAR.pack));
   const POLAR_API = () => (POLAR.sandbox ? "https://sandbox-api.polar.sh" : "https://api.polar.sh");
-  const fx = { lic: null, busy: false, result: null, lastFocus: null, msg: "", returned: false };
+  const fx = { lic: null, busy: false, stage: "", result: null, lastFocus: null, msg: "", returned: false, ai: false };
   const fixer = $("#fixer");
   const delStore = (k) => { try { localStorage.removeItem("stampcheck:" + k); } catch (e) {} };
+  // Problems only the sender can solve, with what they need to do.
+  const NEEDS_YOU = {
+    "unsubscribe": "Add your real unsubscribe link. We can't guess it.",
+    "postal": "Add your company's postal address to the footer.",
+    "test-links": "Point these links to your live pages.",
+    "dead-links": "Give these links a real address.",
+    "lorem": "Replace the placeholder text with your copy.",
+    "todo": "Finish the unfinished text.",
+    "merge-tags": "Check your sending tool fills these tags.",
+    "img-src": "Use a full https:// link for each image.",
+    "svg-images": "Export these images as PNG or JPG.",
+    "webp": "Export these images as PNG or JPG.",
+    "data-images": "Upload these images and link them by https://.",
+    "gif": "Put the key message in the first frame.",
+    "image-heavy": "Add more live text so the email works with images off.",
+    "shorteners": "Use full links on your own domain.",
+    "link-mismatch": "Make the link text match where it goes.",
+    "subject-long": "Shorten the subject; the wording is your call.",
+    "subject-spammy": "Reword the subject; the wording is your call.",
+    "spam-words": "Reword these phrases if you use many of them.",
+    "vague-links": "Say where each link goes, e.g. \"See pricing\".",
+    "web-fonts": "Preview with your fallback font; nothing to change.",
+    "ext-css": "Paste the external CSS into a style block.",
+    "gmail-style-size": "Remove unused CSS from your style block.",
+    "radius": "Square corners in Outlook are usually fine.",
+  };
+  const canFix = (i) => FIXABLE.has(i.key) || (fx.ai && !NEEDS_YOU[i.key]);
+  const reasonFor = (i, skipped) => {
+    const s = (skipped || []).find((x) => x.issue === i.key);
+    return (s && s.reason) || NEEDS_YOU[i.key] || (canFix(i) ? "Couldn't be fixed safely this time. The steps are in your list." : "Not automatic yet. The steps are in your list.");
+  };
 
   async function checkKey(key, use) {
     let r;
@@ -2486,9 +2523,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     return { error: "network" };
   }
   const ERR = {
-    network: "Couldn't reach Polar to check your key. Check your connection and try again.",
+    network: "Couldn't reach the fixing service. Check your connection and try again.",
     invalid: "That key isn't valid, or it has expired. Copy it again from your Polar email or purchases page.",
     used: "You've used every fix in this pack. Get another pack or the monthly plan to keep going.",
+    upstream: "Couldn't reach the fixing service. Try again in a minute.",
+    too_large: "This email is too large to fix automatically.",
   };
   function licLine(lic) {
     if (!lic) return "";
@@ -2504,30 +2543,38 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       im.src = src;
     });
   }
+  const li = (t, sub) => `<li>${esc(t)}${sub ? `<span class="fx-why">${esc(sub)}</span>` : ""}</li>`;
 
   function renderFixer() {
-    const fixable = state.issues.filter((i) => FIXABLE.has(i.key));
-    const others = state.issues.length - fixable.length;
+    const auto = state.issues.filter(canFix);
+    const you = state.issues.filter((i) => !canFix(i));
     const key = store.get("license");
     const sum = $("#fx-summary");
     if (fx.result) {
-      sum.innerHTML = `<h3>Fixed ${plural(fx.result.done.length, "problem", "problems")}</h3><ul>${fx.result.done.map((k) => `<li>${esc(FIX_TEXT[k])}</li>`).join("")}</ul>
-        <p>Your editor now holds the corrected HTML and has been checked again.${others ? ` ${plural(others, "problem needs", "problems need")} a person, so ${others === 1 ? "it stays" : "they stay"} in your list with steps.` : ""}</p>`;
-    } else if (fixable.length) {
-      sum.innerHTML = `<h3>${plural(fixable.length, "problem", "problems")} can be fixed automatically</h3><ul>${fixable.map((i) => `<li>${esc(FIX_TEXT[i.key])}</li>`).join("")}</ul>
-        ${others ? `<p>The other ${plural(others, "finding needs", "findings need")} a person, so ${others === 1 ? "it stays" : "they stay"} in your list with steps.</p>` : ""}`;
+      const r = fx.result;
+      sum.innerHTML = `<h3>${r.fixed.length ? `Fixed ${plural(r.fixed.length, "problem", "problems")}` : "No changes were needed"}</h3>
+        ${r.fixed.length ? `<ul class="fx-list ok">${r.fixed.map((t) => li(t)).join("")}</ul>` : ""}
+        ${r.left.length ? `<h3>Left for you</h3><ul class="fx-list">${r.left.map((x) => li(x.title, x.why)).join("")}</ul>` : `<p>Nothing left to fix. Send yourself a test and you're good to go.</p>`}`;
+    } else if (fx.stage) {
+      sum.innerHTML = `<h3>${esc(fx.stage)}</h3><p>${fx.stage.startsWith("Fixing") ? "Simple fixes are instant; the rest can take up to a minute." : "This takes a few seconds."}</p>`;
+    } else if (auto.length) {
+      sum.innerHTML = `<h3>${plural(auto.length, "problem", "problems")} can be fixed automatically</h3><ul class="fx-list ok">${auto.map((i) => li(FIX_TEXT[i.key] || i.title)).join("")}</ul>
+        ${you.length ? `<h3>Left for you</h3><ul class="fx-list">${you.map((i) => li(i.title, reasonFor(i))).join("")}</ul>` : ""}`;
+    } else if (you.length) {
+      sum.innerHTML = `<h3>These need you</h3><p>Each one depends on something only you know, so we won't guess.</p><ul class="fx-list">${you.map((i) => li(i.title, reasonFor(i))).join("")}</ul>`;
     } else {
-      sum.innerHTML = `<h3>Nothing to fix automatically</h3><p>None of the problems in this email can be fixed automatically yet. They need a person, and each one in your list has steps.</p>`;
+      sum.innerHTML = `<h3>Nothing to fix</h3><p>Your email looks good. Send yourself a test and you're good to go.</p>`;
     }
     const msg = $("#fx-msg");
     msg.textContent = fx.msg; msg.hidden = !fx.msg;
+    const working = !!fx.stage;
     $("#fx-done").hidden = !fx.result;
-    $("#fx-ready").hidden = !!fx.result || !key || !fixable.length;
-    $("#fx-buy").hidden = !!fx.result || !!key || !fixable.length;
+    $("#fx-ready").hidden = working || !!fx.result || !key || !auto.length;
+    $("#fx-buy").hidden = working || !!fx.result || !!key || !auto.length;
     if (key && !fx.result) {
       $("#fx-lic").textContent = licLine(fx.lic) || "License key saved in this browser.";
       const ap = $("#fx-apply");
-      ap.textContent = fx.busy ? "Fixing…" : `Fix ${plural(fixable.length, "problem", "problems")}`;
+      ap.textContent = `Fix ${plural(auto.length, "problem", "problems")}`;
       ap.disabled = fx.busy;
     }
     const k = $("#fx-key-btn");
@@ -2539,18 +2586,21 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     $("#fx-pack-price").textContent = POLAR.packPrice;
     $("#fx-portal").hidden = !POLAR.portal;
     if (POLAR.portal) $("#fx-portal").href = POLAR.portal;
+    $("#fx-privacy").textContent = fx.ai
+      ? "Simple fixes run in your browser. For the rest, your HTML is sent to our server and to Anthropic's Claude only to make the fix, and isn't stored. Payments are handled by Polar as merchant of record."
+      : "Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.";
   }
   function openFixer(source) {
     if (!state.doc) { toast("Paste your email HTML first"); return; }
-    fx.result = null; fx.msg = fx.msg || "";
+    if (!fx.stage) fx.result = null;
     renderFixer();
     if (fixer.hidden) fx.lastFocus = document.activeElement;
     fixer.hidden = false;
     fixer.querySelector(".sheet").scrollTop = 0;
     $("#fixer-close").focus();
-    track("paywall_view", { source, fixable: state.issues.filter((i) => FIXABLE.has(i.key)).length, licensed: !!store.get("license") });
+    track("paywall_view", { source, fixable: state.issues.filter(canFix).length, licensed: !!store.get("license") });
     const key = store.get("license");
-    if (key && !fx.lic) checkKey(key, 0).then((r) => { if (r.lic) { fx.lic = r.lic; renderFixer(); } else if (r.error !== "network") { delStore("license"); fx.lic = null; fx.msg = ERR[r.error]; renderFixer(); } });
+    if (key && !fx.lic && !fx.stage) checkKey(key, 0).then((r) => { if (r.lic) { fx.lic = r.lic; renderFixer(); } else if (r.error !== "network") { delStore("license"); fx.lic = null; fx.msg = ERR[r.error]; renderFixer(); } });
   }
   function closeFixer() {
     fixer.hidden = true; fx.msg = ""; fx.returned = false;
@@ -2578,27 +2628,52 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     else { fx.msg = ERR[r.error]; track("license_invalid", { reason: r.error }); }
     renderFixer();
   }
+  async function smartFix(key, html, issues, local) {
+    try {
+      const r = await fetch("/api/fix", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, html, local, issues: issues.map((i) => ({ key: i.key, title: i.title, detail: i.detail, examples: (i.examples || []).map((e) => e.snip) })) }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) return { error: data.error || "upstream" };
+      return data;
+    } catch (e) { return { error: "network" }; }
+  }
   async function applyFixes() {
     const key = store.get("license");
-    const keys = new Set(state.issues.filter((i) => FIXABLE.has(i.key)).map((i) => i.key));
-    if (!key || !keys.size || fx.busy) return;
-    fx.busy = true; fx.msg = ""; renderFixer();
-    const r = await checkKey(key, 1);
-    if (!r.lic) {
-      fx.busy = false;
-      if (r.error !== "network") { delStore("license"); fx.lic = null; }
-      fx.msg = ERR[r.error]; renderFixer();
-      track("fix_blocked", { reason: r.error });
-      return;
+    const before = analyze(cm.getValue()).issues;
+    const localKeys = new Set(before.filter((i) => FIXABLE.has(i.key)).map((i) => i.key));
+    if (!key || !state.issues.some(canFix) || fx.busy) return;
+    fx.busy = true; fx.msg = ""; fx.stage = "Fixing your email…"; renderFixer();
+    const fail = (err) => {
+      fx.busy = false; fx.stage = "";
+      if (err === "used" || err === "invalid") { delStore("license"); fx.lic = null; }
+      fx.msg = ERR[err] || ERR.upstream; renderFixer();
+      track("fix_blocked", { reason: err });
+    };
+    const local = await autoFix(cm.getValue(), localKeys, measureImg);
+    let html = local.html, skipped = [], aiFailed = false;
+    const rest = analyze(html).issues.filter((i) => canFix(i) && !FIXABLE.has(i.key)).concat(state.issues.filter((i) => i.key === "phone-overflow" && canFix(i)));
+    if (fx.ai) {
+      const res = await smartFix(key, html, rest, local.done.length);
+      if (res.error) return fail(res.error);
+      html = res.html || html; skipped = res.skipped || []; fx.lic = res.lic || fx.lic; aiFailed = !!res.aiError;
+    } else {
+      const r = await checkKey(key, 1);
+      if (!r.lic) return fail(r.error);
+      fx.lic = r.lic;
     }
-    fx.lic = r.lic;
-    const res = await autoFix(cm.getValue(), keys, measureImg);
-    fx.busy = false;
-    fx.result = res;
-    paste.value = res.html;
-    cm.setValue(res.html);
+    const after = analyze(html).issues;
+    const afterKeys = new Set(after.map((i) => i.key));
+    const fixed = before.filter((i) => !afterKeys.has(i.key)).map((i) => FIX_TEXT[i.key] || i.title);
+    const left = after.map((i) => ({ title: i.title, why: reasonFor(i, skipped) }));
+    fx.busy = false; fx.stage = "";
+    fx.result = { fixed, left };
+    if (aiFailed) fx.msg = "Some fixes couldn't be made right now, and you weren't charged for them. Try again in a minute.";
+    paste.value = html;
+    cm.setValue(html);
     renderFixer();
-    track("fix_applied", { fixes: res.done.length, plan: r.lic.limit_usage ? "pack" : "monthly" });
+    track("fix_applied", { fixes: fixed.length, left: left.length, plan: fx.lic && fx.lic.limit_usage ? "pack" : "monthly" });
   }
   function downloadFixed() {
     const blob = new Blob([cm.getValue()], { type: "text/html;charset=utf-8" });
@@ -2623,25 +2698,59 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   $("#fx-forget").addEventListener("click", () => { delStore("license"); fx.lic = null; fx.msg = ""; renderFixer(); });
   $("#fx-download").addEventListener("click", downloadFixed);
   $("#fx-copy").addEventListener("click", copyFixed);
-  $("#fx-again").addEventListener("click", () => { fx.result = null; renderFixer(); });
+  $("#fx-again").addEventListener("click", () => { fx.result = null; fx.msg = ""; renderFixer(); });
 
-  // Coming back from Polar checkout: bring the email back and ask for the key.
-  function returnFromCheckout() {
+  // Is the smart-fix server there? (It isn't on plain static hosting; then only browser fixes are offered.)
+  const aiReady = polarOn()
+    ? fetch("/api/fix", { headers: { Accept: "application/json" } }).then((r) => (r.ok ? r.json() : {})).then((d) => { fx.ai = !!(d && d.ai); }).catch(() => {})
+    : Promise.resolve();
+  aiReady.then(() => { if (state.doc) { renderReport(); if (state.view === "results") renderSimple(); } });
+
+  // Fetch the buyer's key right after checkout, waiting while Polar finishes the payment.
+  async function claimKey(checkoutId) {
+    const until = Date.now() + 60000;
+    while (Date.now() < until) {
+      try {
+        const r = await fetch("/api/claim", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ checkout_id: checkoutId }) });
+        if (r.status === 200) { const d = await r.json(); if (d.key) return d; }
+        else if (r.status !== 202) return null;
+      } catch (e) { return null; }
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    return null;
+  }
+
+  // Coming back from Polar checkout: bring the email back, get the key, and fix right away.
+  async function returnFromCheckout() {
     const q = new URLSearchParams(location.search);
-    const paid = q.has("checkout_id"), back = q.get("checkout") === "back";
-    if (!paid && !back) return;
+    const checkoutId = q.get("checkout_id"), back = q.get("checkout") === "back";
+    if (!checkoutId && !back) return;
     q.delete("checkout_id"); q.delete("checkout");
     try { history.replaceState(history.state, "", location.pathname + (q.toString() ? "?" + q : "") + location.hash); } catch (e) {}
-    track(paid ? "checkout_return" : "checkout_back");
+    track(checkoutId ? "checkout_return" : "checkout_back");
     const draft = store.get("draft");
     delStore("draft");
-    if (!draft || !polarOn()) return;
-    paste.value = draft;
-    go(draft);
-    if (back) { setTimeout(() => openFixer("checkout_back"), 300); return; }
+    if (!polarOn()) return;
+    if (draft) { paste.value = draft; go(draft); }
+    if (back) { if (draft) setTimeout(() => openFixer("checkout_back"), 300); return; }
+    await new Promise((res) => setTimeout(res, 300));
+    await aiReady;
+    fx.stage = "Payment received. Getting your license…";
+    if (state.doc) openFixer("checkout_return");
+    const got = await claimKey(checkoutId);
+    fx.stage = "";
+    if (got && got.key) {
+      store.set("license", got.key);
+      fx.lic = { usage: got.usage, limit_usage: got.limit_usage };
+      track("license_claimed");
+      if (state.doc && state.issues.some(canFix)) { await applyFixes(); return; }
+      fx.msg = "Payment received. Your license is active in this browser.";
+      if (state.doc) renderFixer(); else toast("Payment received. Your license is active.");
+      return;
+    }
     fx.returned = true;
-    fx.msg = "Thanks for your purchase. Your license key is in the receipt email from Polar and on your Polar purchases page. Paste it below to fix this email.";
-    setTimeout(() => openFixer("checkout_return"), 300);
+    fx.msg = "Payment received. Your license key is in the receipt email from Polar and on your Polar purchases page. Paste it below to fix this email.";
+    if (state.doc) renderFixer(); else toast("Payment received. Find your license key in the email from Polar.");
   }
 
   /* ---------- Events ---------- */
@@ -2707,7 +2816,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const fix = e.target.closest("[data-fix]");
     if (fix) {
       track("fix_click", { key: fix.dataset.fix });
-      if (polarOn() && FIXABLE.has(fix.dataset.fix)) { openFixer("item"); return; }
+      if (polarOn() && state.issues.some((i) => i.key === fix.dataset.fix && canFix(i))) { openFixer("item"); return; }
       const note = fix.parentElement.querySelector(".note");
       note.textContent = "Automatic fixes are coming soon. Your click tells us which fixes to build first.";
       note.hidden = false; fix.disabled = true;
