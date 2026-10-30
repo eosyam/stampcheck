@@ -527,6 +527,18 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .sheet-body p, .sheet-body li { margin: 0; font-size: 14px; color: var(--muted); max-width: 64ch; }
 .sheet-body ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
 .sheet-body .small { font-size: 12.5px; color: var(--faint); }
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.plan { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.plan[hidden], .plans[hidden] { display: none; }
+.plan .price { font-size: 20px; font-weight: 700; color: var(--ink); }
+.plan button { justify-self: start; margin-top: 4px; }
+.key-form { display: grid; gap: 8px; margin-top: 16px; }
+.key-form label { font-size: 14px; font-weight: 600; }
+.key-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.key-row input { flex: 1 1 220px; min-width: 0; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); }
+.key-form a { font-size: 13px; }
+.fx-msg { color: var(--ink) !important; background: var(--accent-soft); border-radius: 9px; padding: 10px 12px; }
+#fx-lic { color: var(--ink); font-weight: 600; margin-bottom: 10px; }
 .copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .copy-row code { font-family: var(--f-mono); font-size: 14px; background: var(--hover); border-radius: 6px; padding: 4px 8px; user-select: all; }
 .toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--sheet); font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; box-shadow: 0 10px 30px -10px var(--shadow); max-width: calc(100% - 32px); text-align: center; }
@@ -753,18 +765,20 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     </article>
 
     <article class="sheet-body" data-page="privacy" data-title="Privacy Policy" hidden>
-      <p class="small">Last updated 28 October 2026</p>
-      <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else, and it is gone when you close the tab.</p></div>
+      <p class="small">Last updated 30 October 2026</p>
+      <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else, and it is gone when you close the tab, unless you start a checkout (see Paid fixes below).</p></div>
       <div><h3>What we keep in your browser</h3><p>If you edit the sender name or address in the preview, or resize the panels, those settings are remembered in your browser so you don't have to set them again. They never leave your device, and clearing this site's data removes them.</p></div>
+      <div><h3>Paid fixes</h3><p>Automatic fixes also run inside your browser, so your HTML is still never uploaded. If you buy a plan, Polar (polar.sh) handles the payment as merchant of record and receives your payment and contact details under its own privacy policy. To unlock fixes, your license key is sent to Polar to check that it's valid; it is kept in your browser so you don't have to paste it again. When you start a checkout, the email you're checking is kept in your browser until you come back, then deleted.</p></div>
       <div><h3>What we count</h3><p>With your consent, we use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details only if you accept; if you decline, no analytics cookies are set. We turn off advertising features and Google signals.</p></div>
       <div><h3>Hosting</h3><p>Our hosting provider keeps standard server logs, such as IP address, browser type and time of visit, to keep the site running and secure. We don't combine these logs with other data. Fonts and graphics are part of this page. The only other company contacted is Google, for analytics.</p></div>
       <div><h3>Your rights</h3><p>The tool itself doesn't collect personal data, and analytics data is anonymous usage counts, so there is little for us to access, correct or delete. If you have a question about server logs or your rights under GDPR or KVKK, contact us using the details on the Contact page.</p></div>
-      <div><h3>Changes</h3><p>If we start handling data differently, for example to offer automatic fixes, we will update this page before that change goes live.</p></div>
+      <div><h3>Changes</h3><p>If we start handling data differently, we will update this page before that change goes live.</p></div>
     </article>
 
     <article class="sheet-body" data-page="terms" data-title="Terms of Use" hidden>
-      <p class="small">Last updated 28 October 2026</p>
+      <p class="small">Last updated 30 October 2026</p>
       <div><h3>Using Stampcheck</h3><p>Stampcheck is free to use for personal and commercial work. By using it you agree to these terms.</p></div>
+      <div><h3>Paid fixes</h3><p>Automatic fixes are a paid extra, sold through Polar (polar.sh), which acts as merchant of record and handles billing, taxes, receipts and refunds. The monthly plan renews until you cancel it in your Polar purchases page. A fix pack is paid once and each fixed email uses one fix. Automatic fixes change only the problems they list; always review the corrected HTML and send yourself a test.</p></div>
       <div><h3>Your content</h3><p>The HTML you check stays yours. It is processed in your browser and we don't receive it. Only check content you have the right to use.</p></div>
       <div><h3>Fair use</h3><p>Don't use the site to break the law, to harm the service or other people, or to try to get around its security.</p></div>
       <div><h3>No guarantee</h3><p>Stampcheck is provided as it is. The checks follow known rendering rules but email clients change often, so we can't promise that every problem is found or that every result is correct. Test your email before sending it.</p></div>
@@ -774,9 +788,9 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     </article>
 
     <article class="sheet-body" data-page="cookies" data-title="Cookies" hidden>
-      <p class="small">Last updated 28 October 2026</p>
+      <p class="small">Last updated 30 October 2026</p>
       <div><h3>Analytics cookies</h3><p>If you accept, Google Analytics sets cookies (such as _ga and _ga_*) that last up to two years and let us count visits and button use anonymously. If you decline, no analytics cookies are set. There is no advertising. <button type="button" class="small" id="consent-reset">Change my choice</button></p></div>
-      <div><h3>Browser storage</h3><p>Besides any analytics cookies, the only things kept in your browser are the sender name and address you type into the preview, your panel sizes and your cookie choice, so the tool remembers them next time. Nothing in this paragraph is sent anywhere.</p></div>
+      <div><h3>Browser storage</h3><p>Besides any analytics cookies, the only things kept in your browser are the sender name and address you type into the preview, your panel sizes, your cookie choice and, if you bought fixes, your license key, so the tool remembers them next time. While you're at checkout, the email you were checking is also kept so it's there when you come back, then deleted. Nothing in this paragraph is sent anywhere.</p></div>
       <div><h3>If this changes</h3><p>If we ever add other cookies, we will list them here and ask for your consent first where the law requires it.</p></div>
     </article>
 
@@ -785,6 +799,47 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       <div class="copy-row" id="contact-row" hidden><code id="contact-email"></code><button type="button" class="small" id="contact-copy">Copy address</button></div>
       <p id="contact-missing">A contact address is coming soon.</p>
     </article>
+  </div>
+</div>
+<div class="overlay" id="fixer" role="dialog" aria-modal="true" aria-labelledby="fixer-title" hidden>
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 id="fixer-title">Fix it for me</h2>
+      <button type="button" class="small" id="fixer-close">Close</button>
+    </div>
+    <div class="sheet-body">
+      <div id="fx-summary"></div>
+      <p class="fx-msg" id="fx-msg" role="alert" hidden></p>
+      <div id="fx-buy" hidden>
+        <div class="plans">
+          <div class="plan" id="fx-monthly">
+            <h3>Monthly</h3>
+            <p class="price" id="fx-monthly-price"></p>
+            <p>Unlimited fixes for every email you check. Cancel any time.</p>
+            <button class="primary" type="button" id="fx-monthly-btn">Get monthly</button>
+          </div>
+          <div class="plan" id="fx-pack">
+            <h3>Fix pack</h3>
+            <p class="price" id="fx-pack-price"></p>
+            <p>Pay once, no subscription. Each fixed email uses one fix.</p>
+            <button class="primary" type="button" id="fx-pack-btn">Get the pack</button>
+          </div>
+        </div>
+        <form class="key-form" id="fx-key-form">
+          <label for="fx-key">Already bought? Paste your license key</label>
+          <div class="key-row"><input id="fx-key" type="text" autocomplete="off" spellcheck="false" placeholder="License key from your Polar email"><button type="submit" id="fx-key-btn">Unlock</button></div>
+          <a id="fx-portal" href="#" target="_blank" rel="noopener" hidden>Find your key on your Polar purchases page</a>
+        </form>
+      </div>
+      <div id="fx-ready" hidden>
+        <p id="fx-lic"></p>
+        <div class="key-row"><button class="primary big" type="button" id="fx-apply">Fix problems</button><button class="small" type="button" id="fx-forget">Use a different key</button></div>
+      </div>
+      <div id="fx-done" hidden>
+        <div class="key-row"><button class="primary" type="button" id="fx-download">Download .html</button><button type="button" id="fx-copy">Copy HTML</button><button class="small" type="button" id="fx-again">Back</button></div>
+      </div>
+      <p class="small">Your HTML is fixed inside your browser and never uploaded. Only your license key is checked with Polar, our payment provider. Payments are handled by Polar as merchant of record.</p>
+    </div>
   </div>
 </div>
 <div class="consent" id="consent" role="dialog" aria-label="Analytics consent" hidden>
@@ -800,6 +855,19 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
   /* Set your contact address before going live. */
   const CONTACT_EMAIL = "";
+
+  /* Paid fixes with Polar. Leave org empty and the fix buttons keep saying "coming soon".
+     In Polar: create the two products, give each a License key benefit (set a usage limit on the pack),
+     and set each checkout link's success URL to https://getstampcheck.com/?checkout_id={CHECKOUT_ID}#check */
+  const POLAR = {
+    org: "",            // Organization ID (Polar -> Settings -> General)
+    monthly: "",        // Checkout link URL of the monthly product
+    pack: "",           // Checkout link URL of the one-time fix pack
+    monthlyPrice: "$9 / month",
+    packPrice: "$9 for 10 emails",
+    portal: "",         // Customer portal URL, e.g. https://polar.sh/<your-org-slug>/portal
+    sandbox: false,     // true while testing against sandbox.polar.sh
+  };
 
   /* ---------- Example email ---------- */
   const IMG = "https://img.pinecrest-mobile.ca/email/";
@@ -1830,10 +1898,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 
     renderList();
     const total = c.error + c.warn;
-    $("#fix-box").hidden = !state.doc || total === 0;
+    $("#fix-box").hidden = !state.doc || (total === 0 && !(polarOn() && state.issues.some((i) => FIXABLE.has(i.key))));
     const fb = $("#fix-btn");
     fb.disabled = false;
-    fb.textContent = `Fix ${plural(total, "issue", "issues")} for me`;
+    const auto = state.issues.filter((i) => FIXABLE.has(i.key)).length;
+    fb.textContent = `Fix ${plural(polarOn() && auto ? auto : total, "issue", "issues")} for me`;
     $("#fix-note").textContent = "Corrected HTML, checked again.";
   }
   function seeLabel(see) {
@@ -1868,7 +1937,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
           <div class="more">
             <p>${esc(it.detail)}</p>
             ${ex ? `<div><p class="sub-label">Where</p><div class="examples">${ex}${more}</div></div>` : ""}
-            <div class="issue-actions">${see ? `<button class="small" type="button" data-see='${esc(JSON.stringify(it.see))}'>${see}</button>` : ""}${k !== "info" ? `<button class="small" type="button" data-fix="${it.key}">Fix it</button>` : ""}<span class="note" hidden></span></div>
+            <div class="issue-actions">${see ? `<button class="small" type="button" data-see='${esc(JSON.stringify(it.see))}'>${see}</button>` : ""}${k !== "info" || (polarOn() && FIXABLE.has(it.key)) ? `<button class="small" type="button" data-fix="${it.key}">Fix it</button>` : ""}<span class="note" hidden></span></div>
           </div>
         </details>`;
         first = false;
@@ -2091,10 +2160,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       const ea = simple.items[a.id].filter((i) => i.sev === "error").length, eb = simple.items[b.id].filter((i) => i.sev === "error").length;
       return eb - ea || simple.items[b.id].length - simple.items[a.id].length;
     })[0];
-    $("#cta").hidden = !real.length;
+    const auto = state.issues.filter((i) => FIXABLE.has(i.key)).length;
+    $("#cta").hidden = !real.length && !(polarOn() && auto);
     const fb = $("#fix-simple");
     fb.disabled = false;
-    fb.textContent = `Fix ${plural(real.length, "problem", "problems")} for me`;
+    fb.textContent = `Fix ${plural(polarOn() && auto ? auto : real.length, "problem", "problems")} for me`;
     $("#fix-simple-note").textContent = "Corrected HTML for every inbox.";
     selectTab(simple.tab && simple.items[simple.tab] ? simple.tab : worst.id);
   }
@@ -2233,6 +2303,345 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   }
   if (CONTACT_EMAIL) { $("#contact-email").textContent = CONTACT_EMAIL; $("#contact-row").hidden = false; $("#contact-missing").hidden = true; }
 
+  /* ---------- Automatic fixes (run in the browser; the HTML never leaves the device) ---------- */
+  const FIX_TEXT = {
+    "doctype": "Add <!doctype html>",
+    "charset": "Add <meta charset=\"utf-8\">",
+    "viewport": "Add the mobile viewport tag",
+    "ios-links": "Stop iOS turning dates and phone numbers into blue links",
+    "dark-mode": "Declare a light color scheme so apps don't invert your colors",
+    "lang": "Set the language on the <html> tag",
+    "alt": "Add alt=\"\" to images without alt text",
+    "http-links": "Switch http:// links to https://",
+    "http-images": "Load images over https://",
+    "table-role": "Mark layout tables as role=\"presentation\"",
+    "font-fallback": "Add fallback fonts",
+    "img-width": "Give images a width attribute for Outlook",
+    "vml-ns": "Add the VML namespace for Outlook",
+    "outlook-dpi": "Stop Outlook scaling images on high-DPI screens",
+    "gmail-clip": "Shrink the HTML to get under Gmail's clipping limit",
+    "gmail-clip-near": "Shrink the HTML to stay under Gmail's clipping limit",
+  };
+  const FIXABLE = new Set(Object.keys(FIX_TEXT));
+  const GENERIC_FONT = /\b(serif|sans-serif|monospace|cursive|fantasy|system-ui)\b/i;
+
+  function guessLang(text) {
+    const t = " " + text.toLowerCase() + " ";
+    const score = (re) => (t.match(re) || []).length;
+    const c = {
+      tr: score(/[ğış]|\s(ve|bir|için|ile|bu)\s/g),
+      de: score(/[ß]|\s(und|der|die|das|nicht|mit|für)\s/g),
+      fr: score(/\s(le|la|les|des|et|vous|pour|avec)\s/g),
+      es: score(/[ñ¿¡]|\s(el|los|las|y|para|con|usted)\s/g),
+      en: score(/\s(the|and|you|your|for|with|this)\s/g),
+    };
+    const best = Object.keys(c).sort((a, b) => c[b] - c[a])[0];
+    return c[best] ? best : "en";
+  }
+
+  function ensureShell(html) {
+    if (/<html[\s>]/i.test(html)) {
+      if (!/<head[\s>]/i.test(html)) html = html.replace(/<html\b[^>]*>/i, (m) => m + "\n<head>\n</head>");
+      return html;
+    }
+    const lead = (html.match(/^\s*(?:<!--[\s\S]*?-->\s*)*(?:<!doctype[^>]*>\s*)?/i) || [""])[0];
+    let rest = html.slice(lead.length);
+    const hasHead = /<head[\s>]/i.test(rest);
+    const hasBody = /<body[\s>]/i.test(rest);
+    if (!hasHead && !hasBody) rest = "<head>\n</head>\n<body>\n" + rest + "\n</body>";
+    else if (!hasHead) rest = rest.replace(/<body\b/i, "<head>\n</head>\n$&");
+    return lead + "<html>\n" + rest + "\n</html>";
+  }
+  function headInsert(html, snippet, first) {
+    html = ensureShell(html);
+    const m = html.match(/<head\b[^>]*>/i);
+    if (first) return html.slice(0, m.index + m[0].length) + "\n" + snippet + html.slice(m.index + m[0].length);
+    const end = html.search(/<\/head>/i);
+    if (end < 0) return html.slice(0, m.index + m[0].length) + "\n" + snippet + html.slice(m.index + m[0].length);
+    return html.slice(0, end) + snippet + "\n" + html.slice(end);
+  }
+  function htmlTagAttr(html, name, value) {
+    html = ensureShell(html);
+    return html.replace(/<html\b([^>]*)>/i, (m, attrs) => new RegExp("\\s" + name.replace(":", "\\:") + "\\s*=", "i").test(attrs) ? m : `<html${attrs} ${name}="${value}">`);
+  }
+  // Walk every opening tag of one name, letting fn return a replacement.
+  function eachTag(html, tag, fn) {
+    return html.replace(new RegExp(`<${tag}\\b((?:[^>"']|"[^"]*"|'[^']*')*)>`, "gi"), (m, attrs, i) => fn(m, attrs, i));
+  }
+  const attrOf = (attrs, name) => { const m = attrs.match(new RegExp(`\\s${name}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s>]+))`, "i")); return m ? (m[2] ?? m[3] ?? m[4] ?? "") : null; };
+  const addAttr = (tagHtml, attr) => tagHtml.replace(/\s*(\/?)>$/, (m, slash) => ` ${attr}${slash ? " /" : ""}>`);
+
+  function fixFonts(css) {
+    return css.replace(/(font-family\s*:\s*)([^;}]+)/gi, (m, pre, val) => {
+      const imp = /\s*!important\s*$/i.exec(val);
+      let v = imp ? val.slice(0, imp.index) : val;
+      const trail = (v.match(/\s*$/) || [""])[0];
+      v = v.slice(0, v.length - trail.length);
+      if (!v.trim() || GENERIC_FONT.test(v) || /inherit|initial/i.test(v)) return m;
+      const lower = v.toLowerCase();
+      const add = /mono|courier|consolas|menlo/.test(lower) ? "Courier New, monospace"
+        : /georgia|times|garamond|serif|playfair|merriweather|lora|baskerville|didot|bodoni|caslon|palatino/.test(lower) ? "Georgia, serif"
+        : "Arial, sans-serif";
+      const already = add.split(", ")[0].toLowerCase();
+      return pre + v + (lower.includes(already) ? ", " + add.split(", ")[1] : ", " + add) + trail + (imp ? imp[0] : "");
+    });
+  }
+  // Every top-level <table> range, so a table can tell whether it contains a <th> (like the check does).
+  function tableRanges(html) {
+    const re = /<(\/?)table\b[^>]*>/gi, stack = [], out = new Map();
+    let m;
+    while ((m = re.exec(html))) {
+      if (!m[1]) stack.push(m.index);
+      else if (stack.length) { const s = stack.pop(); out.set(s, re.lastIndex); }
+    }
+    stack.forEach((s) => out.set(s, html.length));
+    return out;
+  }
+  function shrink(html) {
+    const keep = [];
+    html = html.replace(/<(pre|textarea|script)\b[\s\S]*?<\/\1>/gi, (m) => { keep.push(m); return `\u0000${keep.length - 1}\u0000`; });
+    // Drop plain comments; keep Outlook conditional comments ([if mso] ... [endif]).
+    html = html.replace(/<!--[\s\S]*?-->/g, (m) => (/\[if\s|\[endif\]/i.test(m) ? m : ""));
+    html = html.replace(/\n[ \t]+/g, "\n").replace(/[ \t]{2,}/g, " ").replace(/\n{2,}/g, "\n");
+    return html.replace(/\u0000(\d+)\u0000/g, (_, i) => keep[+i]);
+  }
+
+  // measureImg(src) -> Promise<natural width or 0>. Injected so this can run outside a browser too.
+  async function autoFix(raw, keys, measureImg) {
+    let html = raw;
+    const done = [];
+    const want = (k) => keys.has(k);
+    if (want("gmail-clip") || want("gmail-clip-near")) { const before = html.length; html = shrink(html); if (html.length < before) done.push(want("gmail-clip") ? "gmail-clip" : "gmail-clip-near"); }
+    if (want("vml-ns")) { html = htmlTagAttr(html, "xmlns:v", "urn:schemas-microsoft-com:vml"); html = htmlTagAttr(html, "xmlns:o", "urn:schemas-microsoft-com:office:office"); done.push("vml-ns"); }
+    if (want("lang")) {
+      const text = html.replace(/<(style|script|head)\b[\s\S]*?<\/\1>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/gi, " ");
+      html = htmlTagAttr(html, "lang", guessLang(text)); done.push("lang");
+    }
+    if (want("charset")) { html = headInsert(html, '<meta charset="utf-8">', true); done.push("charset"); }
+    if (want("viewport")) { html = headInsert(html, '<meta name="viewport" content="width=device-width, initial-scale=1">'); done.push("viewport"); }
+    if (want("ios-links")) { html = headInsert(html, '<meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">'); done.push("ios-links"); }
+    if (want("dark-mode")) { html = headInsert(html, '<meta name="color-scheme" content="light">\n<meta name="supported-color-schemes" content="light">'); done.push("dark-mode"); }
+    if (want("outlook-dpi")) {
+      html = headInsert(html, "<!--[if mso]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->");
+      if (!/xmlns:o\s*=/i.test(html)) html = htmlTagAttr(html, "xmlns:o", "urn:schemas-microsoft-com:office:office");
+      done.push("outlook-dpi");
+    }
+    if (want("doctype") && !/^\s*(<!--[\s\S]*?-->\s*)*<!doctype/i.test(html)) { html = "<!DOCTYPE html>\n" + html.replace(/^\s+/, ""); done.push("doctype"); }
+    if (want("alt")) { html = eachTag(html, "img", (m, a) => (attrOf(a, "alt") === null ? addAttr(m, 'alt=""') : m)); done.push("alt"); }
+    if (want("http-links")) { html = eachTag(html, "a", (m) => m.replace(/(\shref\s*=\s*["']?)http:\/\//i, "$1https://")); done.push("http-links"); }
+    if (want("http-images")) { html = eachTag(html, "img", (m) => m.replace(/(\ssrc\s*=\s*["']?)http:\/\//i, "$1https://")); done.push("http-images"); }
+    if (want("table-role")) {
+      const ranges = tableRanges(html);
+      html = html.replace(/<table\b((?:[^>"']|"[^"]*"|'[^']*')*)>/gi, (m, a, i) => {
+        if (attrOf(a, "role") !== null) return m;
+        const end = ranges.get(i) || html.length;
+        return /<th[\s>]/i.test(html.slice(i, end)) ? m : addAttr(m, 'role="presentation"');
+      });
+      done.push("table-role");
+    }
+    if (want("font-fallback")) {
+      html = html.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style>)/gi, (m, o, css, c) => o + fixFonts(css) + c);
+      html = html.replace(/(\sstyle\s*=\s*)("([^"]*)"|'([^']*)')/gi, (m, pre, q, dq, sq) => (dq != null ? `${pre}"${fixFonts(dq)}"` : `${pre}'${fixFonts(sq)}'`));
+      done.push("font-fallback");
+    }
+    if (want("img-width")) {
+      const tags = [];
+      eachTag(html, "img", (m, a) => { if (attrOf(a, "width") === null) tags.push(a); return m; });
+      const widths = await Promise.all(tags.map(async (a) => {
+        const st = (attrOf(a, "style") || "").match(/(?:^|[;\s])width\s*:\s*(\d+)px/i);
+        if (st) return +st[1];
+        const src = attrOf(a, "src");
+        const w = src && measureImg ? await measureImg(src) : 0;
+        return w ? Math.min(w, 600) : 0;
+      }));
+      let n = 0;
+      html = eachTag(html, "img", (m, a) => {
+        if (attrOf(a, "width") !== null) return m;
+        const w = widths[n++];
+        return w ? addAttr(m, `width="${w}"`) : m;
+      });
+      if (widths.some(Boolean)) done.push("img-width");
+    }
+    return { html, done };
+  }
+
+  /* ---------- Paid fixes with Polar (license keys are checked from the browser; no server needed) ---------- */
+  const polarOn = () => !!(POLAR.org && (POLAR.monthly || POLAR.pack));
+  const POLAR_API = () => (POLAR.sandbox ? "https://sandbox-api.polar.sh" : "https://api.polar.sh");
+  const fx = { lic: null, busy: false, result: null, lastFocus: null, msg: "", returned: false };
+  const fixer = $("#fixer");
+  const delStore = (k) => { try { localStorage.removeItem("stampcheck:" + k); } catch (e) {} };
+
+  async function checkKey(key, use) {
+    let r;
+    try {
+      r = await fetch(POLAR_API() + "/v1/customer-portal/license-keys/validate", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, organization_id: POLAR.org, increment_usage: use || 0 }),
+      });
+    } catch (e) { return { error: "network" }; }
+    if (r.ok) { try { return { lic: await r.json() }; } catch (e) { return { error: "network" }; } }
+    if (r.status === 400) return { error: "used" };
+    if (r.status === 404 || r.status === 422) return { error: "invalid" };
+    return { error: "network" };
+  }
+  const ERR = {
+    network: "Couldn't reach Polar to check your key. Check your connection and try again.",
+    invalid: "That key isn't valid, or it has expired. Copy it again from your Polar email or purchases page.",
+    used: "You've used every fix in this pack. Get another pack or the monthly plan to keep going.",
+  };
+  function licLine(lic) {
+    if (!lic) return "";
+    if (lic.limit_usage) { const left = Math.max(0, lic.limit_usage - (lic.usage || 0)); return `Fix pack: ${plural(left, "fix", "fixes")} left of ${lic.limit_usage}.`; }
+    return "Monthly plan: unlimited fixes.";
+  }
+  function measureImg(src) {
+    return new Promise((res) => {
+      const im = new Image();
+      const t = setTimeout(() => res(0), 4000);
+      im.onload = () => { clearTimeout(t); res(im.naturalWidth || 0); };
+      im.onerror = () => { clearTimeout(t); res(0); };
+      im.src = src;
+    });
+  }
+
+  function renderFixer() {
+    const fixable = state.issues.filter((i) => FIXABLE.has(i.key));
+    const others = state.issues.length - fixable.length;
+    const key = store.get("license");
+    const sum = $("#fx-summary");
+    if (fx.result) {
+      sum.innerHTML = `<h3>Fixed ${plural(fx.result.done.length, "problem", "problems")}</h3><ul>${fx.result.done.map((k) => `<li>${esc(FIX_TEXT[k])}</li>`).join("")}</ul>
+        <p>Your editor now holds the corrected HTML and has been checked again.${others ? ` ${plural(others, "problem needs", "problems need")} a person, so ${others === 1 ? "it stays" : "they stay"} in your list with steps.` : ""}</p>`;
+    } else if (fixable.length) {
+      sum.innerHTML = `<h3>${plural(fixable.length, "problem", "problems")} can be fixed automatically</h3><ul>${fixable.map((i) => `<li>${esc(FIX_TEXT[i.key])}</li>`).join("")}</ul>
+        ${others ? `<p>The other ${plural(others, "finding needs", "findings need")} a person, so ${others === 1 ? "it stays" : "they stay"} in your list with steps.</p>` : ""}`;
+    } else {
+      sum.innerHTML = `<h3>Nothing to fix automatically</h3><p>None of the problems in this email can be fixed automatically yet. They need a person, and each one in your list has steps.</p>`;
+    }
+    const msg = $("#fx-msg");
+    msg.textContent = fx.msg; msg.hidden = !fx.msg;
+    $("#fx-done").hidden = !fx.result;
+    $("#fx-ready").hidden = !!fx.result || !key || !fixable.length;
+    $("#fx-buy").hidden = !!fx.result || !!key || !fixable.length;
+    if (key && !fx.result) {
+      $("#fx-lic").textContent = licLine(fx.lic) || "License key saved in this browser.";
+      const ap = $("#fx-apply");
+      ap.textContent = fx.busy ? "Fixing…" : `Fix ${plural(fixable.length, "problem", "problems")}`;
+      ap.disabled = fx.busy;
+    }
+    const k = $("#fx-key-btn");
+    k.disabled = fx.busy; k.textContent = fx.busy ? "Checking…" : "Unlock";
+    $("#fx-monthly").hidden = !POLAR.monthly;
+    $("#fx-pack").hidden = !POLAR.pack;
+    document.querySelector("#fx-buy .plans").hidden = fx.returned;
+    $("#fx-monthly-price").textContent = POLAR.monthlyPrice;
+    $("#fx-pack-price").textContent = POLAR.packPrice;
+    $("#fx-portal").hidden = !POLAR.portal;
+    if (POLAR.portal) $("#fx-portal").href = POLAR.portal;
+  }
+  function openFixer(source) {
+    if (!state.doc) { toast("Paste your email HTML first"); return; }
+    fx.result = null; fx.msg = fx.msg || "";
+    renderFixer();
+    if (fixer.hidden) fx.lastFocus = document.activeElement;
+    fixer.hidden = false;
+    fixer.querySelector(".sheet").scrollTop = 0;
+    $("#fixer-close").focus();
+    track("paywall_view", { source, fixable: state.issues.filter((i) => FIXABLE.has(i.key)).length, licensed: !!store.get("license") });
+    const key = store.get("license");
+    if (key && !fx.lic) checkKey(key, 0).then((r) => { if (r.lic) { fx.lic = r.lic; renderFixer(); } else if (r.error !== "network") { delStore("license"); fx.lic = null; fx.msg = ERR[r.error]; renderFixer(); } });
+  }
+  function closeFixer() {
+    fixer.hidden = true; fx.msg = ""; fx.returned = false;
+    if (fx.lastFocus && fx.lastFocus.focus) fx.lastFocus.focus();
+  }
+  function buy(plan) {
+    const link = plan === "monthly" ? POLAR.monthly : POLAR.pack;
+    if (!link) return;
+    // Keep the email in this browser so it's back after checkout. It is deleted as soon as it's restored.
+    if (cm.getValue().trim()) store.set("draft", cm.getValue());
+    track("plan_click", { plan });
+    const u = new URL(link);
+    u.searchParams.set("utm_source", "stampcheck");
+    u.searchParams.set("utm_medium", "fix_dialog");
+    u.searchParams.set("utm_campaign", plan);
+    location.href = u.toString();
+  }
+  async function unlock() {
+    const key = $("#fx-key").value.trim();
+    if (!key) { $("#fx-key").focus(); return; }
+    fx.busy = true; fx.msg = ""; renderFixer();
+    const r = await checkKey(key, 0);
+    fx.busy = false;
+    if (r.lic) { store.set("license", key); fx.lic = r.lic; fx.returned = false; $("#fx-key").value = ""; track("license_valid"); }
+    else { fx.msg = ERR[r.error]; track("license_invalid", { reason: r.error }); }
+    renderFixer();
+  }
+  async function applyFixes() {
+    const key = store.get("license");
+    const keys = new Set(state.issues.filter((i) => FIXABLE.has(i.key)).map((i) => i.key));
+    if (!key || !keys.size || fx.busy) return;
+    fx.busy = true; fx.msg = ""; renderFixer();
+    const r = await checkKey(key, 1);
+    if (!r.lic) {
+      fx.busy = false;
+      if (r.error !== "network") { delStore("license"); fx.lic = null; }
+      fx.msg = ERR[r.error]; renderFixer();
+      track("fix_blocked", { reason: r.error });
+      return;
+    }
+    fx.lic = r.lic;
+    const res = await autoFix(cm.getValue(), keys, measureImg);
+    fx.busy = false;
+    fx.result = res;
+    paste.value = res.html;
+    cm.setValue(res.html);
+    renderFixer();
+    track("fix_applied", { fixes: res.done.length, plan: r.lic.limit_usage ? "pack" : "monthly" });
+  }
+  function downloadFixed() {
+    const blob = new Blob([cm.getValue()], { type: "text/html;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = ((state.title || "email").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-").slice(0, 60) || "email") + "-fixed.html";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    track("fixed_download");
+  }
+  function copyFixed() {
+    try { navigator.clipboard.writeText(cm.getValue()).then(() => toast("Corrected HTML copied"), () => toast("Copy isn't allowed here")); } catch (e) { toast("Copy isn't allowed here"); }
+    track("fixed_copy");
+  }
+  $("#fixer-close").addEventListener("click", closeFixer);
+  fixer.addEventListener("click", (e) => { if (e.target === fixer) closeFixer(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !fixer.hidden) closeFixer(); });
+  $("#fx-monthly-btn").addEventListener("click", () => buy("monthly"));
+  $("#fx-pack-btn").addEventListener("click", () => buy("pack"));
+  $("#fx-key-form").addEventListener("submit", (e) => { e.preventDefault(); unlock(); });
+  $("#fx-apply").addEventListener("click", applyFixes);
+  $("#fx-forget").addEventListener("click", () => { delStore("license"); fx.lic = null; fx.msg = ""; renderFixer(); });
+  $("#fx-download").addEventListener("click", downloadFixed);
+  $("#fx-copy").addEventListener("click", copyFixed);
+  $("#fx-again").addEventListener("click", () => { fx.result = null; renderFixer(); });
+
+  // Coming back from Polar checkout: bring the email back and ask for the key.
+  function returnFromCheckout() {
+    const q = new URLSearchParams(location.search);
+    if (!q.has("checkout_id")) return;
+    q.delete("checkout_id");
+    try { history.replaceState(history.state, "", location.pathname + (q.toString() ? "?" + q : "") + location.hash); } catch (e) {}
+    track("checkout_return");
+    const draft = store.get("draft");
+    delStore("draft");
+    if (!draft || !polarOn()) return;
+    paste.value = draft;
+    go(draft);
+    fx.returned = true;
+    fx.msg = "Thanks for your purchase. Your license key is in the receipt email from Polar and on your Polar purchases page. Paste it below to fix this email.";
+    setTimeout(() => openFixer("checkout_return"), 300);
+  }
+
   /* ---------- Events ---------- */
   $("#sample-btn").addEventListener("click", () => { setCode(SAMPLE); track("example"); });
   $("#clear-btn").addEventListener("click", () => { setCode(""); cm.focus(); });
@@ -2296,6 +2705,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const fix = e.target.closest("[data-fix]");
     if (fix) {
       track("fix_click", { key: fix.dataset.fix });
+      if (polarOn() && FIXABLE.has(fix.dataset.fix)) { openFixer("item"); return; }
       const note = fix.parentElement.querySelector(".note");
       note.textContent = "Automatic fixes are coming soon. Your click tells us which fixes to build first.";
       note.hidden = false; fix.disabled = true;
@@ -2306,6 +2716,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   });
   $("#fix-btn").addEventListener("click", () => {
     track("fix_all_click");
+    if (polarOn()) { openFixer("editor"); return; }
     $("#fix-note").textContent = "Automatic fixes are coming soon. Your click tells us you'd use them.";
     $("#fix-btn").disabled = true;
   });
@@ -2359,6 +2770,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   });
   $("#fix-simple").addEventListener("click", () => {
     track("fix_simple_click");
+    if (polarOn()) { openFixer("results"); return; }
     $("#fix-simple-note").textContent = "Automatic fixes are coming soon. Your click tells us you'd use them.";
     $("#fix-simple").disabled = true;
   });
@@ -2378,6 +2790,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   run();
   routeHash();
   booted = true;
+  returnFromCheckout();
 })();
 </script>
 <script>
