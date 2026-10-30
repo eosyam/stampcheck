@@ -861,11 +861,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
      and set each checkout link's success URL to https://getstampcheck.com/?checkout_id={CHECKOUT_ID}#check */
   const POLAR = {
     org: "7405b2ed-9bc7-4203-95f3-6bf17b9e11d2", // Organization ID (Polar -> Settings -> General)
-    monthly: "",        // Checkout link URL of the monthly product
-    pack: "",           // Checkout link URL of the one-time fix pack
-    monthlyPrice: "$9 / month",
+    monthly: "https://buy.polar.sh/polar_cl_GTC0lRhYA0ArSORNulkzELoKtsGOcbkSjBtNG0aHtoq", // Checkout link of the monthly product
+    pack: "https://buy.polar.sh/polar_cl_Cq5bGfpHCSoIY0U5OCxmomN703Z75UTo8gVdk39R976", // Checkout link of the one-time fix pack
+    monthlyPrice: "$12 / month",
     packPrice: "$9 for 10 emails",
-    portal: "",         // Customer portal URL, e.g. https://polar.sh/<your-org-slug>/portal
+    portal: "https://polar.sh/stampcheck/portal", // Customer portal
     sandbox: false,     // true while testing against sandbox.polar.sh
   };
 
