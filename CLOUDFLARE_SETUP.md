@@ -20,7 +20,7 @@ Cloudflare dashboard → Workers & Pages → `stampcheck` → Settings → Build
 | `POLAR_ACCESS_TOKEN` | Polar → Settings → Developers → New token. Scopes: `checkouts:read`, `customers:read`, `license_keys:read` |
 | `ANTHROPIC_API_KEY` | console.anthropic.com → API keys. Set a monthly spend limit there too. |
 
-Plain variables (`POLAR_ORG_ID`, `POLAR_SERVER`, `ANTHROPIC_MODEL`) live in `wrangler.toml`.
+Plain variables (`POLAR_ORG_ID`, `POLAR_SERVER`, `ANTHROPIC_MODEL`) live in `wrangler.toml`; don't add them in the dashboard (plain dashboard values are replaced on every deploy, and a secret with one of these names breaks the setting).
 
 Check: `https://stampcheck.<your-subdomain>.workers.dev/api/fix` should return `{"ai":true}`.
 
