@@ -13,4 +13,4 @@ run_worker_first = ["/api/*"]
 [vars]
 POLAR_ORG_ID = "7405b2ed-9bc7-4203-95f3-6bf17b9e11d2"
 POLAR_SERVER = "production"
-ANTHROPIC_MODEL = "claude-sonnet-4-6"
+ANTHROPIC_MODEL = "claude-sonnet-5-5"

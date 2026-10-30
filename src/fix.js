@@ -31,7 +31,7 @@ async function checkKey(env, key, use) {
 
 const SYSTEM = `You are a senior email developer. You fix HTML emails so they render correctly in Gmail, Outlook for Windows, Apple Mail and mobile apps.
 
-You get an email's HTML and a list of problems a checker found. Fix as many of the listed problems as you safely can by calling the apply_edits tool once.
+You get an email's HTML and a list of problems a checker found. Fix as many of the listed problems as you safely can, then call the apply_edits tool exactly once with all your edits. Always call the tool, even if every problem is skipped.
 
 How to edit:
 - Each edit replaces one exact piece of the HTML. "find" must be copied character for character from the HTML (same spaces, quotes and line breaks) and must appear exactly once. Include just enough surrounding text to make it unique; keep it short.
@@ -85,19 +85,25 @@ async function askClaude(env, html, issues) {
     method: "POST",
     headers: { "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json" },
     body: JSON.stringify({
-      model: env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
-      max_tokens: 16000,
+      model: env.ANTHROPIC_MODEL || "claude-sonnet-5-5",
+      max_tokens: 32000,
+      // Sonnet 5.5 thinks adaptively and rejects forced tool use, so the tool is offered and the prompt asks for it.
+      output_config: { effort: env.ANTHROPIC_EFFORT || "medium" },
       system: SYSTEM,
       tools: [TOOL],
-      tool_choice: { type: "tool", name: "apply_edits" },
+      tool_choice: { type: "auto" },
       messages: [{ role: "user", content: `Problems to fix:\n${describe(issues)}\n\n<email_html>\n${html}\n</email_html>` }],
     }),
   });
   if (!r.ok) { const e = new Error("claude " + r.status); e.status = r.status; throw e; }
   const out = await r.json();
   const use = (out.content || []).find((c) => c.type === "tool_use" && c.name === "apply_edits");
-  if (!use) throw new Error("no tool call");
-  return use.input || {};
+  if (use) return use.input || {};
+  // Fallback: the same object written as JSON text.
+  const text = (out.content || []).filter((c) => c.type === "text").map((c) => c.text).join("\n");
+  const m = text.match(/\{[\s\S]*"edits"[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch (e) {} }
+  throw new Error("no edits returned");
 }
 
 export function applyEdits(html, edits, allowed) {
