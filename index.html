@@ -1397,7 +1397,10 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     const attrSel = sels.filter((s) => /\[[^\]]+\]/.test(s));
     if (attrSel.length) add({ key: "css-attr-selector", sev: "warn", title: "Attribute selectors are ignored", detail: `Selectors like ${attrSel.slice(0, 2).join(", ")} don't work in Gmail and several Outlook versions.`, els: styleEls, cats: ["gmail", "outlook"] });
     const bodyStyle = doc.body && doc.body.getAttribute("style");
-    if (bodyStyle && /background/i.test(bodyStyle)) add({ key: "gmail-body-style", sev: "warn", title: "Background color on <body> is dropped", detail: "Gmail and many webmail apps remove the <body> tag and its styles. Put the background color on an outer wrapper table instead.", els: [doc.body], cats: ["gmail"], see: { client: "gmail" } });
+    const wrapper = doc.body && [...doc.body.children].find((el) => el.tagName === "TABLE");
+    const wrapperBg = wrapper && /100%/.test((wrapper.getAttribute("width") || "") + (wrapper.getAttribute("style") || "")) &&
+      [wrapper, wrapper.querySelector("td")].some((el) => el && (el.hasAttribute("bgcolor") || /background/i.test(el.getAttribute("style") || "")));
+    if (bodyStyle && /background/i.test(bodyStyle) && !wrapperBg) add({ key: "gmail-body-style", sev: "warn", title: "Background color on <body> is dropped", detail: "Gmail and many webmail apps remove the <body> tag and its styles. Put the background color on an outer wrapper table instead.", els: [doc.body], cats: ["gmail"], see: { client: "gmail" } });
     const bodyStyles = [...doc.querySelectorAll("body style")];
     if (bodyStyles.length) add({ key: "style-in-body", sev: "warn", title: "Style block inside <body>", detail: "Some Gmail apps and webmail clients only read style blocks in <head>. Move it up.", els: bodyStyles, cats: ["gmail"] });
 
@@ -1427,8 +1430,13 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     cssRule({ key: "flex-grid", re: /display\s*:\s*(inline-)?(flex|grid)/i, sev: "error", title: "Layout uses flexbox or grid", detail: "Outlook for Windows ignores it, so boxes that should sit side by side stack or overlap. Use tables for columns.", cats: ["outlook"], see: { client: "outlook" } });
     cssRule({ key: "position", re: /position\s*:\s*(absolute|fixed|sticky)/i, sev: "error", title: "Positioned elements move", detail: "Gmail and Outlook remove positioning, so these elements jump to a different spot.", cats: ["gmail", "outlook"], see: { client: "gmail" } });
     cssRule({ key: "css-vars", re: /var\(\s*--/i, sev: "error", title: "CSS variables are used", detail: "Gmail and Outlook don't understand CSS variables. Colors and sizes that use them fall back to defaults.", cats: ["gmail", "outlook"], see: { client: "gmail" } });
-    cssRule({ key: "gradient", re: /(linear|radial|conic)-gradient\(/i, sev: "warn", title: "Gradients disappear in Outlook", detail: "Outlook for Windows shows no gradient. Without a solid background-color fallback the area turns white, and white text on it disappears.", cats: ["outlook"], see: { client: "outlook" } });
-    cssRule({ key: "radius", re: /border-radius\s*:/i, sev: "warn", title: "Rounded corners turn square", detail: "Outlook for Windows ignores border-radius. Buttons and cards show with sharp edges unless you use VML.", cats: ["outlook"], see: { client: "outlook" } });
+    // Gradients are fine as long as there's a solid color behind them for Outlook.
+    const GRAD = /(linear|radial|conic)-gradient\(/i;
+    const hasSolid = (el) => /background-color\s*:/i.test(el.getAttribute("style") || "") || el.hasAttribute("bgcolor") || (el.parentElement && el.parentElement.hasAttribute("bgcolor"));
+    const gradEls = styled.filter((el) => GRAD.test(el.getAttribute("style")) && !hasSolid(el));
+    const gradRules = (styleText.match(/[^{}]*\{[^{}]*\}/g) || []).filter((r) => GRAD.test(r) && !/background-color\s*:/i.test(r));
+    if (gradEls.length || gradRules.length) add({ key: "gradient", sev: "warn", title: "Gradients disappear in Outlook", detail: `Outlook for Windows shows no gradient, and ${gradEls.length ? plural(gradEls.length, "element has", "elements have") : "your style block has rules with"} no solid background-color behind it, so the area turns white and white text on it disappears.`, els: gradEls.length ? gradEls : styleEls, cats: ["outlook"], see: { client: "outlook" } });
+    cssRule({ key: "radius", re: /border-radius\s*:/i, sev: "info", title: "Rounded corners are square in Outlook", detail: "Outlook for Windows shows sharp corners; every other client keeps them rounded. Usually fine to leave as is.", cats: ["outlook"], see: { client: "outlook" } });
     cssRule({ key: "bg-image", re: /background(-image)?\s*:[^;]*url\(/i, sev: "warn", title: "Background images disappear in Outlook", detail: "Outlook for Windows drops CSS background images. Add a background color behind text, or use VML.", cats: ["outlook"], see: { client: "outlook" } });
     cssRule({ key: "float", re: /(^|[;\s{])float\s*:/i, sev: "warn", title: "Floated items stack in Outlook", detail: "Outlook for Windows ignores float, so these items drop below each other. Use table columns.", cats: ["outlook"], see: { client: "outlook" } });
     cssRule({ key: "neg-margin", re: /margin[a-z-]*\s*:[^;]*-\d/i, sev: "warn", title: "Negative margins are removed", detail: "Gmail and Outlook drop negative margins, so overlapping elements separate and spacing shifts.", cats: ["gmail", "outlook"] });
@@ -1439,7 +1447,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     cssRule({ key: "object-fit", re: /(object-fit|aspect-ratio)\s*:/i, sev: "info", title: "object-fit and aspect-ratio are ignored", detail: "Gmail and Outlook ignore these, so images may stretch. Crop images to the right size before uploading.", cats: ["gmail", "outlook"] });
     cssRule({ key: "shadow", re: /box-shadow\s*:/i, sev: "info", title: "Shadows don't show everywhere", detail: "Outlook and most Gmail apps drop shadows. The design looks flatter there.", cats: ["outlook", "gmail"] });
     if (!hasMso) {
-      const mw = inline(/max-width\s*:/i);
+      const mw = inline(/max-width\s*:/i).filter((el) => !(parseInt(el.getAttribute("width"), 10) > 0));
       if (mw.length) add({ key: "max-width", sev: "warn", title: "Email stretches across the window in Outlook", detail: "Outlook for Windows ignores max-width, and there's no Outlook-only wrapper table to hold the width.", els: mw, cats: ["outlook"], see: { client: "outlook" } });
     }
 
@@ -2583,7 +2591,7 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     "ext-css": "Paste external CSS into the email",
   };
   // Heads-up notes that don't need any change.
-  const NOTE_ONLY = new Set(["merge-tags", "web-fonts", "gif"]);
+  const NOTE_ONLY = new Set(["merge-tags", "web-fonts", "gif", "radius", "shadow"]);
   const canFix = (i) => !NOTE_ONLY.has(i.key) && (FIXABLE.has(i.key) || (fx.ai && !NEEDS_YOU[i.key]));
   const needsYou = (i) => !NOTE_ONLY.has(i.key) && !canFix(i);
   const reasonFor = (i, skipped) => {
@@ -2789,11 +2797,39 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     else { fx.msg = ERR[r.error]; track("license_invalid", { reason: r.error }); }
     renderFixer();
   }
-  async function smartFix(key, html, issues, local) {
+  // Render the HTML at phone width and report anything wider than the screen.
+  function phoneOverflow(html) {
+    return new Promise((resolve) => {
+      const f = document.createElement("iframe");
+      f.setAttribute("sandbox", "allow-same-origin");
+      f.setAttribute("aria-hidden", "true");
+      f.style.cssText = "position:fixed;left:-10000px;top:0;width:375px;height:800px;border:0;visibility:hidden";
+      let settled = false;
+      const done = () => {
+        if (settled) return; settled = true;
+        let out = null;
+        try {
+          const d = f.contentDocument, vw = d.documentElement.clientWidth;
+          const sw = Math.max(d.documentElement.scrollWidth, d.body ? d.body.scrollWidth : 0);
+          if (sw > vw + 1) {
+            const wide = [...d.body.querySelectorAll("*")].filter((e) => e.getBoundingClientRect().right > vw + 1);
+            const outer = wide.filter((e) => !wide.some((o) => o !== e && o.contains(e)));
+            out = { vw, sw, examples: outer.slice(0, 3).map((e) => e.outerHTML.replace(/>[\s\S]*$/, ">").slice(0, 180)) };
+          }
+        } catch (e) {}
+        f.remove(); resolve(out);
+      };
+      f.onload = () => setTimeout(done, 200);
+      setTimeout(done, 5000);
+      f.srcdoc = html;
+      document.body.appendChild(f);
+    });
+  }
+  async function smartFix(key, html, issues, local, retry) {
     try {
       const r = await fetch("/api/fix", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, html, local, issues: issues.map((i) => ({ key: i.key, title: i.title, detail: i.detail, examples: (i.examples || []).map((e) => e.snip) })) }),
+        body: JSON.stringify({ key, html, local, retry, issues: issues.map((i) => ({ key: i.key, title: i.title, detail: i.detail, examples: (i.examples || []).map((e) => e.snip) })) }),
       });
       const data = await r.json().catch(() => ({}));
       if (!r.ok) return { error: data.error || "upstream" };
@@ -2819,6 +2855,17 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
       const res = await smartFix(key, html, rest, local.done.length);
       if (res.error) return fail(res.error);
       html = res.html || html; skipped = res.skipped || []; fx.lic = res.lic || fx.lic; aiFailed = !!res.aiError;
+      // Check the result like a reader would, and let the AI clean up anything it missed (free, same email).
+      if (res.retry) {
+        const again = analyze(html).issues.filter((i) => canFix(i) && !FIXABLE.has(i.key));
+        const ov = await phoneOverflow(html);
+        if (ov) again.unshift({ key: "phone-overflow", title: "Wider than a phone screen", detail: `On a ${ov.vw} px phone the email is ${ov.sw} px wide, so readers scroll sideways. These elements stick out:`, examples: ov.examples.map((snip) => ({ snip })) });
+        if (again.length) {
+          fx.stage = "Double-checking every inbox…"; renderFixer();
+          const res2 = await smartFix(key, html, again, 0, res.retry);
+          if (!res2.error && res2.html) { html = res2.html; skipped = res2.skipped || skipped; }
+        }
+      }
     } else {
       const r = await checkKey(key, 1);
       if (!r.lic) return fail(r.error);
