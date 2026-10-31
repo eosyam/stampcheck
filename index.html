@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stampcheck: Free Email HTML Checker &amp; Preview for Gmail, Outlook and Mobile</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<!-- Google Analytics 4 (Consent Mode v2: nothing is stored until the visitor accepts) -->
+<!-- Google Analytics 4 (Consent Mode v2: on by default; turned off for visitors who choose "Turn off") -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 var saved = null;
 try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
-gtag("consent", "default", { analytics_storage: saved === "granted" ? "granted" : "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
 gtag("set", "ads_data_redaction", true);
 gtag("js", new Date());
 gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
@@ -835,11 +835,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     </article>
 
     <article class="sheet-body" data-page="privacy" data-title="Privacy Policy" hidden>
-      <p class="small">Last updated 30 October 2026</p>
+      <p class="small">Last updated 31 October 2026</p>
       <div><h3>Your email stays on your device</h3><p>Stampcheck checks your HTML inside your browser. The HTML you paste, type or open is never sent to us or to anyone else while it's being checked, and it is gone when you close the tab. The only exceptions are paid fixes and checkout, described below.</p></div>
       <div><h3>What we keep in your browser</h3><p>If you edit the sender name or address in the preview, or resize the panels, those settings are remembered in your browser so you don't have to set them again. They never leave your device, and clearing this site's data removes them.</p></div>
       <div><h3>Paid fixes</h3><p>Checking an email always happens in your browser. If you buy a plan and click Fix, the simple fixes also run in your browser, and the rest are made by Claude, an AI model from Anthropic: your HTML and the list of problems are sent to our server and to Anthropic only to make that fix. We don't store your HTML, and Anthropic doesn't use it to train its models. Polar (polar.sh) handles the payment as merchant of record and receives your payment and contact details under its own privacy policy. Your license key is checked with Polar and kept in your browser so you don't have to enter it again. When you start a checkout, the email you're checking is kept in your browser until you come back, then deleted.</p></div>
-      <div><h3>What we count</h3><p>With your consent, we use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details only if you accept; if you decline, no analytics cookies are set. We turn off advertising features and Google signals.</p></div>
+      <div><h3>What we count</h3><p>We use Google Analytics to count anonymous usage events, such as how many checks run and which buttons are used, so we know what to improve. These counts never include your HTML. Google Analytics sets cookies and receives your IP address and browser details. You can turn it off at any time with the cookie notice or on the Cookies page; after that, no analytics cookies are set. We turn off advertising features and Google signals.</p></div>
       <div><h3>Hosting</h3><p>Our hosting provider keeps standard server logs, such as IP address, browser type and time of visit, to keep the site running and secure. We don't combine these logs with other data. Fonts and graphics are part of this page. The only other company contacted is Google, for analytics.</p></div>
       <div><h3>Your rights</h3><p>The tool itself doesn't collect personal data, and analytics data is anonymous usage counts, so there is little for us to access, correct or delete. If you have a question about server logs or your rights under GDPR or KVKK, contact us using the details on the Contact page.</p></div>
       <div><h3>Changes</h3><p>If we start handling data differently, we will update this page before that change goes live.</p></div>
@@ -858,8 +858,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     </article>
 
     <article class="sheet-body" data-page="cookies" data-title="Cookies" hidden>
-      <p class="small">Last updated 30 October 2026</p>
-      <div><h3>Analytics cookies</h3><p>If you accept, Google Analytics sets cookies (such as _ga and _ga_*) that last up to two years and let us count visits and button use anonymously. If you decline, no analytics cookies are set. There is no advertising. <button type="button" class="small" id="consent-reset">Change my choice</button></p></div>
+      <p class="small">Last updated 31 October 2026</p>
+      <div><h3>Analytics cookies</h3><p>Google Analytics sets cookies (such as _ga and _ga_*) that last up to two years and let us count visits and button use anonymously. If you turn analytics off, no analytics cookies are set from then on. There is no advertising. <button type="button" class="small" id="consent-reset">Change my choice</button></p></div>
       <div><h3>Browser storage</h3><p>Besides any analytics cookies, the only things kept in your browser are the sender name and address you type into the preview, your panel sizes, your cookie choice and, if you bought fixes, your license key, so the tool remembers them next time. While you're at checkout, the email you were checking is also kept so it's there when you come back, then deleted. Nothing in this paragraph is sent anywhere.</p></div>
       <div><h3>If this changes</h3><p>If we ever add other cookies, we will list them here and ask for your consent first where the law requires it.</p></div>
     </article>
@@ -934,8 +934,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   </div>
 </div>
 <div class="consent" id="consent" role="dialog" aria-label="Analytics consent" hidden>
-<p>Stampcheck would like to use Google Analytics cookies to count anonymous usage. Your email HTML is never sent. <a href="#cookies">Details</a></p>
-<div class="row"><button class="small primary" type="button" id="consent-accept">Accept</button><button class="small" type="button" id="consent-decline">Decline</button></div>
+<p>Stampcheck uses Google Analytics cookies to count anonymous usage. Your email HTML is never sent. You can turn this off. <a href="#cookies">Details</a></p>
+<div class="row"><button class="small primary" type="button" id="consent-accept">OK</button><button class="small" type="button" id="consent-decline">Turn off</button></div>
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
 
