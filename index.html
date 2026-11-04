@@ -797,6 +797,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     <a href="#cookies">Cookies</a>
     <a href="#contact">Contact</a>
     <a href="/blog/">Blog</a>
+    <a href="/outlook-email-test/">Outlook test</a>
+    <a href="/gmail-email-preview/">Gmail preview</a>
   </footer>
 </div>
 
@@ -2998,6 +3000,12 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   $("#find-close").addEventListener("click", closeFind);
 
   document.querySelectorAll('input[name="client"]').forEach((r) => r.addEventListener("change", () => { state.client = r.value; track("client", { client: r.value }); renderPreview(); }));
+  // Landing pages link here with ?client=gmail|outlook|apple to open that preview first
+  try {
+    const qc = new URLSearchParams(location.search).get("client");
+    const qr = qc && document.querySelector('input[name="client"][value="' + qc.replace(/[^a-z]/g, "") + '"]');
+    if (qr && !qr.checked) { qr.checked = true; qr.dispatchEvent(new Event("change")); }
+  } catch (e) {}
   devSel.addEventListener("change", () => { state.device = devSel.value; track("device", { device: devSel.value }); renderPreview(); });
   $("#imgs-off").addEventListener("change", (e) => { state.imagesOff = e.target.checked; track("images_off"); renderPreview(); });
 

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SVG images in email: why they don&#x27;t show in Gmail and Outlook · Stampcheck</title>
+<!-- Google Analytics 4 (Consent Mode v2: on by default; off for visitors who turned it off on getstampcheck.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
+</script>
+<meta name="description" content="Gmail and Outlook don&#x27;t display SVG images, so logos and icons go missing. Use PNG at twice the display size with a width attribute instead.">
+<link rel="canonical" href="https://getstampcheck.com/blog/svg-images-in-email/">
+<meta name="theme-color" content="#1D44B8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVG images in email: why they don&#x27;t show in Gmail and Outlook">
+<meta property="og:description" content="Gmail and Outlook don&#x27;t display SVG images, so logos and icons go missing. Use PNG at twice the display size with a width attribute instead.">
+<meta property="og:url" content="https://getstampcheck.com/blog/svg-images-in-email/">
+<meta property="og:image" content="https://getstampcheck.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "SVG images in email: why they don't show in Gmail and Outlook",
+ "description": "Gmail and Outlook don't display SVG images, so logos and icons go missing. Use PNG at twice the display size with a width attribute instead.",
+ "datePublished": "2026-11-04",
+ "dateModified": "2026-11-04",
+ "author": {
+  "@type": "Person",
+  "name": "Eray",
+  "url": "https://getstampcheck.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "Stampcheck",
+  "url": "https://getstampcheck.com/"
+ },
+ "mainEntityOfPage": "https://getstampcheck.com/blog/svg-images-in-email/",
+ "image": "https://getstampcheck.com/og.png"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Does Apple Mail show SVG?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, but Gmail and Outlook don't, so SVG isn't safe for an email most people will open there."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why use the width attribute instead of CSS?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Outlook ignores CSS width on images and shows them at their real pixel size, so a 2× image would appear twice as big."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Should my logo be PNG or JPEG?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "PNG for logos and icons with sharp edges or transparency; JPEG for photos."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I find SVGs in my email?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Paste the HTML into Stampcheck: it flags SVG, WebP and embedded images."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root { --ink:#12261A; --muted:#4F5B54; --line:#DCE3DE; --bg:#FAFBF9; --panel:#FFFFFF; --blue:#1D44B8; --red:#D42A3C; --code:#F1F4F2; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E8EEEA; --muted:#A8B3AC; --line:#2A3530; --bg:#111714; --panel:#161E1A; --blue:#7E9BF0; --red:#F06373; --code:#1C2521; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .stripe { height: 6px; background: repeating-linear-gradient(-45deg, var(--red) 0 14px, transparent 14px 28px, var(--blue) 28px 42px, transparent 42px 56px); }
+  header.top, main, footer { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  header.top a { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 20px; }
+  header.top nav a { font-weight: 500; font-size: 15px; color: var(--muted); margin-left: 16px; }
+  h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 44px 0 10px; }
+  h3 { font-size: 19px; margin: 28px 0 6px; }
+  p, li { color: var(--ink); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+  .tldr { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 16px 20px; margin: 0 0 8px; }
+  .tldr p { margin: 6px 0; }
+  code { font: 0.88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre code { background: none; padding: 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  table.grid th, table.grid td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.grid th { color: var(--muted); font-weight: 600; }
+  .box { overflow-x: auto; }
+  .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
+  .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  a { color: var(--blue); }
+  footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
+  footer a { color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<header class="top">
+  <a href="/">Stampcheck</a>
+  <nav><a href="/blog/">Blog</a><a href="/">Check an email</a></nav>
+</header>
+
+<main>
+<article>
+  <h1>SVG images in email: why they don't show in Gmail and Outlook</h1>
+  <p class="meta">By Eray, who builds Stampcheck · Published 4 November 2026</p>
+  <div class="tldr"><p><strong>Short answer:</strong> Gmail and Outlook don't display SVG images, whether linked or inline. Export your logos and icons as PNG at twice the size you display them, and set the display size with the <code>width</code> attribute so they stay sharp on high-resolution screens.</p></div>
+
+  <h2>The fix</h2>
+  <ol>
+    <li>Export the SVG as a PNG at <strong>2×</strong> the display size: a logo shown at 150 px wide becomes a 300 px PNG.</li>
+    <li>Set the display size with the <code>width</code> attribute (and <code>height</code> if you know it), not only with CSS.</li>
+    <li>Add <code>alt</code> text, because many readers see emails with images off.</li>
+  </ol>
+<pre><code>&lt;img src=&quot;https://example.com/logo@2x.png&quot; width=&quot;150&quot; alt=&quot;Acme&quot; style=&quot;display:block;border:0;&quot;&gt;</code></pre>
+  <h2>What about WebP?</h2>
+  <p>WebP and AVIF are smaller, but support in email clients is still patchy, so some readers would see a blank space. PNG and JPEG work everywhere; use GIF only for simple animation, and remember Outlook for Windows shows only the first frame.</p>
+
+  <div class="cta">
+    <strong>Check your email for image problems in seconds.</strong>
+    <p>Stampcheck is free. Paste your HTML and it runs 80+ checks for Gmail, Outlook, Apple Mail and phones, with live previews. It runs in your browser and nothing is uploaded.</p>
+    <a class="btn" href="/?client=gmail&amp;utm_source=blog&amp;utm_medium=referral&amp;utm_campaign=svg-images-in-email">Check my email</a>
+  </div>
+
+  <h2>Frequently asked questions</h2>
+  <h3>Does Apple Mail show SVG?</h3>
+  <p>Yes, but Gmail and Outlook don't, so SVG isn't safe for an email most people will open there.</p>
+  <h3>Why use the width attribute instead of CSS?</h3>
+  <p>Outlook ignores CSS width on images and shows them at their real pixel size, so a 2× image would appear twice as big.</p>
+  <h3>Should my logo be PNG or JPEG?</h3>
+  <p>PNG for logos and icons with sharp edges or transparency; JPEG for photos.</p>
+  <h3>How do I find SVGs in my email?</h3>
+  <p>Paste the HTML into Stampcheck: it flags SVG, WebP and embedded images.</p>
+</article>
+</main>
+
+<footer>
+  <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
+</footer>
+</body>
+</html>

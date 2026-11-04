@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rounded email buttons in Outlook: the bulletproof button fix · Stampcheck</title>
+<!-- Google Analytics 4 (Consent Mode v2: on by default; off for visitors who turned it off on getstampcheck.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
+</script>
+<meta name="description" content="Outlook ignores border-radius and link padding, so email buttons turn into flat text links. Here is the bulletproof button code that works in Outlook and everywhere else.">
+<link rel="canonical" href="https://getstampcheck.com/blog/outlook-button-not-showing/">
+<meta name="theme-color" content="#1D44B8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why your email button looks flat in Outlook (and the bulletproof fix)">
+<meta property="og:description" content="Outlook ignores border-radius and link padding, so email buttons turn into flat text links. Here is the bulletproof button code that works in Outlook and everywhere else.">
+<meta property="og:url" content="https://getstampcheck.com/blog/outlook-button-not-showing/">
+<meta property="og:image" content="https://getstampcheck.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Why your email button looks flat in Outlook (and the bulletproof fix)",
+ "description": "Outlook ignores border-radius and link padding, so email buttons turn into flat text links. Here is the bulletproof button code that works in Outlook and everywhere else.",
+ "datePublished": "2026-11-04",
+ "dateModified": "2026-11-04",
+ "author": {
+  "@type": "Person",
+  "name": "Eray",
+  "url": "https://getstampcheck.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "Stampcheck",
+  "url": "https://getstampcheck.com/"
+ },
+ "mainEntityOfPage": "https://getstampcheck.com/blog/outlook-button-not-showing/",
+ "image": "https://getstampcheck.com/og.png"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why does my button work in Gmail but not Outlook?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Gmail renders CSS like a browser; classic Outlook uses Word, which ignores border-radius and padding on links."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is the whole VML button clickable?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. The href on v:roundrect makes the entire shape a link in Outlook."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do I need the VML namespace?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Without the xmlns attributes, Outlook ignores the VML. Stampcheck flags VML used without its namespace."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can I use an image as a button instead?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "You can, but it disappears when images are off, which is the default for many Outlook users. A real HTML button is safer."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root { --ink:#12261A; --muted:#4F5B54; --line:#DCE3DE; --bg:#FAFBF9; --panel:#FFFFFF; --blue:#1D44B8; --red:#D42A3C; --code:#F1F4F2; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E8EEEA; --muted:#A8B3AC; --line:#2A3530; --bg:#111714; --panel:#161E1A; --blue:#7E9BF0; --red:#F06373; --code:#1C2521; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .stripe { height: 6px; background: repeating-linear-gradient(-45deg, var(--red) 0 14px, transparent 14px 28px, var(--blue) 28px 42px, transparent 42px 56px); }
+  header.top, main, footer { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  header.top a { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 20px; }
+  header.top nav a { font-weight: 500; font-size: 15px; color: var(--muted); margin-left: 16px; }
+  h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 44px 0 10px; }
+  h3 { font-size: 19px; margin: 28px 0 6px; }
+  p, li { color: var(--ink); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+  .tldr { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 16px 20px; margin: 0 0 8px; }
+  .tldr p { margin: 6px 0; }
+  code { font: 0.88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre code { background: none; padding: 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  table.grid th, table.grid td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.grid th { color: var(--muted); font-weight: 600; }
+  .box { overflow-x: auto; }
+  .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
+  .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  a { color: var(--blue); }
+  footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
+  footer a { color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<header class="top">
+  <a href="/">Stampcheck</a>
+  <nav><a href="/blog/">Blog</a><a href="/">Check an email</a></nav>
+</header>
+
+<main>
+<article>
+  <h1>Why your email button looks flat in Outlook (and the bulletproof fix)</h1>
+  <p class="meta">By Eray, who builds Stampcheck · Published 4 November 2026</p>
+  <div class="tldr"><p><strong>Short answer:</strong> classic Outlook ignores <code>border-radius</code> and padding on links, so a styled <code>&lt;a&gt;</code> loses its shape. Use a "bulletproof" button: a VML rounded rectangle that only Outlook sees, and a normal styled link for every other client.</p></div>
+
+  <h2>The bulletproof button</h2>
+  <p>Copy this and change the link, colors, size and label. Keep the width and height in both parts the same.</p>
+<pre><code>&lt;!--[if mso]&gt;
+&lt;v:roundrect xmlns:v=&quot;urn:schemas-microsoft-com:vml&quot; xmlns:w=&quot;urn:schemas-microsoft-com:office:word&quot;
+  href=&quot;https://example.com&quot; style=&quot;height:44px;v-text-anchor:middle;width:200px;&quot;
+  arcsize=&quot;12%&quot; stroke=&quot;f&quot; fillcolor=&quot;#1D44B8&quot;&gt;
+  &lt;w:anchorlock/&gt;
+  &lt;center style=&quot;color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;&quot;&gt;Get started&lt;/center&gt;
+&lt;/v:roundrect&gt;
+&lt;![endif]--&gt;
+&lt;!--[if !mso]&gt;&lt;!--&gt;
+&lt;a href=&quot;https://example.com&quot; style=&quot;background:#1D44B8;border-radius:5px;color:#ffffff;display:inline-block;
+  font-family:Arial,sans-serif;font-size:16px;font-weight:bold;line-height:44px;text-align:center;
+  text-decoration:none;width:200px;&quot;&gt;Get started&lt;/a&gt;
+&lt;!--&lt;![endif]--&gt;</code></pre>
+  <h2>Simpler option: square corners in Outlook</h2>
+  <p>If rounded corners in Outlook don't matter, put the background and padding on a table cell and the link inside it. Outlook shows a square button, other clients show your rounded one.</p>
+<pre><code>&lt;table role=&quot;presentation&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;
+  &lt;tr&gt;
+    &lt;td bgcolor=&quot;#1D44B8&quot; style=&quot;border-radius:5px;padding:12px 24px;&quot;&gt;
+      &lt;a href=&quot;https://example.com&quot; style=&quot;color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;text-decoration:none;&quot;&gt;Get started&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+  <p>More Outlook problems and their fixes: <a href="/blog/outlook-email-broken/">Why your email looks broken in Outlook</a>.</p>
+
+  <div class="cta">
+    <strong>Check your email for Outlook button problems in seconds.</strong>
+    <p>Stampcheck is free. Paste your HTML and it runs 80+ checks for Gmail, Outlook, Apple Mail and phones, with live previews. It runs in your browser and nothing is uploaded.</p>
+    <a class="btn" href="/?client=outlook&amp;utm_source=blog&amp;utm_medium=referral&amp;utm_campaign=outlook-button-not-showing">Check my email</a>
+  </div>
+
+  <h2>Frequently asked questions</h2>
+  <h3>Why does my button work in Gmail but not Outlook?</h3>
+  <p>Gmail renders CSS like a browser; classic Outlook uses Word, which ignores border-radius and padding on links.</p>
+  <h3>Is the whole VML button clickable?</h3>
+  <p>Yes. The href on v:roundrect makes the entire shape a link in Outlook.</p>
+  <h3>Do I need the VML namespace?</h3>
+  <p>Yes. Without the xmlns attributes, Outlook ignores the VML. Stampcheck flags VML used without its namespace.</p>
+  <h3>Can I use an image as a button instead?</h3>
+  <p>You can, but it disappears when images are off, which is the default for many Outlook users. A real HTML button is safer.</p>
+</article>
+</main>
+
+<footer>
+  <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
+</footer>
+</body>
+</html>

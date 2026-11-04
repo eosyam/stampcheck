@@ -8,3 +8,17 @@
 ## Guides
 
 - [Why your email looks broken in Outlook (and how to fix it)](https://getstampcheck.com/blog/outlook-email-broken/): classic Outlook for Windows renders email with Word; flexbox, max-width, rounded buttons, background images, spacing and web fonts break, with the fix for each
+- [Gmail "[Message clipped]": why it happens and how to fix it](https://getstampcheck.com/blog/gmail-clipped-message/): Gmail clips emails whose HTML is larger than about 102 KB and hides the rest behind &quot;View entire message&quot;. Here is how to get your email under the limit.
+- [Why Gmail removes your CSS (and how to keep your styles)](https://getstampcheck.com/blog/gmail-removes-style-block/): Gmail drops style blocks over 16 KB, linked stylesheets, @import and some selectors. Here is what survives and how to write CSS Gmail keeps.
+- [Why your email button looks flat in Outlook (and the bulletproof fix)](https://getstampcheck.com/blog/outlook-button-not-showing/): Outlook ignores border-radius and link padding, so email buttons turn into flat text links. Here is the bulletproof button code that works in Outlook and everywhere else.
+- [SVG images in email: why they don't show in Gmail and Outlook](https://getstampcheck.com/blog/svg-images-in-email/): Gmail and Outlook don&#x27;t display SVG images, so logos and icons go missing. Use PNG at twice the display size with a width attribute instead.
+- [How to set email preview text (preheader) in HTML](https://getstampcheck.com/blog/email-preview-text/): Preview text is the line after the subject in the inbox. Without it, clients show whatever text comes first. Here is the HTML to set it and stop body text leaking in.
+- [Why images show up huge in Outlook (and how to fix it)](https://getstampcheck.com/blog/email-images-too-big-outlook/): Outlook ignores CSS width and max-width on images and shows them at their real pixel size. Set the width attribute to fix it.
+- [Why gradient backgrounds disappear in Outlook (and what to do)](https://getstampcheck.com/blog/outlook-gradient-background/): Classic Outlook doesn&#x27;t support CSS gradients, so gradient backgrounds turn blank. Always set a solid fallback color, and use VML if you need a gradient in Outlook.
+
+## Client tests
+
+- [Test your email in Outlook, free](https://getstampcheck.com/outlook-email-test/): Paste your email HTML and see what classic Outlook for Windows will break: layouts, buttons, widths, fonts and images. Free, in your browser, nothing uploaded.
+- [Preview your email in Gmail, free](https://getstampcheck.com/gmail-email-preview/): Paste your email HTML and see how Gmail will show it: clipping over 102 KB, dropped style blocks, ignored selectors and images that don&#x27;t load. Free, in your browser.
+- [Preview your email in Apple Mail, free](https://getstampcheck.com/apple-mail-preview/): Paste your email HTML and preview it in Apple Mail on iPhone and Mac. Catch tiny text, missing mobile layout, auto-linked dates and phones, and dark mode problems.
+- [Dark mode email checklist](https://getstampcheck.com/dark-mode-email-test/): How Gmail, Outlook and Apple Mail change emails in dark mode, a checklist to make yours hold up, and a free checker that flags missing dark mode rules.
