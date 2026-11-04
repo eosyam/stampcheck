@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Apple Mail email preview: check your HTML email for iPhone and Mac · Stampcheck</title>
+<!-- Google Analytics 4 (Consent Mode v2: on by default; off for visitors who turned it off on getstampcheck.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
+</script>
+<meta name="description" content="Paste your email HTML and preview it in Apple Mail on iPhone and Mac. Catch tiny text, missing mobile layout, auto-linked dates and phones, and dark mode problems.">
+<link rel="canonical" href="https://getstampcheck.com/apple-mail-preview/">
+<meta name="theme-color" content="#1D44B8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Preview your email in Apple Mail, free">
+<meta property="og:description" content="Paste your email HTML and preview it in Apple Mail on iPhone and Mac. Catch tiny text, missing mobile layout, auto-linked dates and phones, and dark mode problems.">
+<meta property="og:url" content="https://getstampcheck.com/apple-mail-preview/">
+<meta property="og:image" content="https://getstampcheck.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "Stampcheck",
+ "url": "https://getstampcheck.com/apple-mail-preview/",
+ "applicationCategory": "DeveloperApplication",
+ "operatingSystem": "Any (runs in the browser)",
+ "description": "Paste your email HTML and preview it in Apple Mail on iPhone and Mac. Catch tiny text, missing mobile layout, auto-linked dates and phones, and dark mode problems.",
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is Apple Mail easier to design for than Outlook?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. It uses WebKit, so modern CSS mostly works. The common problems are phone layout, auto-linked text and dark mode."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I stop iOS from turning dates and phone numbers blue?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Wrap them in a link styled to match your text, or add format-detection meta tags. Stampcheck flags text iOS is likely to auto-link."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does the preview show iPhone sizes?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. You can switch between common iPhone widths and desktop."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is it free?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, and the check runs in your browser."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root { --ink:#12261A; --muted:#4F5B54; --line:#DCE3DE; --bg:#FAFBF9; --panel:#FFFFFF; --blue:#1D44B8; --red:#D42A3C; --code:#F1F4F2; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E8EEEA; --muted:#A8B3AC; --line:#2A3530; --bg:#111714; --panel:#161E1A; --blue:#7E9BF0; --red:#F06373; --code:#1C2521; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .stripe { height: 6px; background: repeating-linear-gradient(-45deg, var(--red) 0 14px, transparent 14px 28px, var(--blue) 28px 42px, transparent 42px 56px); }
+  header.top, main, footer { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  header.top a { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 20px; }
+  header.top nav a { font-weight: 500; font-size: 15px; color: var(--muted); margin-left: 16px; }
+  h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 44px 0 10px; }
+  h3 { font-size: 19px; margin: 28px 0 6px; }
+  p, li { color: var(--ink); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+  .tldr { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 16px 20px; margin: 0 0 8px; }
+  .tldr p { margin: 6px 0; }
+  code { font: 0.88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre code { background: none; padding: 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  table.grid th, table.grid td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.grid th { color: var(--muted); font-weight: 600; }
+  .box { overflow-x: auto; }
+  .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
+  .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  a { color: var(--blue); }
+  footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
+  footer a { color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<header class="top">
+  <a href="/">Stampcheck</a>
+  <nav><a href="/blog/">Blog</a><a href="/">Check an email</a></nav>
+</header>
+
+<main>
+<article>
+  <h1>Preview your email in Apple Mail, free</h1>
+  
+  <div class="tldr"><p><strong>Apple Mail renders modern HTML well, so the problems are different.</strong> They are mostly about phones: width, text size, auto-detected links and dark mode. Stampcheck shows an Apple Mail preview at real phone sizes and flags each one.</p></div>
+  <div class="cta" style="margin:18px 0 0;padding:16px 20px"><a class="btn" style="margin-top:0" href="/?client=apple&amp;utm_source=landing&amp;utm_medium=referral&amp;utm_content=top&amp;utm_campaign=apple-mail-preview">Open the Apple Mail preview</a></div>
+
+  <h2>What goes wrong in Apple Mail</h2>
+  <ul>
+    <li><strong>Wider than the phone:</strong> a fixed 600 px layout forces sideways scrolling or shrinks everything on a 390 px screen.</li>
+    <li><strong>No mobile layout:</strong> without a media query, columns stay side by side and text gets tiny.</li>
+    <li><strong>Blue links you didn't add:</strong> iOS turns dates, phone numbers and addresses into links, often in a color that clashes with your design.</li>
+    <li><strong>Dark mode:</strong> without dark mode rules, colors can be changed for you and dark logos can disappear on dark backgrounds. See the <a href="/dark-mode-email-test/">dark mode checklist</a>.</li>
+  </ul>
+
+  <h2>How to use it</h2>
+  <ol>
+    <li>Open Stampcheck with Apple Mail selected using the button below.</li>
+    <li>Paste your HTML, then switch the device between iPhone sizes and desktop.</li>
+    <li>Look for the "Scrolls sideways" warning on the phone preview and fix width problems first.</li>
+  </ol>
+
+  <div class="cta">
+    <strong>Preview your email in Apple Mail now.</strong>
+    <p>Free, in your browser. Nothing is uploaded.</p>
+    <a class="btn" href="/?client=apple&amp;utm_source=landing&amp;utm_medium=referral&amp;utm_campaign=apple-mail-preview">Open the Apple Mail preview</a>
+  </div>
+
+  <h2>Frequently asked questions</h2>
+  <h3>Is Apple Mail easier to design for than Outlook?</h3>
+  <p>Yes. It uses WebKit, so modern CSS mostly works. The common problems are phone layout, auto-linked text and dark mode.</p>
+  <h3>How do I stop iOS from turning dates and phone numbers blue?</h3>
+  <p>Wrap them in a link styled to match your text, or add format-detection meta tags. Stampcheck flags text iOS is likely to auto-link.</p>
+  <h3>Does the preview show iPhone sizes?</h3>
+  <p>Yes. You can switch between common iPhone widths and desktop.</p>
+  <h3>Is it free?</h3>
+  <p>Yes, and the check runs in your browser.</p>
+</article>
+</main>
+
+<footer>
+  <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
+</footer>
+</body>
+</html>

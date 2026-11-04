@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gmail &quot;[Message clipped]&quot;: why it happens and how to fix it · Stampcheck</title>
+<!-- Google Analytics 4 (Consent Mode v2: on by default; off for visitors who turned it off on getstampcheck.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
+</script>
+<meta name="description" content="Gmail clips emails whose HTML is larger than about 102 KB and hides the rest behind &quot;View entire message&quot;. Here is how to get your email under the limit.">
+<link rel="canonical" href="https://getstampcheck.com/blog/gmail-clipped-message/">
+<meta name="theme-color" content="#1D44B8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gmail &quot;[Message clipped]&quot;: why it happens and how to fix it">
+<meta property="og:description" content="Gmail clips emails whose HTML is larger than about 102 KB and hides the rest behind &quot;View entire message&quot;. Here is how to get your email under the limit.">
+<meta property="og:url" content="https://getstampcheck.com/blog/gmail-clipped-message/">
+<meta property="og:image" content="https://getstampcheck.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Gmail \"[Message clipped]\": why it happens and how to fix it",
+ "description": "Gmail clips emails whose HTML is larger than about 102 KB and hides the rest behind \"View entire message\". Here is how to get your email under the limit.",
+ "datePublished": "2026-11-04",
+ "dateModified": "2026-11-04",
+ "author": {
+  "@type": "Person",
+  "name": "Eray",
+  "url": "https://getstampcheck.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "Stampcheck",
+  "url": "https://getstampcheck.com/"
+ },
+ "mainEntityOfPage": "https://getstampcheck.com/blog/gmail-clipped-message/",
+ "image": "https://getstampcheck.com/og.png"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is Gmail's exact clipping limit?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "About 102 KB of HTML. Images don't count toward it because they are linked, not included."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does my email get clipped when the file is under 102 KB?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Your email platform adds tracking links and personalization when it sends, which makes the HTML bigger than the file you uploaded."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does clipping affect deliverability?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not directly, but a hidden unsubscribe link leads to more spam complaints, which do."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I check the size?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Paste the HTML into Stampcheck: it shows the size and warns as you get close to the limit."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root { --ink:#12261A; --muted:#4F5B54; --line:#DCE3DE; --bg:#FAFBF9; --panel:#FFFFFF; --blue:#1D44B8; --red:#D42A3C; --code:#F1F4F2; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E8EEEA; --muted:#A8B3AC; --line:#2A3530; --bg:#111714; --panel:#161E1A; --blue:#7E9BF0; --red:#F06373; --code:#1C2521; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .stripe { height: 6px; background: repeating-linear-gradient(-45deg, var(--red) 0 14px, transparent 14px 28px, var(--blue) 28px 42px, transparent 42px 56px); }
+  header.top, main, footer { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  header.top a { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 20px; }
+  header.top nav a { font-weight: 500; font-size: 15px; color: var(--muted); margin-left: 16px; }
+  h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 44px 0 10px; }
+  h3 { font-size: 19px; margin: 28px 0 6px; }
+  p, li { color: var(--ink); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+  .tldr { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 16px 20px; margin: 0 0 8px; }
+  .tldr p { margin: 6px 0; }
+  code { font: 0.88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre code { background: none; padding: 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  table.grid th, table.grid td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.grid th { color: var(--muted); font-weight: 600; }
+  .box { overflow-x: auto; }
+  .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
+  .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  a { color: var(--blue); }
+  footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
+  footer a { color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<header class="top">
+  <a href="/">Stampcheck</a>
+  <nav><a href="/blog/">Blog</a><a href="/">Check an email</a></nav>
+</header>
+
+<main>
+<article>
+  <h1>Gmail "[Message clipped]": why it happens and how to fix it</h1>
+  <p class="meta">By Eray, who builds Stampcheck · Published 4 November 2026</p>
+  <div class="tldr"><p><strong>Short answer:</strong> Gmail cuts off any email whose HTML is larger than about 102 KB. Everything after the cut, often your footer, unsubscribe link and open-tracking pixel, hides behind "View entire message". Shrink the HTML, not the content: remove repeated inline styles, comments and whitespace, and leave headroom for the tracking your email platform adds.</p></div>
+
+  <h2>Why it matters</h2>
+  <ul>
+    <li>Readers rarely click "View entire message", so the end of your email goes unseen.</li>
+    <li>The unsubscribe link is usually at the bottom, which can push people to the spam button instead.</li>
+    <li>If the tracking pixel is below the cut, opens are undercounted.</li>
+  </ul>
+
+  <h2>How to get under 102 KB</h2>
+  <ol>
+    <li><strong>Measure the final HTML.</strong> The size that counts is the HTML Gmail receives, after your platform adds tracking links and personalization. Leave 10–15 KB of headroom.</li>
+    <li><strong>Remove comments and extra whitespace.</strong> Builders and templates often leave a lot of both. Keep Outlook conditional comments (<code>&lt;!--[if mso]&gt;</code>); they are code, not comments.</li>
+    <li><strong>Stop repeating long inline styles.</strong> The same 300-character style on every cell adds up fast. Move shared styles into a style block (Gmail supports one up to 16 KB) and keep inline only what Outlook needs.</li>
+    <li><strong>Don't embed images as base64.</strong> Host them and link to them; embedded images are both huge and blocked by many clients.</li>
+    <li><strong>Cut sections, not words.</strong> If an email is still too big, it is usually doing too much. Split it, or link to the rest.</li>
+  </ol>
+
+  <div class="cta">
+    <strong>Check your email for Gmail clipping in seconds.</strong>
+    <p>Stampcheck is free. Paste your HTML and it runs 80+ checks for Gmail, Outlook, Apple Mail and phones, with live previews. It runs in your browser and nothing is uploaded.</p>
+    <a class="btn" href="/?client=gmail&amp;utm_source=blog&amp;utm_medium=referral&amp;utm_campaign=gmail-clipped-message">Check my email</a>
+  </div>
+
+  <h2>Frequently asked questions</h2>
+  <h3>What is Gmail's exact clipping limit?</h3>
+  <p>About 102 KB of HTML. Images don't count toward it because they are linked, not included.</p>
+  <h3>Why does my email get clipped when the file is under 102 KB?</h3>
+  <p>Your email platform adds tracking links and personalization when it sends, which makes the HTML bigger than the file you uploaded.</p>
+  <h3>Does clipping affect deliverability?</h3>
+  <p>Not directly, but a hidden unsubscribe link leads to more spam complaints, which do.</p>
+  <h3>How do I check the size?</h3>
+  <p>Paste the HTML into Stampcheck: it shows the size and warns as you get close to the limit.</p>
+</article>
+</main>
+
+<footer>
+  <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
+</footer>
+</body>
+</html>
