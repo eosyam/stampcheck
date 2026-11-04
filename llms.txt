@@ -1,0 +1,10 @@
+# Stampcheck
+
+> Free email HTML checker. Paste an email's HTML and see what breaks in Gmail, Outlook, Apple Mail and on phones before you send. 80+ checks, live previews, runs in the browser; nothing is uploaded. An optional paid feature fixes the issues it finds.
+
+- [Stampcheck](https://getstampcheck.com/): the checker itself
+- [Blog](https://getstampcheck.com/blog/): guides to email HTML problems and fixes
+
+## Guides
+
+- [Why your email looks broken in Outlook (and how to fix it)](https://getstampcheck.com/blog/outlook-email-broken/): classic Outlook for Windows renders email with Word; flexbox, max-width, rounded buttons, background images, spacing and web fonts break, with the fix for each
