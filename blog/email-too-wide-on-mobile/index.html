@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email too wide on mobile? Why it scrolls sideways and how to fix it · Stampcheck</title>
+<!-- Google Analytics 4 (Consent Mode v2: on by default; off for visitors who turned it off on getstampcheck.com) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMQPH746BD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+var saved = null;
+try { saved = localStorage.getItem("stampcheck:consent"); } catch (e) {}
+gtag("consent", "default", { analytics_storage: saved === "denied" ? "denied" : "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", wait_for_update: 500 });
+gtag("set", "ads_data_redaction", true);
+gtag("js", new Date());
+gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personalization_signals: false });
+</script>
+<meta name="description" content="If your email is wider than the phone screen, readers scroll sideways or the app shrinks everything. Here is what usually causes it and the HTML that makes an email fit a 375 px screen.">
+<link rel="canonical" href="https://getstampcheck.com/blog/email-too-wide-on-mobile/">
+<meta name="theme-color" content="#1D44B8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Email too wide on mobile? Why it scrolls sideways and how to fix it">
+<meta property="og:description" content="If your email is wider than the phone screen, readers scroll sideways or the app shrinks everything. Here is what usually causes it and the HTML that makes an email fit a 375 px screen.">
+<meta property="og:url" content="https://getstampcheck.com/blog/email-too-wide-on-mobile/">
+<meta property="og:image" content="https://getstampcheck.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Email too wide on mobile? Why it scrolls sideways and how to fix it",
+ "description": "If your email is wider than the phone screen, readers scroll sideways or the app shrinks everything. Here is what usually causes it and the HTML that makes an email fit a 375 px screen.",
+ "datePublished": "2026-11-06",
+ "dateModified": "2026-11-06",
+ "author": {
+  "@type": "Person",
+  "name": "Eray",
+  "url": "https://getstampcheck.com/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "name": "Stampcheck",
+  "url": "https://getstampcheck.com/"
+ },
+ "mainEntityOfPage": "https://getstampcheck.com/blog/email-too-wide-on-mobile/",
+ "image": "https://getstampcheck.com/og.png"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What width should an HTML email be?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Most emails are designed at 600 to 640 px for desktop. That is fine as long as the width is a maximum, not a fixed size, so the email can shrink to fit a phone that is 320 to 430 px wide."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does my email look fine on desktop but scroll sideways on my phone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Something inside it has a fixed width larger than the phone screen: usually a 600 px table, an image without max-width, a long unbroken link, or columns that don't stack."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do I still need media queries?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "They help with stacking columns and adjusting padding, but not every mobile app applies them in every setup. Build the email so it fits without them, and use media queries as an improvement on top."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Will Outlook break if I use width 100% and max-width?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Classic Outlook for Windows ignores max-width, so the email can stretch across the window. Wrap the content in an Outlook-only table with a fixed width, as shown above, to keep it at 600 px there."
+   }
+  }
+ ]
+}
+</script>
+<style>
+  :root { --ink:#12261A; --muted:#4F5B54; --line:#DCE3DE; --bg:#FAFBF9; --panel:#FFFFFF; --blue:#1D44B8; --red:#D42A3C; --code:#F1F4F2; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#E8EEEA; --muted:#A8B3AC; --line:#2A3530; --bg:#111714; --panel:#161E1A; --blue:#7E9BF0; --red:#F06373; --code:#1C2521; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .stripe { height: 6px; background: repeating-linear-gradient(-45deg, var(--red) 0 14px, transparent 14px 28px, var(--blue) 28px 42px, transparent 42px 56px); }
+  header.top, main, footer { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  header.top a { color: var(--ink); text-decoration: none; font-weight: 700; font-size: 20px; }
+  header.top nav a { font-weight: 500; font-size: 15px; color: var(--muted); margin-left: 16px; }
+  h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 25px; line-height: 1.25; margin: 44px 0 10px; }
+  h3 { font-size: 19px; margin: 28px 0 6px; }
+  p, li { color: var(--ink); }
+  .meta { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+  .tldr { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 8px; padding: 16px 20px; margin: 0 0 8px; }
+  .tldr p { margin: 6px 0; }
+  code { font: 0.88em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre code { background: none; padding: 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  table.grid th, table.grid td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.grid th { color: var(--muted); font-weight: 600; }
+  .box { overflow-x: auto; }
+  .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
+  .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  a { color: var(--blue); }
+  footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
+  footer a { color: var(--muted); margin-right: 14px; }
+</style>
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<header class="top">
+  <a href="/">Stampcheck</a>
+  <nav><a href="/blog/">Blog</a><a href="/">Check an email</a></nav>
+</header>
+
+<main>
+<article>
+  <h1>Email too wide on mobile? Why it scrolls sideways and how to fix it</h1>
+  <p class="meta">By Eray, who builds Stampcheck · Published 6 November 2026</p>
+  <div class="tldr"><p><strong>Short answer:</strong> an email scrolls sideways on a phone when something inside it has a fixed width larger than the screen, most often a <code>width="600"</code> table, an image without <code>max-width</code>, or a long unbroken link. Make widths a maximum instead of a fixed size (<code>width:100%; max-width:600px</code>), keep a fixed-width table only for Outlook, and let long text wrap.</p></div>
+
+  <h2>Why it happens</h2>
+  <p>Most emails are designed at 600 to 640 px, while phones are usually 320 to 430 px wide. If any element refuses to shrink, the whole email becomes as wide as that element. Depending on the app, readers then have to scroll sideways, or the app scales the entire email down until the text is too small to read. Either way, people tend to give up.</p>
+  <p>The usual culprits:</p>
+  <ul>
+    <li><strong>Fixed-width tables.</strong> A wrapper like <code>&lt;table width="600"&gt;</code> stays 600 px on every screen unless something overrides it.</li>
+    <li><strong>Images sized in pixels only.</strong> An image with <code>width="600"</code> and no <code>max-width:100%</code> pushes the layout out.</li>
+    <li><strong>Columns that don't stack.</strong> Two or three side-by-side table cells with fixed widths add up to more than the screen.</li>
+    <li><strong>Long unbroken strings.</strong> A raw tracking URL, a long email address or a coupon code with no spaces can't wrap.</li>
+    <li><strong><code>min-width</code> and <code>white-space: nowrap</code>.</strong> Both stop content from shrinking or wrapping.</li>
+    <li><strong>No viewport meta tag.</strong> Without it, some mobile apps lay the email out as if the screen were wider and then zoom out.</li>
+  </ul>
+
+  <h2>How to fix it, step by step</h2>
+  <ol>
+    <li><strong>Find the element that sticks out.</strong> Open the email at phone width and look for whatever reaches past the right edge. It is often a single image or table, not the whole layout.</li>
+    <li><strong>Turn fixed widths into maximums.</strong> Give the main container <code>width:100%; max-width:600px</code> instead of a fixed 600 px.</li>
+    <li><strong>Keep a fixed width for classic Outlook.</strong> Outlook for Windows ignores <code>max-width</code>, so wrap the container in an Outlook-only table that holds it at 600 px there. More on that in <a href="/blog/outlook-email-broken/">why emails break in Outlook</a>.</li>
+    <li><strong>Make images fluid.</strong> Keep the <code>width</code> attribute for Outlook, and add <code>width:100%; max-width:600px; height:auto</code> in the style. See <a href="/blog/email-images-too-big-outlook/">why images show up huge in Outlook</a> for why the attribute matters.</li>
+    <li><strong>Let long text wrap.</strong> Add <code>overflow-wrap:anywhere; word-break:break-word</code> to cells that hold links or codes, or replace raw URLs with short link text.</li>
+    <li><strong>Stack columns on small screens.</strong> Use a media query to make column cells full width, or build columns as inline-block elements that wrap on their own when there isn't room.</li>
+    <li><strong>Add the viewport tag</strong> in the <code>&lt;head&gt;</code>: <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>.</li>
+  </ol>
+
+  <h2>Copy-paste starting point</h2>
+  <p>A container that is 600 px on desktop, fits a phone, and stays 600 px in classic Outlook:</p>
+<pre><code>&lt;!--[if mso]&gt;
+&lt;table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td&gt;
+&lt;![endif]--&gt;
+&lt;table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="width:100%; max-width:600px; margin:0 auto;"&gt;
+  &lt;tr&gt;
+    &lt;td style="padding:24px; overflow-wrap:anywhere; word-break:break-word;"&gt;
+      &lt;img src="https://example.com/hero.jpg" width="600" alt="Spring sale"
+           style="display:block; width:100%; max-width:600px; height:auto; border:0;"&gt;
+      &lt;p style="font:16px/1.5 Arial, sans-serif;"&gt;Your content here.&lt;/p&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;!--[if mso]&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;![endif]--&gt;</code></pre>
+  <p>And a media query to stack two columns on phones. Add the class <code>col</code> to each column cell:</p>
+<pre><code>&lt;style&gt;
+  @media (max-width: 620px) {
+    .col { display:block !important; width:100% !important; }
+  }
+&lt;/style&gt;</code></pre>
+  <p>Treat the media query as an improvement, not the only fix. Support for style blocks and media queries varies between mobile apps and account types, so the base layout should already fit without it.</p>
+
+  <div class="cta">
+    <strong>See if your email fits a phone screen.</strong>
+    <p>Stampcheck is free. Paste your HTML and it previews the email at phone width and tells you if it is wider than a 375 px screen, along with 80+ other checks for Gmail, Outlook and Apple Mail. It runs in your browser and nothing is uploaded.</p>
+    <a class="btn" href="/?utm_source=blog&amp;utm_medium=referral&amp;utm_campaign=email-too-wide-on-mobile">Check my email</a>
+  </div>
+
+  <h2>Frequently asked questions</h2>
+  <h3>What width should an HTML email be?</h3>
+  <p>Most emails are designed at 600 to 640 px for desktop. That is fine as long as the width is a maximum, not a fixed size, so the email can shrink to fit a phone that is 320 to 430 px wide.</p>
+  <h3>Why does my email look fine on desktop but scroll sideways on my phone?</h3>
+  <p>Something inside it has a fixed width larger than the phone screen: usually a 600 px table, an image without max-width, a long unbroken link, or columns that don't stack.</p>
+  <h3>Do I still need media queries?</h3>
+  <p>They help with stacking columns and adjusting padding, but not every mobile app applies them in every setup. Build the email so it fits without them, and use media queries as an improvement on top.</p>
+  <h3>Will Outlook break if I use width 100% and max-width?</h3>
+  <p>Classic Outlook for Windows ignores max-width, so the email can stretch across the window. Wrap the content in an Outlook-only table with a fixed width, as shown above, to keep it at 600 px there.</p>
+</article>
+</main>
+</main>
+
+<footer>
+  <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
+</footer>
+</body>
+</html>
