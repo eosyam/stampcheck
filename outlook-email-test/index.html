@@ -108,6 +108,10 @@ gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personali
   .box { overflow-x: auto; }
   .cta { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin: 40px 0; }
   .cta a.btn { display: inline-block; margin-top: 8px; background: var(--blue); color: #fff; text-decoration: none; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  .quick label { display: block; margin-bottom: 8px; }
+  .quick textarea { width: 100%; box-sizing: border-box; min-height: 120px; resize: vertical; background: var(--code); color: inherit; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .quick .btn { display: inline-block; margin-top: 10px; background: var(--blue); color: #fff; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: 12px 20px; border-radius: 10px; }
+  .quick .alt { margin-left: 14px; font-size: 15px; }
   a { color: var(--blue); }
   footer { color: var(--muted); font-size: 14px; padding-top: 30px; padding-bottom: 40px; border-top: 1px solid var(--line); margin-top: 50px; }
   footer a { color: var(--muted); margin-right: 14px; }
@@ -125,7 +129,12 @@ gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personali
   <h1>Test your email in Outlook, free</h1>
   
   <div class="tldr"><p><strong>Paste your HTML, pick Outlook, and see what breaks.</strong> Stampcheck flags the CSS and markup that classic Outlook for Windows drops, shows an Outlook-style preview, and points to the exact line that causes each problem.</p></div>
-  <div class="cta" style="margin:18px 0 0;padding:16px 20px"><a class="btn" style="margin-top:0" href="/?client=outlook&amp;utm_source=landing&amp;utm_medium=referral&amp;utm_content=top&amp;utm_campaign=outlook-email-test">Open the Outlook test</a></div>
+  <form class="cta quick" id="quick" style="margin:18px 0 0;padding:16px 20px" action="/" method="get">
+    <label for="quick-html"><strong>Paste your email HTML</strong> and check it in Outlook:</label>
+    <textarea id="quick-html" spellcheck="false" placeholder="<!DOCTYPE html>..." aria-label="Email HTML"></textarea>
+    <button class="btn" type="submit">Check in Outlook</button>
+    <a class="alt" href="/?client=outlook&amp;utm_source=landing&amp;utm_medium=referral&amp;utm_content=top&amp;utm_campaign=outlook-email-test">or open the full Outlook test</a>
+  </form>
 
   <h2>What Outlook breaks, and what this test catches</h2>
   <p>Classic Outlook for Windows renders email with Microsoft Word's engine, not a browser. Stampcheck checks your HTML against the problems that causes:</p>
@@ -140,7 +149,7 @@ gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personali
 
   <h2>How to use it</h2>
   <ol>
-    <li>Open Stampcheck with Outlook selected using the button below.</li>
+    <li>Paste your HTML in the box at the top of this page, or open Stampcheck with Outlook selected using the button below.</li>
     <li>Paste your HTML or open the file. Exports from Mailchimp, Klaviyo, HubSpot or MJML all work.</li>
     <li>Fix what is marked <em>will break</em> first, then <em>may look wrong</em>. Each issue shows the line and the fix.</li>
   </ol>
@@ -168,5 +177,20 @@ gtag("config", "G-SMQPH746BD", { allow_google_signals: false, allow_ad_personali
 <footer>
   <a href="/">Stampcheck</a><a href="/blog/">Blog</a><a href="/outlook-email-test/">Outlook test</a><a href="/gmail-email-preview/">Gmail preview</a><a href="/apple-mail-preview/">Apple Mail preview</a><a href="/dark-mode-email-test/">Dark mode</a><a href="/#privacy">Privacy</a>
 </footer>
+<script>
+(function () {
+  var f = document.getElementById("quick"), t = document.getElementById("quick-html");
+  var url = "/?client=outlook&utm_source=landing&utm_medium=referral&utm_content=paste&utm_campaign=outlook-email-test";
+  function send() {
+    var v = t.value;
+    if (!v.trim()) { t.focus(); return; }
+    try { sessionStorage.setItem("sc_handoff", v); location.href = url + "&handoff=1"; }
+    catch (e) { location.href = url; }
+  }
+  f.addEventListener("submit", function (e) { e.preventDefault(); send(); });
+  t.addEventListener("paste", function () { var was = t.value; setTimeout(function () { if (!was.trim() && t.value.trim()) send(); }, 0); });
+  t.addEventListener("keydown", function (e) { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); send(); } });
+})();
+</script>
 </body>
 </html>
