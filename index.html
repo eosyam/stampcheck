@@ -3082,6 +3082,14 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   $("#try-example").addEventListener("click", () => { paste.value = SAMPLE; go(); track("example"); });
   paste.addEventListener("paste", () => { const was = paste.value; setTimeout(() => { if (!was.trim() && paste.value.trim()) go(); }, 0); });
   paste.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); go(); } });
+  // Landing pages hand pasted HTML over with ?handoff=1 and start the check right away
+  try {
+    if (new URLSearchParams(location.search).get("handoff")) {
+      const h = sessionStorage.getItem("sc_handoff");
+      sessionStorage.removeItem("sc_handoff");
+      if (h && h.trim()) { paste.value = h; setTimeout(() => go(h), 0); }
+    }
+  } catch (e) {}
   $("#file-simple").addEventListener("change", (e) => {
     const f = e.target.files && e.target.files[0];
     e.target.value = "";
