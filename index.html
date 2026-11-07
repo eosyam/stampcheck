@@ -443,6 +443,8 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
 .link:hover { background: none; }
 .link input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
 .or { color: var(--faint); font-size: 14px; }
+.try-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 12px; color: var(--muted); font-size: 14px; }
+.try-line button { border-color: var(--accent); color: var(--accent); }
 .promises { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; color: var(--muted); font-size: 14px; }
 .promises b { color: var(--ink); font-weight: 600; }
 .results { max-width: 1280px; margin: 0 auto; display: grid; gap: 18px; }
@@ -645,12 +647,12 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
     <section class="home" id="home" aria-labelledby="hero-title">
       <h1 class="hero-title" id="hero-title">Will your email break?</h1>
       <p class="hero-sub">Paste your email HTML and see it in Gmail, Outlook and on an iPhone, with every problem marked.</p>
+      <div class="try-line"><button id="try-example" type="button">Try an example</button><span>No HTML handy? See an email that breaks in Outlook.</span></div>
       <div class="paste">
         <textarea id="paste" spellcheck="false" placeholder="Paste your email HTML here" aria-label="Email HTML"></textarea>
         <div class="paste-actions">
           <button class="primary big" id="go" type="button">Check my email</button>
           <span class="or">or</span>
-          <button class="link" id="try-example" type="button">try an example</button>
           <label class="link" for="file-simple">open an .html file<input id="file-simple" type="file" accept=".html,.htm,text/html"></label>
         </div>
       </div>
@@ -3079,7 +3081,11 @@ button.big { font-size: 16px; padding: 12px 22px; border-radius: 11px; }
   document.body.appendChild(measure);
 
   $("#go").addEventListener("click", () => go());
-  $("#try-example").addEventListener("click", () => { paste.value = SAMPLE; go(); track("example"); });
+  $("#try-example").addEventListener("click", () => {
+    const ol = document.querySelector('input[name="client"][value="outlook"]');
+    if (ol && !ol.checked) { ol.checked = true; ol.dispatchEvent(new Event("change")); }
+    paste.value = SAMPLE; go(); track("example");
+  });
   paste.addEventListener("paste", () => { const was = paste.value; setTimeout(() => { if (!was.trim() && paste.value.trim()) go(); }, 0); });
   paste.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); go(); } });
   // Landing pages hand pasted HTML over with ?handoff=1 and start the check right away
